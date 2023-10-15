@@ -2,7 +2,18 @@ package com.example.chat.model.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDateTime;
+import java.util.List;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 
 
 @Entity(name = "chatEntity")
@@ -21,7 +32,7 @@ public class Chat extends Base {
 
     @Column(name = "c_receiver")
     @OneToMany
-    private User receiver;
+    private List<User> receiver;
 
     @Column(name = "c_date")
     private LocalDateTime date;

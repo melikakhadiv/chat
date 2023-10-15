@@ -5,9 +5,17 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1>Chat-App
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+
+<input id="userId" placeholder="username">
+<div id="output">
+<input id="message" type="text">
+</div>
+<button onclick="send()">Send</button>
+
+
+<script src="assets/js/ws.js"></script>
 </body>
 </html>
