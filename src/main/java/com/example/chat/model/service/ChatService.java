@@ -1,6 +1,7 @@
 package com.example.chat.model.service;
 
 import com.example.chat.model.entity.Chat;
+import com.example.chat.model.entity.User;
 import com.example.chat.model.service.impl.ServiceImpl;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
@@ -9,11 +10,14 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
+import java.nio.file.AccessDeniedException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestScoped
 @Named
-public class chatService implements ServiceImpl<Chat, Long> {
+public class ChatService implements ServiceImpl<Chat, Long> {
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
 
@@ -43,6 +47,10 @@ public class chatService implements ServiceImpl<Chat, Long> {
     public Chat findById(Long id) throws Exception {
         return entityManager.find(Chat.class, id);
     }
+    public List<Chat> chatBetween2Users(String firstUsername,String secondUsername) throws Exception {
+        Query query = entityManager.createNamedQuery("chatBetween2Users")
+                .setParameter("firstUsername" , firstUsername)
+                .setParameter("secondUsername" , secondUsername);
+        return query.getResultList();
 
-
-}
+}}

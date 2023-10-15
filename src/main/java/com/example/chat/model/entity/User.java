@@ -2,14 +2,20 @@ package com.example.chat.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+@Getter
+@Setter
+@SuperBuilder
 
 @Entity(name = "userEntity")
 @Table(name = "chat_user_tbl")
 @NamedQueries({@NamedQuery(name ="User.FindByUsernameAndPassWord" , query = "select oo from userEntity oo where oo.username=:username and  oo.password=:password") ,
-@NamedQuery(name = "User.FindPrivateAccount" , query = "select oo from userEntity oo where oo.privateAccount=true"),
-@NamedQuery(name = "User.FindByPublicAccount" , query = "select oo from userEntity oo where oo.privateAccount=false")})
+        @NamedQuery(name = "User.FindPrivateAccount" , query = "select oo from userEntity oo where oo.privateAccount=true"),
+        @NamedQuery(name = "User.FindByPublicAccount" , query = "select oo from userEntity oo where oo.privateAccount=false")})
 
 public class User extends Base{
 
@@ -37,9 +43,8 @@ public class User extends Base{
     @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Lastname")
     private String lastname;
 
-    @Column(name = "u_role" , length = 20)
-    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Lastname")
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "u_role")
     private Role role;
 
     @Column(name = "u_privateAccount" )
@@ -49,8 +54,10 @@ public class User extends Base{
     @JoinColumn(name = "u_photo_id")
     private Attachment photo;
 
-    @OneToMany
-    @JoinColumn(name = "u_chat_id")
-    private List<Chat> chat;
+    @OneToMany(mappedBy = "sender")
+    private List<Chat> chatSender;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<Chat> chatReceiver;
 
 }
