@@ -23,17 +23,18 @@ public class AttachmentServlet extends HttpServlet {
               String title= req.getParameter("title");
               String fileType= req.getParameter("fileType");
               String filePath= req.getParameter("filePath");
-              Attachment attachment= Attachment.builder()
-                    .title(title)
-                    .fileType(fileType)
-                    .filePath(filePath)
-                    .build();
-            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
+              Attachment attachment= Attachment
+                      .builder()
+                      .title(title)
+                      .fileType(fileType)
+                      .filePath(filePath)
+                      .build();
+//            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("Attachment",attachment);
             resp.sendRedirect("/panel.jsp");
-            resp.getWriter().println("Attachment successfully saved");
-            );
+            resp.getWriter().println("Attachment is successfully saved");
+
         }
         catch (Exception e){
             System.out.println("Error"+e.getMessage());

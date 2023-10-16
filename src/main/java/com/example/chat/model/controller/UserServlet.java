@@ -25,7 +25,7 @@ public class UserServlet extends HttpServlet {
               String nickname=req.getParameter("nickname");
               String firstname=req.getParameter("firstname");
               String lastname=req.getParameter("lastname");
-              Role role= RoleService.getService().findByRole(req.getParameter("role");
+              Role role= RoleService.getService().findByRole(req.getParameter("role"));
               Attachment attachment= AttachmentService.getService().findById(req.getParameter("attachment"));
               //list of user for chat??
 
@@ -36,7 +36,10 @@ public class UserServlet extends HttpServlet {
                            .nickname(nickname)
                           .firstname(firstname)
                           .lastname(lastname)
+                          .role(role)
+                           .attachment(attachment)
                           .build();
+
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User",user);
             resp.sendRedirect("/panel.jsp");
@@ -45,7 +48,7 @@ public class UserServlet extends HttpServlet {
 
 
 
-            );
+
         }
         catch (Exception e){
             System.out.println("Error"+e.getMessage());
