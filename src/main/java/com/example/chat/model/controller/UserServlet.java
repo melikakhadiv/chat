@@ -15,7 +15,6 @@ import java.io.IOException;
 public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       resp.getWriter().println("User saved.");
         try {
               String username= req.getParameter("username");
               String password=req.getParameter("password");
@@ -33,7 +32,8 @@ public class UserServlet extends HttpServlet {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User",user);
             resp.sendRedirect("/panel.jsp");
-            resp.getWriter().println("Attachment successfully saved");
+
+            resp.getWriter().println("User saved.");
 
 
 

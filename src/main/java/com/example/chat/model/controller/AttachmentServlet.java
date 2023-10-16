@@ -3,6 +3,7 @@ package com.example.chat.model.controller;
 import com.example.chat.model.entity.Attachment;
 import com.example.chat.model.entity.User;
 import com.example.chat.model.service.AttachmentService;
+import com.oreilly.servlet.MultipartRequest;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,6 +28,7 @@ public class AttachmentServlet extends HttpServlet {
                     .fileType(fileType)
                     .filePath(filePath)
                     .build();
+            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("Attachment",attachment);
             resp.sendRedirect("/panel.jsp");
