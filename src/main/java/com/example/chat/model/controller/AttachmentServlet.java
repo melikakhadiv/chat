@@ -36,6 +36,7 @@ public class AttachmentServlet extends HttpServlet {
             resp.getWriter().println("Attachment is successfully saved");
 
         }
+
         catch (Exception e){
             System.out.println("Error"+e.getMessage());
         }
