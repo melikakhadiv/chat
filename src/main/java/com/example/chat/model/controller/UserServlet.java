@@ -1,6 +1,10 @@
 package com.example.chat.model.controller;
 
+import com.example.chat.model.entity.Attachment;
+import com.example.chat.model.entity.Role;
 import com.example.chat.model.entity.User;
+import com.example.chat.model.service.AttachmentService;
+import com.example.chat.model.service.RoleService;
 import com.example.chat.model.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,6 +25,10 @@ public class UserServlet extends HttpServlet {
               String nickname=req.getParameter("nickname");
               String firstname=req.getParameter("firstname");
               String lastname=req.getParameter("lastname");
+              Role role= RoleService.getService().findByRole(req.getParameter("role");
+              Attachment attachment= AttachmentService.getService().findById(req.getParameter("attachment"));
+              //list of user for chat??
+
 
               User user = User.builder()
                           .username(username)
