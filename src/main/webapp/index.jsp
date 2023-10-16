@@ -10,9 +10,8 @@
 <br/>
 
 <input id="userId" placeholder="username">
-<div id="output">
+<div id="output"></div>
 <input id="message" type="text">
-</div>
 <button onclick="send()">Send</button>
 
 

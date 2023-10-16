@@ -37,8 +37,7 @@ public class User extends Base{
     @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Lastname")
     private String lastname;
 
-    @Column(name = "u_role" , length = 20)
-    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Lastname")
+    @JoinColumn(name = "u_role_id" )
     @OneToOne
     private Role role;
 
