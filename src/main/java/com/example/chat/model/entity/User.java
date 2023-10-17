@@ -13,7 +13,10 @@ import java.util.List;
 
 @Entity(name = "userEntity")
 @Table(name = "chat_user_tbl")
-@NamedQueries({@NamedQuery(name ="User.FindByUsernameAndPassWord" , query = "select oo from userEntity oo where oo.username=:username and  oo.password=:password") ,
+@NamedQueries({
+        @NamedQuery(name ="User.FindAllUsernames" , query = "select oo.username from userEntity oo where oo.privateAccount=false ") ,
+        @NamedQuery(name ="User.FindByUsername" , query = "select oo from userEntity oo where oo.username=:username") ,
+        @NamedQuery(name ="User.FindByUsernameAndPassWord" , query = "select oo from userEntity oo where oo.username=:username and  oo.password=:password") ,
         @NamedQuery(name = "User.FindPrivateAccount" , query = "select oo from userEntity oo where oo.privateAccount=true"),
         @NamedQuery(name = "User.FindByPublicAccount" , query = "select oo from userEntity oo where oo.privateAccount=false")})
 

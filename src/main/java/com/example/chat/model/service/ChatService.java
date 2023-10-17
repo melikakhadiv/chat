@@ -47,10 +47,14 @@ public class ChatService implements ServiceImpl<Chat, Long> {
     public Chat findById(Long id) throws Exception {
         return entityManager.find(Chat.class, id);
     }
-    public List<Chat> chatBetween2Users(String firstUsername,String secondUsername) throws Exception {
-        Query query = entityManager.createNamedQuery("chatBetween2Users")
-                .setParameter("firstUsername" , firstUsername)
-                .setParameter("secondUsername" , secondUsername);
-        return query.getResultList();
+    public void removeChatsByUserName(String username) throws Exception {
+        Query query = entityManager.createNamedQuery("findChatByUserName");
+        query.setParameter("username",username);
+        List<Chat> chatList = query.getResultList();
+        for (Chat chat : chatList) {
+            chat.setActive(false);
+        }
+    }
 
-}}
+}
+

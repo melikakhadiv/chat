@@ -14,8 +14,12 @@ public class UserService implements ServiceImpl<User , Long> {
 
     @Override
     public User save(User user) throws Exception {
-        user.setActive(true);
-        entityManager.persist(user);
+        Query query = entityManager.createNamedQuery("User.FindByUsername");
+        query.setParameter("username", user.getUsername());
+        if (query.getSingleResult() == null) {
+            user.setActive(true);
+            entityManager.persist(user);
+        }
         return user;
     }
 
@@ -53,6 +57,18 @@ public class UserService implements ServiceImpl<User , Long> {
                 .setParameter("password" , password);
         return (User) query.getSingleResult();
     }
+
+    public User findByUsername(String username) throws Exception {
+        Query query = entityManager.createNamedQuery("User.FindByUsername");
+        query.setParameter("username", username);
+        return (User) query.getSingleResult();
+    }
+
+    public List<String> findByAllUsernames() throws Exception {
+        Query query = entityManager.createNamedQuery("User.FindAllUsernames");
+        return query.getResultList();
+    }
+
 
     public List<User> privateAcc() throws Exception{
         Query query = entityManager.createNamedQuery("User.FindPrivateAccount");

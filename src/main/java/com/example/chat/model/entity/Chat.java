@@ -16,13 +16,11 @@ import java.time.LocalDateTime;
 
 @Entity(name = "chatEntity")
 @Table(name = "chat_tbl")
-@NamedQueries({
-        @NamedQuery(name = "chatBetween2Users",query = "select c from chatEntity c " +
-                "where ( sender.username = :firstUsername and receiver.username = :secondUsername ) or " +
-                "      (receiver.username = :firstUsername and sender.username = :secondUsername) " +
-                "  order by date")
-}
+
+@NamedQueries(
+        @NamedQuery(name = "findChatByUserName", query = "select oo from chatEntity oo where oo.sender.username=:username or receiver.username=:username")
 )
+
 public class Chat extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
