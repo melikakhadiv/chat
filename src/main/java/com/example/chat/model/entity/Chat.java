@@ -26,6 +26,9 @@ public class Chat extends Base {
     @Column(name = "c_message")
     private String message;
 
+    @Column(name = "c_user")
+    private String username;
+
     @JoinColumn(name = "c_sender_id")
     @OneToOne
     private User sender;

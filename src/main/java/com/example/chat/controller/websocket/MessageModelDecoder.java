@@ -3,9 +3,9 @@ package com.example.chat.controller.websocket;
 import com.example.chat.model.entity.Chat;
 import com.google.gson.Gson;
 
-import javax.websocket.DecodeException;
-import javax.websocket.Decoder;
-import javax.websocket.EndpointConfig;
+import jakarta.websocket.DecodeException;
+import jakarta.websocket.Decoder;
+import jakarta.websocket.EndpointConfig;
 
 public class MessageModelDecoder implements Decoder.Text<Chat> {
     

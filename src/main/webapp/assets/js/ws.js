@@ -1,5 +1,5 @@
-var wsUrl = "ws://" + document.location.host + document.location.pathname + "chat";
-var ws = new WebSocket(wsUrl);
+let wsUrl = "ws://" + document.location.host + document.location.pathname + "chat";
+let ws = new WebSocket(wsUrl);
 
 ws.onmessage = function (event) {
     onMessage(event);
@@ -19,17 +19,20 @@ function onOpen() {
 };
 
 function display(dataString) {
-    var data = JSON.parse(dataString);
-    var message = "<p>User " + data.sender.username + " : " + data.message + "</p>";
+    console.log(dataString)
+    let data = JSON.parse( dataString );
+    let message = "<p>User " + data.username + " said : " + data.message + "</p>";
     document.getElementById("output").innerHTML += message +" </br>";
+    // document.getElementById("user").innerHTML = data.username +" </br>";
 };
 
 function send() {
-    var message = document.getElementById("message").value;
-    var username = document.getElementById("username").value;
-    var json ={
+    let message = document.getElementById("message").value;
+    let username = document.getElementById("username").value;
+    // let user = document.getElementById("user").value;
+    let json ={
         "message": message,
-        "username" : username
+        "username" : username ,
     };
     console.log("sending " + message)
     ws.send(JSON.stringify(json))
