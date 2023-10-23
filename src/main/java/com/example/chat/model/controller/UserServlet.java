@@ -32,7 +32,6 @@ public class UserServlet extends HttpServlet {
               Role role= RoleService.findById(req.getParameter("role"));
               Attachment attachment= AttachmentService.findById(req.getParameter("attachment"));
 
-
               User user = User.builder()
                           .username(username)
                           .password(password)
@@ -40,7 +39,7 @@ public class UserServlet extends HttpServlet {
                           .firstname(firstname)
                           .lastname(lastname)
                           .role(role)
-                           .attachment(attachment)
+                           .photo(attachment)
                           .build();
 
             HttpSession httpSession = req.getSession();

@@ -2,8 +2,16 @@ package com.example.chat.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+@NoArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 
 @Entity(name = "userEntity")
 @Table(name = "chat_user_tbl")
