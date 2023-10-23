@@ -24,23 +24,15 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-              String username= req.getParameter("username");
-              String password=req.getParameter("password");
-              String nickname=req.getParameter("nickname");
-              String firstname=req.getParameter("firstname");
-              String lastname=req.getParameter("lastname");
-              Role role= RoleService.findById(req.getParameter("role"));
-              Attachment attachment= AttachmentService.findById(req.getParameter("attachment"));
-
 
               User user = User.builder()
-                          .username(username)
-                          .password(password)
-                           .nickname(nickname)
-                          .firstname(firstname)
-                          .lastname(lastname)
-                          .role(role)
-                           .attachment(attachment)
+                          .username(req.getParameter("username"))
+                          .password(req.getParameter("password"))
+                           .nickname(req.getParameter("nickname"))
+                          .firstname(req.getParameter("firstname"))
+                          .lastname(req.getParameter("lastname"))
+                          .role(RoleService.findById(req.getParameter("role")))
+                           .attachment(AttachmentService.findById(req.getParameter("attachment")))
                           .build();
 
             HttpSession httpSession = req.getSession();

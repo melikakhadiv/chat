@@ -21,14 +21,11 @@ public class AttachmentServlet extends HttpServlet {
 
 
         try {
-              String title= req.getParameter("title");
-              FileType fileType= req.getParameterNames(FileType);
-              String filePath= req.getParameter("filePath");
               Attachment attachment= Attachment
                       .builder()
-                      .title(title)
-                      .fileType(fileType)
-                      .filePath(filePath)
+                      .title(req.getParameter("title"))
+                      .fileType(req.getParameterNames(FileType))
+                      .filePath(req.getParameter("filePath"))
                       .build();
 //            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
             HttpSession httpSession = req.getSession();
