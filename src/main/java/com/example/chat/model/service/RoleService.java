@@ -51,8 +51,7 @@ public class RoleService implements ServiceImpl<Role, Long> {
     }
 
 
-    @Override
-    public Role findById(Long id) throws Exception {
+    public static Role findById(String id) throws Exception {
         return entityManager.find(Role.class , id);
     }
 

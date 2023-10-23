@@ -2,6 +2,7 @@ package com.example.chat.model.controller;
 
 import com.example.chat.model.entity.Attachment;
 import com.example.chat.model.entity.User;
+import com.example.chat.model.entity.enums.FileType;
 import com.example.chat.model.service.AttachmentService;
 import com.oreilly.servlet.MultipartRequest;
 import jakarta.servlet.ServletException;
@@ -21,7 +22,7 @@ public class AttachmentServlet extends HttpServlet {
 
         try {
               String title= req.getParameter("title");
-              String fileType= req.getParameter("fileType");
+              FileType fileType= req.getParameterNames(FileType);
               String filePath= req.getParameter("filePath");
               Attachment attachment= Attachment
                       .builder()

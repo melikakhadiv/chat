@@ -6,6 +6,7 @@ import com.example.chat.model.entity.User;
 import com.example.chat.model.service.AttachmentService;
 import com.example.chat.model.service.RoleService;
 import com.example.chat.model.service.UserService;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,6 +18,9 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/User")
 public class UserServlet extends HttpServlet {
+    @Inject
+    private RoleService roleService;
+    private AttachmentService attachmentService;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -25,9 +29,8 @@ public class UserServlet extends HttpServlet {
               String nickname=req.getParameter("nickname");
               String firstname=req.getParameter("firstname");
               String lastname=req.getParameter("lastname");
-              Role role= RoleService.getService().findByRole(req.getParameter("role"));
-              Attachment attachment= AttachmentService.getService().findById(req.getParameter("attachment"));
-              //list of user for chat??
+              Role role= RoleService.findById(req.getParameter("role"));
+              Attachment attachment= AttachmentService.findById(req.getParameter("attachment"));
 
 
               User user = User.builder()
