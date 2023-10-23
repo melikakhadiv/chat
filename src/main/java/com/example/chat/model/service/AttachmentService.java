@@ -37,8 +37,7 @@ public class AttachmentService implements ServiceImpl<Attachment, Long> {
         return query.getResultList();
     }
 
-    @Override
-    public Attachment findById(Long id) throws Exception {
+    public static Attachment findById(String id) throws Exception {
         return entityManager.find(Attachment.class, id);
     }
 }
