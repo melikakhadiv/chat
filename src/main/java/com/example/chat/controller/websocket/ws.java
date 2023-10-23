@@ -1,6 +1,7 @@
 package com.example.chat.controller.websocket;
 
 import com.example.chat.model.entity.Chat;
+import com.example.chat.model.util.HTMLFilter;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
 
@@ -9,11 +10,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-@ServerEndpoint(value = "/chat", encoders = MessageModelEncoder.class , decoders = MessageModelDecoder.class , configurator = GetHttpSessionConfigurator.class)
+@ServerEndpoint(value = "/chat", encoders = MessageModelEncoder.class, decoders = MessageModelDecoder.class, configurator = GetHttpSessionConfigurator.class)
 public class ws {
     private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
 
-    @OnMessage
+
+        @OnMessage
     public String onMessage(Session session , Chat chat) throws EncodeException, IOException {
         System.out.println("message : " + chat);
         for (Session s : sessions) {
@@ -23,15 +25,25 @@ public class ws {
         return chat.getMessage();
     }
 
+
+
     @OnOpen
     public void  onOpen(Session session){
         System.out.println("ws opend: " + session.getId());
         sessions.add(session);
     }
 
-    @OnClose
+
+        @OnClose
     public void  onClose(Session session){
         System.out.println("ws closed: " + session.getId());
         sessions.remove(session);
     }
+
+
+    @OnError
+    public void onError(Throwable t) throws Throwable {
+    }
+
+
 }

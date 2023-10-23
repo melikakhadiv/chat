@@ -19,7 +19,6 @@
 <%--        <input id="user" >--%>
 <%--    </div>--%>
 </div>
-
 <script src="assets/js/ws.js"></script>
 </body>
 </html>
