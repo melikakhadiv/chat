@@ -18,31 +18,23 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/Chat")
 public class ChatServlet extends HttpServlet {
-@Inject
-private UserService userService;
+    @Inject
+    private UserService userService;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            String message=req.getParameter("message");
-            User sender=req.getSession();
-            User reciever=req.getSession();
-
-
-
-
+            String message = req.getParameter("message");
+//            User sender=req.getSession();
+//            User reciever=req.getSession();
 
 
             HttpSession httpSession = req.getSession();
             resp.sendRedirect("/chat.jsp");
 
 
-
-
-
-
-        }
-        catch (Exception e){
-            System.out.println("Error"+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
         }
     }
 }
