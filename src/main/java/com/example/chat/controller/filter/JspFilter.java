@@ -29,7 +29,7 @@ public class JspFilter implements Filter {
                         "username", realUsername);
                 ((HttpServletRequest) servletRequest).getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(servletRequest, servletResponse);
             }
-//            filterChain.doFilter(servletRequest, servletResponse);
+
             ((HttpServletRequest) servletRequest).getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(servletRequest, servletResponse);
         } catch (Exception e) {
             e.printStackTrace();

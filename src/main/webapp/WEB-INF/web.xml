@@ -28,8 +28,8 @@
 <!--        <auth-constraint>-->
 <!--            <role-name>costumer</role-name>-->
 <!--        </auth-constraint>-->
-
     </security-constraint>
+
 
 
     <login-config>

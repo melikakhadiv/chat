@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Title</title>
-    <jsp:include page="../../css-import.jsp"></jsp:include>
+    <jsp:include page="../css-import.jsp"></jsp:include>
 </head>
 <body>
 <div class="row">
@@ -23,9 +23,9 @@
     <%--        <input id="user" >--%>
     <%--    </div>--%>
 </div>
-
-
-<jsp:include page="../../js-import.jsp"></jsp:include>
 </div>
+
+<%--<jsp:include page="../../js-import.jsp"></jsp:include>--%>
+<script src="../../assets/js/ws.js"></script>
 </body>
 </html>

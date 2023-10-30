@@ -1,4 +1,4 @@
-let wsUrl = "ws://" + document.location.host + document.location.pathname + "chat";
+let wsUrl = "ws://localhost/chat";
 let ws = new WebSocket(wsUrl);
 
 ws.onmessage = function (event) {
