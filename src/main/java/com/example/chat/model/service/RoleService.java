@@ -2,12 +2,15 @@ package com.example.chat.model.service;
 
 import com.example.chat.model.entity.Role;
 import com.example.chat.model.service.impl.ServiceImpl;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import jakarta.persistence.PersistenceContext;
+
 import java.util.List;
 
+@RequestScoped
 public class RoleService implements ServiceImpl<Role, Long> {
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
@@ -51,8 +54,15 @@ public class RoleService implements ServiceImpl<Role, Long> {
     }
 
 
-    public static Role findById(String id) throws Exception {
-        return entityManager.find(Role.class , id);
+    public Role findById(Long id) throws Exception {
+        return entityManager.find(Role.class, id);
+    }
+
+    public Role findByRole(String role) throws Exception {
+        Query query = entityManager.createNamedQuery("Role.FindByName")
+                .setParameter("role", role);
+        return (Role) query.getSingleResult();
+
     }
 
 }

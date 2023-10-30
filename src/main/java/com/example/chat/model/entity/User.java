@@ -26,23 +26,23 @@ public class User extends Base{
     private long id;
 
     @Column(name = "u_username" , length = 20)
-    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid UserName")
+//    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid UserName")
     private String username;
 
     @Column(name = "u_password" , length = 20)
-    @Pattern(regexp = "^[A-Za-z]{8,30}$", message = "Invalid Password")
+//    @Pattern(regexp = "^[A-Za-z]{8,30}$", message = "Invalid Password")
     private String password;
 
     @Column(name = "u_nickname" , length = 20)
-    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Nickname")
+//    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Nickname")
     private String nickname;
 
     @Column(name = "u_firstname" , length = 20)
-    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Firstname")
+//    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Firstname")
     private String firstname;
 
     @Column(name = "u_lastname" , length = 20)
-    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Lastname")
+//    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid Lastname")
     private String lastname;
 
     @JoinColumn(name = "u_role_id" )

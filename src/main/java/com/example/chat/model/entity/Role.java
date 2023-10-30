@@ -12,9 +12,10 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 
+@NamedQueries(@NamedQuery(name = "Role.FindByName", query = "select oo from roleEntity oo where oo.role=:role"))
 
 @Entity(name="roleEntity")
-@Table(name="role_tbl")
+@Table(name="chat_role_tbl")
 
 public class Role {
     @Id

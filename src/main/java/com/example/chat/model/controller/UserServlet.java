@@ -9,10 +9,7 @@ import com.example.chat.model.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.lang.annotation.Repeatable;
@@ -21,13 +18,16 @@ import java.lang.annotation.Repeatable;
 public class UserServlet extends HttpServlet {
     @Inject
     private RoleService roleService;
+    @Inject
     private UserService userService;
+    @Inject
     private AttachmentService attachmentService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.getSession().setAttribute("userList", userService.findAll());
+            resp.sendRedirect("/user/panel.jsp");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -41,8 +41,8 @@ public class UserServlet extends HttpServlet {
             String nickname = req.getParameter("nickname");
             String firstname = req.getParameter("firstname");
             String lastname = req.getParameter("lastname");
-            Role role = RoleService.findById(req.getParameter("role"));
-            Attachment attachment = AttachmentService.findById(req.getParameter("attachment"));
+//            boolean privateAcc = Boolean.parseBoolean(req.getParameter("privateAcc"));
+//            Attachment attachment = attachmentService.findById(Long.valueOf(req.getParameter("attachmentId")));
 
             User user = User.builder()
                     .username(username)
@@ -50,18 +50,20 @@ public class UserServlet extends HttpServlet {
                     .nickname(nickname)
                     .firstname(firstname)
                     .lastname(lastname)
-                    .role(role)
-                    .photo(attachment)
+//                    .privateAccount(privateAcc)
+//                    .photo(attachment)
                     .build();
             userService.save(user);
+
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User", user);
-            resp.sendRedirect("/panel.jsp");
+            resp.sendRedirect("/user/panel.jsp");
 
             resp.getWriter().println("User saved.");
 
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error" + e.getMessage());
         }
     }
@@ -69,32 +71,31 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            String id = req.getParameter("id");
+            Long id = Long.valueOf(req.getParameter("id"));
             String username = req.getParameter("username");
             String password = req.getParameter("password");
             String nickname = req.getParameter("nickname");
             String firstname = req.getParameter("firstname");
             String lastname = req.getParameter("lastname");
-            String active = req.getParameter("active");
-            Role role = RoleService.findById(req.getParameter("role"));
-            Attachment attachment = AttachmentService.findById(req.getParameter("attachment"));
+            boolean privateAcc = Boolean.parseBoolean(req.getParameter("privateAcc"));
+            boolean active = Boolean.parseBoolean(req.getParameter("active"));
+            Attachment attachment = attachmentService.findById(Long.valueOf(req.getParameter("attachmentId")));
 
             User user = User.builder()
-                    .id(Long.parseLong(id))
-                    .username(username)
+                    .id(id)
                     .password(password)
                     .nickname(nickname)
                     .firstname(firstname)
                     .lastname(lastname)
-                    .active(Boolean.parseBoolean(active))
-                    .role(role)
+                    .privateAccount(privateAcc)
+                    .active(active)
                     .photo(attachment)
                     .build();
 
             userService.edit(user);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User", user);
-            resp.sendRedirect("/panel.jsp");
+            resp.sendRedirect("/user/panel.jsp");
 
             resp.getWriter().println("User edited.");
 
@@ -108,7 +109,7 @@ public class UserServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
             userService.remove(Long.valueOf(req.getParameter("id")));
-            resp.sendRedirect("/panel.jsp");
+            resp.sendRedirect("/user/panel.jsp");
         }catch (Exception e){
             System.out.println("Error: " + e.getMessage());
         }

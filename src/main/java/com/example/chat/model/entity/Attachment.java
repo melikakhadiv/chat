@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 
 
 @Entity(name="attachmentEntity")
-@Table(name="attachment_tbl")
+@Table(name="chat_attachment_tbl")
 
 public class Attachment extends Base {
     @Id

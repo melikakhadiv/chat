@@ -24,6 +24,7 @@ public class AttachmentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.getSession().setAttribute("attachments", attachmentService.findAll());
+            resp.sendRedirect("/panel.jsp");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -35,15 +36,15 @@ public class AttachmentServlet extends HttpServlet {
 
 
         try {
-            String id= req.getParameter("id");
+            Long id= Long.valueOf(req.getParameter("id"));
             String title = req.getParameter("title");
             String filePath = req.getParameter("filePath");
-            String fileType = req.getParameter("fileType");
+            FileType fileType = FileType.valueOf(req.getParameter("fileType"));
             Attachment attachment = Attachment
                     .builder()
-                    .id(Long.parseLong(id))
+                    .id(id)
                     .title(title)
-                    .fileType(FileType.valueOf(fileType))
+                    .fileType(fileType)
                     .filePath(filePath)
                     .build();
 //            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
@@ -63,15 +64,15 @@ public class AttachmentServlet extends HttpServlet {
 
 
         try {
-            String id= req.getParameter("id");
+            Long id= Long.valueOf(req.getParameter("id"));
             String title = req.getParameter("title");
             String filePath = req.getParameter("filePath");
-            String fileType = req.getParameter("fileType");
+            FileType fileType = FileType.valueOf(req.getParameter("fileType"));
             Attachment attachment = Attachment
                     .builder()
-                    .id(Long.parseLong(id))
+                    .id(id)
                     .title(title)
-                    .fileType(FileType.valueOf(fileType))
+                    .fileType(fileType)
                     .filePath(filePath)
                     .build();
 //            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);

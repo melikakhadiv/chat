@@ -2,7 +2,9 @@ package com.example.chat.model.service;
 
 import com.example.chat.model.entity.Chat;
 import com.example.chat.model.service.impl.ServiceImpl;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -11,9 +13,9 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-@RequestScoped
+@ApplicationScoped
 @Named
-public class chatService implements ServiceImpl<Chat, Long> {
+public class ChatService implements ServiceImpl<Chat, Long> {
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
 

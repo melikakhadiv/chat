@@ -4,6 +4,7 @@ import com.example.chat.model.entity.Attachment;
 import com.example.chat.model.entity.Role;
 import com.example.chat.model.entity.User;
 import com.example.chat.model.service.AttachmentService;
+import com.example.chat.model.service.ChatService;
 import com.example.chat.model.service.RoleService;
 import com.example.chat.model.service.UserService;
 import jakarta.inject.Inject;
@@ -19,14 +20,25 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/Chat")
 public class ChatServlet extends HttpServlet {
     @Inject
-    private UserService userService;
+    private ChatService chatService;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            req.getSession().setAttribute("chatList", chatService.findAll());
+            resp.sendRedirect("/chat.jsp");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String message = req.getParameter("message");
-//            User sender=req.getSession();
-//            User reciever=req.getSession();
+            User sender= (User) req.getSession().getAttribute("user");
+
+//            User receiver=req.getSession();
 
 
             HttpSession httpSession = req.getSession();

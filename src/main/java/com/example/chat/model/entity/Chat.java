@@ -38,5 +38,5 @@ public class Chat extends Base {
     private List<User> receiver;
 
     @Column(name = "c_date")
-    private LocalDateTime date;
+    private LocalDateTime timeStamp;
 }
