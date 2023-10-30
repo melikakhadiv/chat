@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>login</title>
+    <jsp:include page="/css-import.jsp"></jsp:include>
 </head>
 <body>
 <form action="j_security_check" method="post">
@@ -19,7 +20,6 @@
     <input type="submit" value="Login">
 </form>
 
-<script src="js-import.jsp"/>
-<script src="css-import.jsp"/>
+<jsp:include page="/js-import.jsp"></jsp:include>
 </body>
 </html>

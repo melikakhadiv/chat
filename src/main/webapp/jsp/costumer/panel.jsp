@@ -13,7 +13,5 @@
 <body>
 <a href="chat.jsp">chat page</a>
 
-<script src="js-import.jsp"/>
-<script src="css-import.jsp"/>
 </body>
 </html>

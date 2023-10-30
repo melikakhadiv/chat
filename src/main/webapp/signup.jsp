@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>signup</title>
+    <jsp:include page="/css-import.jsp"></jsp:include>
 </head>
 <body>
 <form action="/User" method="post">
@@ -20,7 +21,6 @@
     <input type="submit" value="sign up">
 </form>
 
-<script src="js-import.jsp"/>
-<script src="css-import.jsp"/>
+<jsp:include page="/js-import.jsp"></jsp:include>
 </body>
 </html>

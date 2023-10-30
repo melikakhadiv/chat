@@ -68,6 +68,12 @@ public class UserService implements ServiceImpl<User , Long> {
         return (User) query.getSingleResult();
     }
 
+    public User findByUsername(String username) throws Exception{
+        Query query = entityManager.createNamedQuery("User.FindRoleByUsername")
+                .setParameter("username" , username);
+        return (User) query.getSingleResult();
+    }
+
     public List<User> privateAcc() throws Exception{
         Query query = entityManager.createNamedQuery("User.FindPrivateAccount");
         return query.getResultList();
