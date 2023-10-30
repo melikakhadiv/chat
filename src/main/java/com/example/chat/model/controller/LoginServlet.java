@@ -4,6 +4,9 @@ import com.example.chat.model.entity.User;
 import com.example.chat.model.service.UserService;
 import jakarta.security.enterprise.credential.Password;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.HttpConstraint;
+import jakarta.servlet.annotation.HttpMethodConstraint;
+import jakarta.servlet.annotation.ServletSecurity;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.inject.Inject;
@@ -13,6 +16,15 @@ import org.openqa.selenium.UsernameAndPassword;
 
 import java.io.IOException;
 
+
+@ServletSecurity(value = @HttpConstraint(
+        rolesAllowed = {"admin","costumer"}),
+        httpMethodConstraints = {
+        @HttpMethodConstraint(
+                value = "GET",
+                rolesAllowed = {"admin","costumer"}
+        )}
+)
 @WebServlet(urlPatterns = "/Login")
 public class LoginServlet extends HttpServlet {
 
