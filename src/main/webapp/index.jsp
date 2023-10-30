@@ -10,10 +10,11 @@
 <br/>
 
 
-<a href="/login.jsp">Login</a>
+<%--<a href="/jsp/admin/chat.jsp">Login</a>--%>
+<a href="/jsp/admin/chat.jsp">Login</a>
 <a href="/signup.jsp">Signup</a>
 
-<script src="js-import.jsp"/>
-<script src="css-import.jsp"/>
+<%--<script src="js-import.jsp"/>--%>
+<%--<script src="css-import.jsp"/>--%>
 </body>
 </html>

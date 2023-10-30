@@ -27,7 +27,7 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.getSession().setAttribute("userList", userService.findAll());
-            resp.sendRedirect("/user/panel.jsp");
+            resp.sendRedirect("/jsp/admin/panel.jsp");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -57,7 +57,7 @@ public class UserServlet extends HttpServlet {
 
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User", user);
-            resp.sendRedirect("/user/panel.jsp");
+            resp.sendRedirect("/jsp/" + user.getRole().getRole() + "/panel.jsp");
 
             resp.getWriter().println("User saved.");
 
@@ -95,8 +95,7 @@ public class UserServlet extends HttpServlet {
             userService.edit(user);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User", user);
-            resp.sendRedirect("/user/panel.jsp");
-
+            resp.sendRedirect("/jsp/" + user.getRole().getRole() + "/panel.jsp");
             resp.getWriter().println("User edited.");
 
 
@@ -107,10 +106,10 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
+        try {
             userService.remove(Long.valueOf(req.getParameter("id")));
-            resp.sendRedirect("/user/panel.jsp");
-        }catch (Exception e){
+            resp.sendRedirect("/jsp/admin/panel.jsp");
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
