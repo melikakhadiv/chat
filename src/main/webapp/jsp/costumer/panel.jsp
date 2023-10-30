@@ -11,7 +11,7 @@
     <title>User Panel</title>
 </head>
 <body>
-<a href="chat.jsp">chat page</a>
+<a href="/jsp/costumer/chat.jsp">chat page</a>
 
 </body>
 </html>

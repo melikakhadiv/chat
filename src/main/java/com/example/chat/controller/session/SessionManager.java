@@ -30,8 +30,8 @@ public class SessionManager {
     public static boolean validateWebSocketSession(HttpSession httpSession, Session session) {
         return sessionMap.get(httpSession.getAttribute("username").toString()).containsKey(session);
     }
-    public static boolean invalidateHttpSession(HttpSession httpSession, Session session) {
-        return sessionMap.remove(httpSession.getAttribute("username").toString()).containsKey(httpSession);
+    public static void invalidateHttpSession(HttpSession httpSession, Session session) {
+        sessionMap.remove(httpSession.getAttribute("username").toString());
     }
 
     public static Session getWebSocketSession(HttpSession httpSession) {

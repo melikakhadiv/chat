@@ -11,6 +11,10 @@
     <title>panel</title>
 </head>
 <body>
-<a href="chat.jsp">chat page</a>
+<a href="/jsp/admin/chat.jsp">chat page</a>
+<script>
+    console.log("ws://" + document.location.host + document.location.pathname + "chat");
+
+</script>
 </body>
 </html>

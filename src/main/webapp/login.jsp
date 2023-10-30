@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>login</title>
-    <jsp:include page="/css-import.jsp"></jsp:include>
+    <jsp:include page="/jsp/css-import.jsp"></jsp:include>
 </head>
 <body>
 <form action="j_security_check" method="post">
@@ -20,6 +20,6 @@
     <input type="submit" value="Login">
 </form>
 
-<jsp:include page="/js-import.jsp"></jsp:include>
+<jsp:include page="/jsp/js-import.jsp"></jsp:include>
 </body>
 </html>

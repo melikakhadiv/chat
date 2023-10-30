@@ -46,6 +46,10 @@ public class ws {
     }
 
 
+    @OnError
+    public void onError(Throwable t) throws Throwable {
+    }
+
     public static void send(HttpSession httpSession, String msg) throws IOException {
         SessionManager.getWebSocketSession(httpSession).getBasicRemote().sendText(msg);
     }
