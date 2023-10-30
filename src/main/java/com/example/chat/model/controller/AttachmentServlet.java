@@ -3,6 +3,9 @@ package com.example.chat.model.controller;
 import com.example.chat.model.entity.Attachment;
 import com.example.chat.model.entity.enums.FileType;
 import com.example.chat.model.service.AttachmentService;
+import com.example.chat.model.service.RoleService;
+import com.example.chat.model.service.UserService;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +17,9 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/Attachment")
 public class AttachmentServlet extends HttpServlet {
+    @Inject
+    private AttachmentService attachmentService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
