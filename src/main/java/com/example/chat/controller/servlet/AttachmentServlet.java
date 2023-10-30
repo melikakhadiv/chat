@@ -1,4 +1,4 @@
-package com.example.chat.model.controller;
+package com.example.chat.controller.servlet;
 
 import com.example.chat.model.entity.Attachment;
 import com.example.chat.model.entity.enums.FileType;

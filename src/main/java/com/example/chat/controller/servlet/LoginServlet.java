@@ -1,4 +1,4 @@
-package com.example.chat.model.controller;
+package com.example.chat.controller.servlet;
 
 import com.example.chat.model.entity.User;
 import com.example.chat.model.service.UserService;

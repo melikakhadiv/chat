@@ -23,7 +23,7 @@
     <%--    </div>--%>
 </div>
 
-<script src="assets/js/ws.js"></script>
-
+<script src="js-import.jsp"/>
+<script src="css-import.jsp"/>
 </body>
 </html>

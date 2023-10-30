@@ -19,5 +19,8 @@
     <input type="text" name="nickname" placeholder="nickname">
     <input type="submit" value="sign up">
 </form>
+
+<script src="js-import.jsp"/>
+<script src="css-import.jsp"/>
 </body>
 </html>

@@ -19,5 +19,7 @@
     <input type="submit" value="Login">
 </form>
 
+<script src="js-import.jsp"/>
+<script src="css-import.jsp"/>
 </body>
 </html>
