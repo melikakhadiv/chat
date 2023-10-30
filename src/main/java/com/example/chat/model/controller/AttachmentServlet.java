@@ -23,7 +23,7 @@ public class AttachmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            req.getSession().setAttribute("attachments", AttachmentService.findAll());
+            req.getSession().setAttribute("attachments", attachmentService.findAll());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -47,7 +47,7 @@ public class AttachmentServlet extends HttpServlet {
                     .filePath(filePath)
                     .build();
 //            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
-            AttachmentService.save(attachment);
+            attachmentService.save(attachment);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("Attachment", attachment);
             resp.sendRedirect("/panel.jsp");
@@ -75,7 +75,7 @@ public class AttachmentServlet extends HttpServlet {
                     .filePath(filePath)
                     .build();
 //            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
-            AttachmentService.edit(attachment);
+            attachmentService.edit(attachment);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("Attachment", attachment);
             resp.sendRedirect("/panel.jsp");
@@ -88,7 +88,7 @@ public class AttachmentServlet extends HttpServlet {
 
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
-            AttachmentService.remove(req.getParameter("title"));
+            attachmentService.remove(Long.valueOf(req.getParameter("id")));
             resp.sendRedirect("/panel.jsp");
         }catch (Exception e){
             System.out.println("Error: " + e.getMessage());
