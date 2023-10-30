@@ -23,7 +23,7 @@ public class UserService implements ServiceImpl<User , Long> {
     @Transactional
     public User save(User user) throws Exception {
         user.setActive(true);
-        user.setRole(roleService.findByRole("user"));
+        user.setRole(roleService.findByRole("costumer"));
         entityManager.persist(user);
         return user;
     }
