@@ -31,7 +31,7 @@ public class SessionManager {
         return sessionMap.get(httpSession.getAttribute("username").toString()).containsKey(session);
     }
     public static void invalidateHttpSession(HttpSession httpSession, Session session) {
-        sessionMap.remove(httpSession.getAttribute("username").toString());
+//        sessionMap.remove(httpSession.getAttribute("username").toString());
     }
 
     public static Session getWebSocketSession(HttpSession httpSession) {

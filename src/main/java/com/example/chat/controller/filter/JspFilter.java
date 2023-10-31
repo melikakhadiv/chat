@@ -21,16 +21,15 @@ public class JspFilter implements Filter {
 
         try {
             String realUsername = ((HttpServletRequest) servletRequest).getUserPrincipal().getName();
-            String username = String.valueOf(((HttpServletRequest) servletRequest).getSession().getAttribute("username"));
             String role = userService.findByUsername(realUsername).getRole().getRole();
-            System.out.println(role + username + realUsername);
-            if (username == null) {
-                ((HttpServletRequest) servletRequest).getSession().setAttribute(
-                        "username", realUsername);
-                ((HttpServletRequest) servletRequest).getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(servletRequest, servletResponse);
-            }
-
+//         anjam bede rahi ke rafte boodi chi sho? start
+            ((HttpServletRequest) servletRequest).getSession().setAttribute(
+                    "username", realUsername);
+            ((HttpServletRequest) servletRequest).getSession().setAttribute(
+                    "role", role);
             ((HttpServletRequest) servletRequest).getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(servletRequest, servletResponse);
+            System.out.println(role + " " + ((HttpServletRequest) servletRequest).getSession().getAttribute("username"));
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

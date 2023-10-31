@@ -14,7 +14,8 @@
 <div class="row">
     <div class="col-10">
         <div id="output"></div>
-        <input id="username" placeholder="username"><br/>
+        <input id="username" placeholder="username" value="${sessionScope.username}"><br/>
+<%--        ok shod mersi--%>
         <input id="message" type="text">
         <button onclick="send()">Send</button>
     </div>

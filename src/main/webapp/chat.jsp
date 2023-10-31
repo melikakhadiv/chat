@@ -8,14 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
-    <jsp:include page="../css-import.jsp"></jsp:include>
+    <title>Chat-Admin</title>
+<%--    <jsp:include page="../css-import.jsp"></jsp:include>--%>
 </head>
 <body>
 <div class="row">
     <div class="col-10">
         <div id="output"></div>
-        <input id="username" placeholder="username"><br/>
+        <input id="username"  value="${sessionScope.username}" placeholder="username"><br/>
         <input id="message" type="text">
         <button onclick="send()">Send</button>
     </div>
@@ -26,6 +26,9 @@
 </div>
 
 <%--<jsp:include page="../../js-import.jsp"></jsp:include>--%>
-<script src="../../assets/js/ws.js"></script>
+<script src="/assets/js/ws.js">
+    console.log("test")
+
+</script>
 </body>
 </html>

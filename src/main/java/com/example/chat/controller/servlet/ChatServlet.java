@@ -26,7 +26,7 @@ public class ChatServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.getSession().setAttribute("chatList", chatService.findAll());
-            resp.sendRedirect("/chat.jsp");
+            resp.sendRedirect("/admin-chat.jsp");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class ChatServlet extends HttpServlet {
 
 
             HttpSession httpSession = req.getSession();
-            resp.sendRedirect("/chat.jsp");
+            resp.sendRedirect("/admin-chat.jsp");
 
 
         } catch (Exception e) {

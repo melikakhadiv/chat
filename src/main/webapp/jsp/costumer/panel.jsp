@@ -8,10 +8,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta http-equiv="Cache-Control" content="no-store,no-cache,must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
     <title>User Panel</title>
 </head>
 <body>
-<a href="/jsp/costumer/chat.jsp">chat page</a>
+<div class="row">
+    <div class="col-10">
+        <div id="output"></div>
+        <input id="username" placeholder="username"><br/>
+        <input id="message" type="text">
+        <button onclick="send()">Send</button>
+    </div>
+    <%--    <div class="col-2">--%>
+    <%--        <input id="user" >--%>
+    <%--    </div>--%>
+</div>
 
+<%--<jsp:include page="../../js-import.jsp"></jsp:include>--%>
+<script src="/assets/js/ws.js"></script>
 </body>
 </html>

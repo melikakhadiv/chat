@@ -26,17 +26,23 @@ public class UserService implements ServiceImpl<User , Long> {
     @Override
     @Transactional
     public User save(User user) throws Exception {
+        try{
         UserRoles userRoles = UserRoles.builder()
                 .username(user.getUsername())
-                .roleName(user.getRole().getRole())
+                .roleName("costumer")
                 .build();
         user.setActive(true);
         user.setRole(roleService.findByRole("costumer"));
         userRolesService.save(userRoles);
         entityManager.persist(user);
         return user;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
+    //todo: add user role edit here
     @Override
     @Transactional
     public User edit(User user) throws Exception {

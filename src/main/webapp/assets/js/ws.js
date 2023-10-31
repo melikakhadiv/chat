@@ -28,7 +28,7 @@ function display(dataString) {
 
 function send() {
     let message = document.getElementById("message").value;
-    let username = document.getElementById("username").value;
+    // let username = document.getElementById("username").value;
     // let user = document.getElementById("user").value;
     let json ={
         "message": message,
