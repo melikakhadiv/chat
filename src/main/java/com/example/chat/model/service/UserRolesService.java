@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @RequestScoped
-public class UserRolesService implements ServiceImpl<UserRoles,String> {
+public class UserRolesService implements ServiceImpl<UserRoles, String> {
 
 
     @PersistenceContext(unitName = "mft")
@@ -40,7 +40,7 @@ public class UserRolesService implements ServiceImpl<UserRoles,String> {
     @Transactional
 
     public UserRoles remove(String username) throws Exception {
-      UserRoles userRoles= entityManager.find(UserRoles.class,username);
+        UserRoles userRoles = entityManager.find(UserRoles.class, username);
         entityManager.remove(username);
         return userRoles;
     }
@@ -49,8 +49,7 @@ public class UserRolesService implements ServiceImpl<UserRoles,String> {
     @Transactional
 
     public List<UserRoles> findAll() throws Exception {
-
-        Query query = entityManager.createQuery("select oo from userrolesEntity oo");
+        Query query = entityManager.createQuery("select oo from userRolesEntity oo");
         return query.getResultList();
     }
 
@@ -58,8 +57,7 @@ public class UserRolesService implements ServiceImpl<UserRoles,String> {
     @Transactional
 
     public UserRoles findById(String username) throws Exception {
-        UserRoles userRoles= entityManager.find(UserRoles.class,username);
-        return userRoles;
+        return entityManager.find(UserRoles.class, username);
     }
 
 }

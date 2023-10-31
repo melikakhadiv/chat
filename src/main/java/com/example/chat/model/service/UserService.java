@@ -14,7 +14,7 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @RequestScoped
-public class UserService implements ServiceImpl<User , Long> {
+public class UserService implements ServiceImpl<User, Long> {
     @Inject
     RoleService roleService;
 
@@ -27,57 +27,48 @@ public class UserService implements ServiceImpl<User , Long> {
     @Override
     @Transactional
     public User save(User user) throws Exception {
-        try{
-        UserRoles userRoles = UserRoles.builder()
-                .username(user.getUsername())
-                .roleName("costumer")
-                .build();
-        user.setActive(true);
-        user.setRole(roleService.findByRole("costumer"));
-        userRolesService.save(userRoles);
-        entityManager.persist(user);
-        return user;
-        }catch (Exception e){
+        try {
+            UserRoles userRoles = UserRoles.builder()
+                    .username(user.getUsername())
+                    .roleName("costumer")
+                    .build();
+            user.setActive(true);
+            user.setRole(roleService.findByRole("costumer"));
+            userRolesService.save(userRoles);
+            entityManager.persist(user);
+            return user;
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
+
     @Override
     @Transactional
-
     public User edit(User user) throws Exception {
-
         try {
             UserRoles userRoles = UserRoles.builder()
                     .username(user.getUsername())
                     .roleName(user.getRole().getRole())
                     .build();
-            userRolesService.save(userRoles);
+            userRolesService.edit(userRoles);
             entityManager.merge(user);
             return user;
-    }  catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
-        }
-
-    //todo: add user role edit here
-    @Override
-    @Transactional
-    public User edit(User user) throws Exception {
-       entityManager.merge(user);
-       return user;
     }
 
     @Override
     @Transactional
     public User remove(Long id) throws Exception {
-        User user =findById(id);
-        if (user != null){
+        User user = findById(id);
+        if (user != null) {
             user.setActive(false);
             return user;
-        }else {
+        } else {
             return null;
         }
     }
@@ -92,29 +83,29 @@ public class UserService implements ServiceImpl<User , Long> {
     @Override
     @Transactional
     public User findById(Long id) throws Exception {
-        return entityManager.find(User.class , id);
+        return entityManager.find(User.class, id);
     }
 
 
-    public User login(String username , String password) throws Exception{
+    public User login(String username, String password) throws Exception {
         Query query = entityManager.createNamedQuery("User.FindByUsernameAndPassWord")
-                .setParameter("username" , username)
-                .setParameter("password" , password);
+                .setParameter("username", username)
+                .setParameter("password", password);
         return (User) query.getSingleResult();
     }
 
-    public User findByUsername(String username) throws Exception{
+    public User findByUsername(String username) throws Exception {
         Query query = entityManager.createNamedQuery("User.FindRoleByUsername")
-                .setParameter("username" , username);
+                .setParameter("username", username);
         return (User) query.getSingleResult();
     }
 
-    public List<User> privateAcc() throws Exception{
+    public List<User> privateAcc() throws Exception {
         Query query = entityManager.createNamedQuery("User.FindPrivateAccount");
         return query.getResultList();
     }
 
-    public List<User> publicAcc() throws Exception{
+    public List<User> publicAcc() throws Exception {
         Query query = entityManager.createNamedQuery("User.FindByPublicAccount");
         return query.getResultList();
     }
