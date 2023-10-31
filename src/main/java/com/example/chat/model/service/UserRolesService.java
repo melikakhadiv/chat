@@ -27,7 +27,7 @@ public class UserRolesService implements ServiceImpl<UserRoles,String> {
         entityManager.persist(userRoles);
         return userRoles;
     }
-//todo: complete services
+
     @Override
     @Transactional
 
@@ -61,5 +61,6 @@ public class UserRolesService implements ServiceImpl<UserRoles,String> {
         UserRoles userRoles= entityManager.find(UserRoles.class,username);
         return userRoles;
     }
+
 }
 

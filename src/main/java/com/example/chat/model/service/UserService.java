@@ -1,5 +1,6 @@
 package com.example.chat.model.service;
 
+import com.example.chat.model.entity.Role;
 import com.example.chat.model.entity.User;
 import com.example.chat.model.entity.UserRoles;
 import com.example.chat.model.service.impl.ServiceImpl;
@@ -41,6 +42,25 @@ public class UserService implements ServiceImpl<User , Long> {
             return null;
         }
     }
+    @Override
+    @Transactional
+
+    public User edit(User user) throws Exception {
+
+        try {
+            UserRoles userRoles = UserRoles.builder()
+                    .username(user.getUsername())
+                    .roleName(user.getRole().getRole())
+                    .build();
+            userRolesService.save(userRoles);
+            entityManager.merge(user);
+            return user;
+    }  catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        }
 
     //todo: add user role edit here
     @Override
