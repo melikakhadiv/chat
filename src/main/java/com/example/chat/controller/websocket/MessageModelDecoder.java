@@ -3,13 +3,15 @@ package com.example.chat.controller.websocket;
 import com.example.chat.model.entity.Chat;
 import com.google.gson.Gson;
 
+import jakarta.inject.Inject;
 import jakarta.websocket.DecodeException;
 import jakarta.websocket.Decoder;
 import jakarta.websocket.EndpointConfig;
 
 public class MessageModelDecoder implements Decoder.Text<Chat> {
     
-    Gson gson = new Gson();
+    @Inject
+    Gson gson;
 
     @Override
     public Chat decode(String s) throws DecodeException {
