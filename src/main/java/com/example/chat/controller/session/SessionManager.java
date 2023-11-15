@@ -18,9 +18,7 @@ public class SessionManager {
     }
 
     public static void addWebSocketSession(HttpSession httpSession, Session Session) {
-        sessionMap
-                .get(httpSession.getAttribute("username").toString())
-                .put(httpSession,Session);
+        sessionMap.get(httpSession.getAttribute("username").toString()).put(httpSession, Session);
     }
 
     public static boolean validateHttpSession(HttpSession httpSession) {
@@ -30,6 +28,7 @@ public class SessionManager {
     public static boolean validateWebSocketSession(HttpSession httpSession, Session session) {
         return sessionMap.get(httpSession.getAttribute("username").toString()).containsKey(session);
     }
+
     public static void invalidateHttpSession(HttpSession httpSession, Session session) {
 //        sessionMap.remove(httpSession.getAttribute("username").toString());
     }
@@ -38,7 +37,7 @@ public class SessionManager {
         return sessionMap.get(httpSession.getAttribute("username").toString()).get(httpSession);
     }
 
-//    public static Set<HttpSession> getHttpSessions() {
+    //    public static Set<HttpSession> getHttpSessions() {
 //        Set<HttpSession> httpSessions = new HashSet<>();
 //        for (Map<HttpSession, Session> value : sessionMap.values()) {
 //            httpSessions.add(value.keySet());
@@ -49,7 +48,6 @@ public class SessionManager {
     public static Collection<Map<HttpSession, Session>> getWebSocketSessions() {
         return sessionMap.values();
     }
-
 
 
 //    public static Map<HttpSession, Session> getSessionMap() {

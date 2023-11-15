@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>chat box</title>
-    <jsp:include page="../css-import.jsp"></jsp:include>
+    <jsp:include page="../../css-import.jsp"></jsp:include>
 </head>
 <body>
 <div class="top"></div>
@@ -141,6 +141,6 @@
         </div>
     </div>
 </div>
-<%--<jsp:include page="../../js-import.jsp"></jsp:include>--%>
+<jsp:include page="../../js-import.jsp"></jsp:include>
 </body>
 </html>

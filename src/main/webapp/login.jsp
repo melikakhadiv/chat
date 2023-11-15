@@ -12,9 +12,12 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="-1">
     <title>login</title>
-    <jsp:include page="/jsp/css-import.jsp"></jsp:include>
+    <jsp:include page="/css-import.jsp"></jsp:include>
 </head>
 <body>
+<%--<script>--%>
+<%--    setTimeout(function(){ location.reload(); },1000 * 60 * 25);--%>
+<%--</script>--%>
 <%--<% session.invalidate(); %>--%>
 <%--//todo: 408- request timeout--%>
 <form action="j_security_check" method="post">
@@ -23,7 +26,10 @@
     <label for="passId">Password</label>
     <input id="passId" type="password" name="j_password">
     <input type="submit" value="Login">
+
 </form>
+
+
 
 <%--<jsp:include page="/jsp/js-import.jsp"></jsp:include>--%>
 </body>
