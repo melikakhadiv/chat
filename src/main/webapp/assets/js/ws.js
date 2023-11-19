@@ -26,11 +26,12 @@ function onOpen() {
     console.log("ws opened: " + wsUrl)
 }
 
+
 function display(dataString) {
     console.log("ine " + dataString)
     let data = JSON.parse(dataString);
     console.log("data " + data)
-    let msg = "<p>User " + username + " said : " + message + "</p>";
+    let msg = "<p>" + data.username + " : " + data.message + "</p>";
     document.getElementById("output").innerHTML += msg + " </br>";
     // document.getElementById("user").innerHTML = data.username +" </br>";
 }
@@ -44,6 +45,7 @@ function send() {
         "username": username,
     };
     console.log("sending " + message)
-    ws.send(JSON.stringify(msg))
+        ws.send(JSON.stringify(msg))
+
 }
 

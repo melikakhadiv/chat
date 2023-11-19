@@ -25,7 +25,7 @@
             <li>
                 <div class="friend">
                     <div class="img-name">
-                        <img src="" class="ava" alt="">
+                        <img src="" class="ava" alt="*">
                         <div>
                             <h3>${user}</h3>
                         </div>

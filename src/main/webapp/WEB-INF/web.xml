@@ -17,15 +17,29 @@
             <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
-
-
-
-
+    
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
             <form-login-page>/login.jsp</form-login-page>
-            <form-error-page>/errors/login-error.jsp</form-error-page>
+            <form-error-page>/errors/NotFound.jsp</form-error-page>
         </form-login-config>
     </login-config>
+    
+    <error-page>
+        <error-code>403</error-code>
+        <location>/errors/Forbidden.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errors/NotFound.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>406</error-code>
+        <location>/errors/NotAccepted.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>408</error-code>
+        <location>/errors/RequestTimeOut.jsp</location>
+    </error-page>
 </web-app>

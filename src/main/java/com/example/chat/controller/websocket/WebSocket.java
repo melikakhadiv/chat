@@ -2,6 +2,11 @@ package com.example.chat.controller.websocket;
 
 import com.example.chat.controller.session.SessionManager;
 import com.example.chat.model.entity.Chat;
+import com.example.chat.model.entity.User;
+import com.example.chat.model.service.ChatService;
+import com.example.chat.model.service.UserService;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
@@ -15,8 +20,12 @@ import java.util.Set;
         configurator = GetHttpSessionConfigurator.class,
         encoders = {MessageModelEncoder.class},
         decoders = {MessageModelDecoder.class})
-
+@RequestScoped
 public class WebSocket {
+    @Inject
+    ChatService chatService;
+    @Inject
+    UserService userService;
 
     public static Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
 
@@ -32,21 +41,24 @@ public class WebSocket {
     }
 
     @OnMessage
-    public void onMessage(Session session, Chat chat) throws EncodeException, IOException {
+    public void onMessage(Session session, Chat chat) throws Exception {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
         httpSession.setAttribute("message", chat.getMessage());
         httpSession.setAttribute("sender", HttpSession.class.getName());
         broadcast(chat);
+//        User sender = userService.findByUsername(chat.getUsername());
+//        chat.setSender(sender);
+        chatService.save(chat);
         System.out.println("user" + session.getId() + "sent :" + chat);
     }
 
-    public static void broadcast(Chat chat) throws EncodeException, IOException {
+    public static void broadcast(Chat chat) throws Exception {
         for (Session socketSessions : SessionManager.getWebSocketSessions()) {
           socketSessions.getBasicRemote().sendObject(chat);
         }
     }
 
-    public void send(Session session, Chat chat) throws IOException, EncodeException {
+    public void send(Session session, Chat chat) throws Exception {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
         SessionManager.getWebSocketSession(httpSession).getBasicRemote().sendObject(chat);
         session.getBasicRemote().sendObject(chat);

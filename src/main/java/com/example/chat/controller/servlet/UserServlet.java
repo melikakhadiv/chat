@@ -57,12 +57,13 @@ public class UserServlet extends HttpServlet {
 
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User", user);
-            resp.sendRedirect("/jsp/" + user.getRole().getRole() + "/panel.jsp");
+            resp.sendRedirect("/login.jsp");
             System.out.println("person saved "+ user);
             resp.getWriter().println("User saved.");
 
 
         } catch (Exception e) {
+            resp.sendError(403);
             e.printStackTrace();
             System.out.println("Error" + e.getMessage());
         }

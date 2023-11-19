@@ -11,6 +11,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ApplicationScoped
@@ -22,6 +23,7 @@ public class ChatService implements ServiceImpl<Chat, Long> {
     @Transactional
     public Chat save(Chat chat) throws Exception {
         chat.setActive(true);
+        chat.setTimeStamp(LocalDateTime.now());
         entityManager.persist(chat);
         return chat;
     }
