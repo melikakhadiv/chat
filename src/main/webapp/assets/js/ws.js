@@ -20,15 +20,18 @@ function onMessage(event) {
     display(event.data);
 }
 
+function broadcast(event) {
+    console.log(event);
+    display(event.data);
+}
+
 function onOpen() {
     console.log("ws opened: " + wsUrl)
 }
 
-
-
 function display(dataString) {
     console.log(dataString)
-    let data = JSON.parse( dataString );
+    let data = JSON.parse(dataString);
     let message = "<p>User " + data.username + " said : " + data.message + "</p>";
     document.getElementById("output").innerHTML += message +" </br>";
     // document.getElementById("user").innerHTML = data.username +" </br>";

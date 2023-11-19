@@ -17,8 +17,8 @@ public class SessionManager {
         sessionMap.put(httpSession.getAttribute("username").toString(), session);
     }
 
-    public static void addWebSocketSession(HttpSession httpSession, Session Session) {
-        sessionMap.get(httpSession.getAttribute("username").toString()).put(httpSession, Session);
+    public static void addWebSocketSession(HttpSession httpSession, Session session) {
+        sessionMap.get(httpSession.getAttribute("username").toString()).put(httpSession, session);
     }
 
     public static boolean validateHttpSession(HttpSession httpSession) {
@@ -30,7 +30,7 @@ public class SessionManager {
     }
 
     public static void invalidateHttpSession(HttpSession httpSession, Session session) {
-//        sessionMap.remove(httpSession.getAttribute("username").toString());
+        sessionMap.remove(httpSession.getAttribute("username").toString());
     }
 
     public static Session getWebSocketSession(HttpSession httpSession) {
