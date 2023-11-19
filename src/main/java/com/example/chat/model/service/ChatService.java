@@ -21,6 +21,7 @@ public class ChatService implements ServiceImpl<Chat, Long> {
 
     @Transactional
     public Chat save(Chat chat) throws Exception {
+        chat.setActive(true);
         entityManager.persist(chat);
         return chat;
     }

@@ -9,19 +9,16 @@ ws.onopen = function () {
     onOpen();
 };
 
-window.onbeforeunload = function() {
+window.onbeforeunload = function () {
     console.log("ws closed: " + wsUrl)
-    ws.onclose = function () {}; // disable onclose handler first
-    ws.close();
+    ws.onclose = function () {
+        ws.close();
+    }; // disable onclose handler first
+
 };
 
 function onMessage(event) {
-    console.log(event);
-    display(event.data);
-}
-
-function broadcast(event) {
-    console.log(event);
+    console.log("onmessage" + event);
     display(event.data);
 }
 
@@ -30,10 +27,11 @@ function onOpen() {
 }
 
 function display(dataString) {
-    console.log(dataString)
+    console.log("ine " + dataString)
     let data = JSON.parse(dataString);
-    let message = "<p>User " + data.username + " said : " + data.message + "</p>";
-    document.getElementById("output").innerHTML += message +" </br>";
+    console.log("data " + data)
+    let msg = "<p>User " + username + " said : " + message + "</p>";
+    document.getElementById("output").innerHTML += msg + " </br>";
     // document.getElementById("user").innerHTML = data.username +" </br>";
 }
 
@@ -41,12 +39,11 @@ function send() {
     let message = document.getElementById("message").value;
     let username = document.getElementById("username").value;
     // let user = document.getElementById("user").value;
-    let json ={
+    let msg = {
         "message": message,
-        "username" : username ,
+        "username": username,
     };
     console.log("sending " + message)
-    ws.send(JSON.stringify(json))
-
+    ws.send(JSON.stringify(msg))
 }
 

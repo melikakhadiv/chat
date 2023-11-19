@@ -8,13 +8,13 @@ import jakarta.websocket.Encoder;
 import jakarta.websocket.EndpointConfig;
 
 
-public class MessageModelEncoder implements Encoder.Text<String>{
+public class MessageModelEncoder implements Encoder.Text<Chat>{
     
     Gson gson = new Gson();
 
     @Override
-    public String encode(String message) throws EncodeException {
-        return gson.toJson(message);
+    public String encode(Chat chat) throws EncodeException {
+        return gson.toJson(chat);
     }
 
     @Override
@@ -24,5 +24,6 @@ public class MessageModelEncoder implements Encoder.Text<String>{
     @Override
     public void destroy() {
         }
-    
+
+
 }

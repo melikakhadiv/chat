@@ -1,36 +1,64 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: PC
-  Date: 10/30/2023
-  Time: 4:06 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <%--    <meta http-equiv="Cache-Control" content="no-store,no-cache,must-revalidate">--%>
-    <%--    <meta http-equiv="Pragma" content="no-cache">--%>
-    <%--    <meta http-equiv="Expires" content="-1">--%>
-    <jsp:include page="../../css-import.jsp"></jsp:include>
-    <title>panel</title>
+    <meta charset="UTF-8">
+    <title>chat box</title>
+    <link rel="stylesheet" href="assets/css/myCss.css">
 </head>
 <body>
-
-<div class="row">
-    <div class="col-10">
-        <div id="output"></div>
-        <input id="username" placeholder="username" value="${sessionScope.username}"><br/>
-        <input id="message" type="text">
-        <button onclick="send()">Send</button>
+<div class="top"></div>
+<div class="box">
+    <div class="left">
+        <div class="topp">
+            <h3>CHATBOX</h3>
+        </div>
+        <div class="search">
+            <input class="in" type="text" placeholder="search buddy..">
+            <div class="ico">
+                <!--               put search icon-->
+                <img src="" class="icon1" alt="">
+            </div>
+        </div>
+        <ul>
+            <c:forEach var="user" items="${sessionScope.username}">
+            <li>
+                <div class="friend">
+                    <div class="img-name">
+                        <img src="" class="ava" alt="">
+                        <div>
+                            <h3>${user}</h3>
+                        </div>
+                    </div>
+                    <div class="time"><p class="p">Today</p></div>
+                </div>
+            </li>
+            </c:forEach>
+        </ul>
     </div>
+    <div class="right">
+        <div class="right-top">
+            <div class="img-name">
+                <img src="" class="ava" alt="">
+                <div>
+                    <input type="text" id="username" class="in2" placeholder="username">
+                </div>
+            </div>
+            <!--            put three dot icon (more menu)-->
+            <img src="" class="icon2" alt="">
+        </div>
 
-    <%--    <div class="col-2">--%>
-    <%--        <input id="user" >--%>
-    <%--    </div>--%>
+        <div class="mid">
+            <div id="output"  class="${sessionScope.sender != null ? "sender" : "receiver"}" ></div>
+        </div>
+        <div class="btm">
+            <input type="text" id="message" class="in2" placeholder="typing...">
+            <button class="ico3" onclick="send()">Send</button>
+            <%--                        <ion-icon name="paper-plane-outline"></ion-icon>--%>
+        </div>
+    </div>
 </div>
-
-
-<jsp:include page="../../js-import.jsp"></jsp:include>
+<jsp:include page="js-import.jsp"></jsp:include>
 <script src="/assets/js/ws.js">
     console.log("test")
 </script>
