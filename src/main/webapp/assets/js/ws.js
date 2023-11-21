@@ -24,6 +24,7 @@ function onMessage(event) {
 
 function onOpen() {
     console.log("ws opened: " + wsUrl)
+
 }
 
 
@@ -36,6 +37,20 @@ function display(dataString) {
     // document.getElementById("user").innerHTML = data.username +" </br>";
 }
 
+var input = document.getElementById("message");
+
+
+input.addEventListener("keypress", function(event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("sendBtn").click();
+
+    }
+});
+
 function send() {
     let message = document.getElementById("message").value;
     let username = document.getElementById("username").value;
@@ -45,7 +60,10 @@ function send() {
         "username": username,
     };
     console.log("sending " + message)
-        ws.send(JSON.stringify(msg))
+    ws.send(JSON.stringify(msg))
 
 }
+
+
+
 

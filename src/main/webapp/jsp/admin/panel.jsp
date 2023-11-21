@@ -53,7 +53,7 @@
         </div>
         <div class="btm">
             <input type="text" id="message" class="in2" placeholder="typing...">
-            <button class="ico3" onclick="send()">Send</button>
+            <button class="ico3" id="sendBtn">Send</button>
             <%--                        <ion-icon name="paper-plane-outline"></ion-icon>--%>
         </div>
     </div>

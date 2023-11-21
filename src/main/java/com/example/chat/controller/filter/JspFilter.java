@@ -29,8 +29,8 @@ public class JspFilter implements Filter {
                         "username", realUsername);
                 ((HttpServletRequest) servletRequest).getSession().setAttribute(
                         "role", role);
-                ((HttpServletRequest) servletRequest).getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(servletRequest, servletResponse);
-//                ((HttpServletRequest) servletRequest).getRequestDispatcher("/jsp/admin/panel.jsp").forward(servletRequest, servletResponse);
+//                ((HttpServletRequest) servletRequest).getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(servletRequest, servletResponse);
+                ((HttpServletRequest) servletRequest).getRequestDispatcher("/panel.jsp").forward(servletRequest, servletResponse);
             }
             System.out.println(role + " " + username + realUsername);
         } catch (Exception e) {

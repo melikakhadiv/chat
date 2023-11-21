@@ -8,10 +8,7 @@ import com.example.chat.model.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
@@ -36,23 +33,32 @@ public class AttachmentServlet extends HttpServlet {
 
 
         try {
-            Long id= Long.valueOf(req.getParameter("id"));
-            String title = req.getParameter("title");
-            String filePath = req.getParameter("filePath");
-            FileType fileType = FileType.valueOf(req.getParameter("fileType"));
-            Attachment attachment = Attachment
-                    .builder()
-                    .id(id)
-                    .title(title)
-                    .fileType(fileType)
-                    .filePath(filePath)
-                    .build();
+
+
+                /* Receive file uploaded to the Servlet from the HTML5 form */
+                Part filePart = req.getPart("file");
+                String fileName = filePart.getSubmittedFileName() + req.getSession().getAttribute("username");
+                System.out.println("File : "+ fileName);
+                for (Part part : req.getParts()) {
+                    part.write("c:\\root\\"+fileName);
+                }
+                resp.getWriter().print("The file uploaded sucessfully.");
+
+//            String title = req.getParameter("title");
+//            String filePath = req.getParameter("filePath");
+//            FileType fileType = FileType.valueOf(req.getParameter("fileType"));
+//            Attachment attachment = Attachment
+//                    .builder()
+//                    .title(title)
+//                    .fileType(fileType)
+//                    .filePath(filePath)
+//                    .build();
 //            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
-            attachmentService.save(attachment);
-            HttpSession httpSession = req.getSession();
-            httpSession.setAttribute("Attachment", attachment);
-            resp.sendRedirect("/panel.jsp");
-            resp.getWriter().println("Attachment is successfully saved");
+//            attachmentService.save(attachment);
+//            HttpSession httpSession = req.getSession();
+//            httpSession.setAttribute("Attachment", attachment);
+//            resp.sendRedirect("/panel.jsp");
+//            resp.getWriter().println("Attachment is successfully saved");
 
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());

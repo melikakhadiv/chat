@@ -15,6 +15,6 @@
 <a href="${"/jsp/"}${"admin"}${"/panel.jsp"}">Login</a>
 <%--<a href="/login.jsp">Login</a>--%>
 <a href="/signup.jsp">Signup</a>
-<a href="/chat.jsp">chat</a>
+<a href="/panel.jsp">chat</a>
 </body>
 </html>

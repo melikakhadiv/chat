@@ -53,11 +53,13 @@
         </div>
         <div class="btm">
             <input type="text" id="message" class="in2" placeholder="typing...">
-            <button class="ico3" onclick="send()">Send</button>
+            <button class="ico3" id="sendBtn" onclick=send()>Send</button>
             <%--                        <ion-icon name="paper-plane-outline"></ion-icon>--%>
         </div>
     </div>
 </div>
+
+
 <jsp:include page="js-import.jsp"></jsp:include>
 <script src="/assets/js/ws.js">
     console.log("test")

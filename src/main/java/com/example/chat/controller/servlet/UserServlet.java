@@ -8,12 +8,20 @@ import com.example.chat.model.service.RoleService;
 import com.example.chat.model.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Repeatable;
-
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10,      // 10 MB
+        maxRequestSize = 1024 * 1024 * 100   // 100 MB
+)
 @WebServlet(urlPatterns = "/User")
 public class UserServlet extends HttpServlet {
     @Inject
@@ -43,6 +51,7 @@ public class UserServlet extends HttpServlet {
             String lastname = req.getParameter("lastname");
 //            boolean privateAcc = Boolean.parseBoolean(req.getParameter("privateAcc"));
 //            Attachment attachment = attachmentService.findById(Long.valueOf(req.getParameter("attachmentId")));
+
 
             User user = User.builder()
                     .username(username)

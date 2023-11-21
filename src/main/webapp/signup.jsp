@@ -18,6 +18,7 @@
     <input type="text" name="firstname" placeholder="firstname">
     <input type="text" name="lastname" placeholder="lastname">
     <input type="text" name="nickname" placeholder="nickname">
+    <input type="file" name="file" placeholder="img">
     <input type="submit" value="sign up">
 </form>
 
