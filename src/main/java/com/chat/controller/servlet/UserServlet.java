@@ -57,11 +57,12 @@ public class UserServlet extends HttpServlet {
             Part filePart = req.getPart("file");
             String fileName = filePart.getSubmittedFileName();
             System.out.println("File : " + fileName);
+            fileName =  username + "." + fileName.split(".")[1];
             for (Part part : req.getParts()) {
-                part.write("c:\\root\\" + fileName);
+                part.write( fileName);
             }
 
-            Attachment attachment = Attachment.builder().title(username + " Image").filePath("c:\\root\\" + fileName).fileType(FileType.jpg).active(true).build();
+            Attachment attachment = Attachment.builder().title(username + " Image").filePath(fileName).fileType(FileType.valueOf(fileName.split(".")[1])).active(true).build();
             attachmentService.save(attachment);
 
             User user = User.builder()
