@@ -10,6 +10,8 @@ import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
+
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,14 +29,10 @@ public class WebSocket {
     @Inject
     UserService userService;
 
-    public static Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
-
     @OnOpen
     public void onOpen(Session session) throws EncodeException, IOException {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-        SessionManager.addWebSocketSession(httpSession, session);
-        httpSession.setAttribute("socketSession", session);
-        sessions.add(session);
+        SessionManager.addWebSocketSession(String.valueOf(httpSession.getAttribute("username")), session);
         System.out.println("web socket opened " + session.getId());
 //        String msg = "--new user joined!--";
 //        broadcast(msg);
@@ -43,13 +41,15 @@ public class WebSocket {
     @OnMessage
     public void onMessage(Session session, Chat chat) throws Exception {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-        httpSession.setAttribute("message", chat.getMessage());
-        httpSession.setAttribute("sender", HttpSession.class.getName());
-        broadcast(chat);
+        SessionManager.getWebSocketSession(chat.getReceiver().getUsername()).getBasicRemote().sendText(chat.getMessage());
+//        send();
+//        httpSession.setAttribute("message", chat.getMessage());
+//        httpSession.setAttribute("sender", HttpSession.class.getName());
+//        broadcast(chat);
 //        User sender = userService.findByUsername(chat.getUsername());
 //        chat.setSender(sender);
-        chatService.save(chat);
-        System.out.println("user" + session.getId() + "sent :" + chat);
+//        chatService.save(chat);
+//        System.out.println("user" + session.getId() + "sent :" + chat);
     }
 
     public static void broadcast(Chat chat) throws Exception {
@@ -60,14 +60,14 @@ public class WebSocket {
 
     public void send(Session session, Chat chat) throws Exception {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-        SessionManager.getWebSocketSession(httpSession).getBasicRemote().sendObject(chat);
-        session.getBasicRemote().sendObject(chat);
+        SessionManager.getWebSocketSession(String.valueOf(httpSession.getAttribute("username"))).getBasicRemote().sendObject(chat);
     }
 
 
     @OnClose
     public void onClose(Session session) {
-        sessions.remove(session);
+        HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
+        SessionManager.invalidateHttpSession(String.valueOf(httpSession.getAttribute("username")));
         System.out.println("web socket closed " + session.getId());
     }
 }

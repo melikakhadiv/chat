@@ -15,10 +15,6 @@
         </div>
         <div class="search">
             <input class="in" type="text" placeholder="search buddy..">
-            <div class="ico">
-                <!--               put search icon-->
-                <img src="" class="icon1" alt="">
-            </div>
         </div>
         <ul>
             <c:forEach var="user" items="${sessionScope.username}">
@@ -52,7 +48,8 @@
             <div id="output"  class="${sessionScope.sender != null ? "sender" : "receiver"}" ></div>
         </div>
         <div class="btm">
-            <input type="text" id="message" class="in2" placeholder="typing...">
+            <button class="ico3" id="file">+</button>
+            <input type="text" id="message" class="in2" placeholder="  typing...">
             <button class="ico3" id="sendBtn" onclick=send()>Send</button>
             <%--                        <ion-icon name="paper-plane-outline"></ion-icon>--%>
         </div>

@@ -34,8 +34,8 @@ public class Chat extends Base {
     private User sender;
 
     @JoinColumn(name = "c_receiver_id")
-    @OneToMany
-    private List<User> receiver;
+    @OneToOne
+    private User receiver;
 
     @Column(name = "c_date")
     private LocalDateTime timeStamp;

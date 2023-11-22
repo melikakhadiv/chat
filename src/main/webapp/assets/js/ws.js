@@ -41,13 +41,9 @@ var input = document.getElementById("message");
 
 
 input.addEventListener("keypress", function(event) {
-    // If the user presses the "Enter" key on the keyboard
     if (event.key === "Enter") {
-        // Cancel the default action, if needed
         event.preventDefault();
-        // Trigger the button element with a click
         document.getElementById("sendBtn").click();
-
     }
 });
 
@@ -61,8 +57,17 @@ function send() {
     };
     console.log("sending " + message)
     ws.send(JSON.stringify(msg))
+    message = "";
 
 }
+
+
+const btn = document.getElementById("sendBtn");
+btn.addEventListener("click", function handleClick(event) {
+    event.preventDefault();
+    const firstInput = document.getElementById("message");
+    firstInput.value = "";
+});
 
 
 
