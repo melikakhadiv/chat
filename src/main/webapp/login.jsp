@@ -12,7 +12,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="-1">
     <title>login</title>
-    <jsp:include page="/css-import.jsp"></jsp:include>
+    <jsp:include page="/jsp/css-import.jsp"></jsp:include>
 </head>
 <body>
 <%--<script>--%>

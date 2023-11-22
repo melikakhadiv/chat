@@ -57,11 +57,7 @@
 
 <button onclick="getUsers()">Get Users</button>
 
-<jsp:include page="/js-import.jsp"></jsp:include>
-<script src="/assets/js/ws.js">
-    console.log("test")
-</script>
-
+<jsp:include page="/jsp/js-import.jsp"></jsp:include>
 <script>
     // setInterval(async function () {
     const response = await fetch("/api/users",

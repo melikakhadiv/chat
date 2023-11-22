@@ -20,20 +20,18 @@
                 <img src="" class="icon1" alt="">
             </div>
         </div>
-        <ul>
-            <c:forEach var="user" items="${sessionScope.username}">
-            <li>
+        <ul id="chat-users">
+            <li id="user-info">
                 <div class="friend">
                     <div class="img-name">
-                        <img src="" class="ava" alt="*">
+                        <img id="usernameImage" src="" class="ava" alt="">
                         <div>
-                            <h3>${user}</h3>
+                            <h3 id="usernameText">Users</h3>
                         </div>
                     </div>
                     <div class="time"><p class="p">Today</p></div>
                 </div>
             </li>
-            </c:forEach>
         </ul>
     </div>
     <div class="right">
@@ -58,9 +56,28 @@
         </div>
     </div>
 </div>
-<jsp:include page="../../js-import.jsp"></jsp:include>
+<jsp:include page="../js-import.jsp"></jsp:include>
 <script src="/assets/js/ws.js">
-    console.log("test")
+    // setInterval(async function () {
+    const response = await fetch("/api/users",
+        {
+            method: "GET"
+        });
+    const users = await response.json();
+
+    const ul = document.getElementById("chat-users");
+
+    ul.innerHTML = "";
+
+    users.forEach(function (user) {
+        const li = document.getElementById("user-info").cloneNode(true);
+        li.getElementById("usernameText").innerText = user;
+        ul.appendChild(li);
+    });
+
+    // show users on table
+    // }, 50000)
+    // }
 </script>
 </body>
 </html>

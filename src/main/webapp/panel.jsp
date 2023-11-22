@@ -57,7 +57,7 @@
 </div>
 
 
-<jsp:include page="js-import.jsp"></jsp:include>
+<jsp:include page="jsp/js-import.jsp"></jsp:include>
 <script src="/assets/js/ws.js">
     console.log("test")
 </script>
