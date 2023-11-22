@@ -12,7 +12,7 @@
     <jsp:include page="/jsp/css-import.jsp"></jsp:include>
 </head>
 <body>
-<form action="/User" enctype="multipart/form-data">
+<form action="/User" method="post" enctype="multipart/form-data">
     <input type="text" name="username" placeholder="username">
     <input type="text" name="password" placeholder="password">
     <input type="text" name="firstname" placeholder="firstname">

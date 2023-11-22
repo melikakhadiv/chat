@@ -9,10 +9,6 @@
 <h1>Chat-App
 </h1>
 <br/>
-
-
-<%--<a href="${"/jsp/"}${role}${"/panel.jsp"}">Login</a>--%>
-<%--<a href="${"/jsp/"}${"admin"}${"/panel.jsp"}">Login</a>--%>
 <a href="/user-panel">Login</a>
 <a href="/signup.jsp">Signup</a>
 <a href="/panel.jsp">chat</a>

@@ -28,11 +28,7 @@ public class AttachmentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         try {
-
-
                 /* Receive file uploaded to the Servlet from the HTML5 form */
                 Part filePart = req.getPart("file");
                 String fileName = filePart.getSubmittedFileName() + req.getSession().getAttribute("username");

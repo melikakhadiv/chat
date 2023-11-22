@@ -24,12 +24,12 @@ public class Attachment extends Base {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name="a_title",length = 30, unique = true)
-    @Pattern(regexp = "^[A-Za-z\\s]{2,30}$", message = "Invalid Role")
+    @Column(name="a_title",length = 30)
+//    @Pattern(regexp = "^[A-Za-z\\s]{2,30}$", message = "Invalid Role")
     private String title;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name="a_file_type",length = 30, unique = true)
+//    @Column(name="a_file_type")
     private FileType fileType;
 
     @Column(name="a_file_path")

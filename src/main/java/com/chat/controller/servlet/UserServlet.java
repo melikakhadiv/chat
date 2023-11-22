@@ -47,6 +47,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("User Post");
         try {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
@@ -56,17 +57,17 @@ public class UserServlet extends HttpServlet {
 //            boolean privateAcc = Boolean.parseBoolean(req.getParameter("privateAcc"));
             Part filePart = req.getPart("file");
             String fileName = filePart.getSubmittedFileName();
-            System.out.println("File : " + fileName);
-            fileName =  username + "." + fileName.split(".")[1];
+            fileName = "/" + username + "_" + fileName;
             for (Part part : req.getParts()) {
-                part.write( fileName);
+                part.write(fileName);
             }
 
-            Attachment attachment = Attachment.builder().title(username + " Image").filePath(fileName).fileType(FileType.valueOf(fileName.split(".")[1])).active(true).build();
-            attachmentService.save(attachment);
+            Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).fileType(FileType.jpg).active(true).build();
+            System.out.println(attachment);
+//            attachmentService.save(attachment);
 
             User user = User.builder()
-                    .photo(attachment)
+//                    .photo(attachment)
                     .username(username)
                     .password(password)
                     .nickname(nickname)
@@ -85,14 +86,12 @@ public class UserServlet extends HttpServlet {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User", user);
             resp.sendRedirect("/login.jsp");
-            System.out.println("person saved " + user);
             resp.getWriter().println("User saved.");
 
-
         } catch (Exception e) {
-            resp.sendError(403);
+            System.out.println("Error : " + e.getMessage());
             e.printStackTrace();
-            System.out.println("Error" + e.getMessage());
+            resp.sendError(403);
         }
     }
 
