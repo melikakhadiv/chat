@@ -63,16 +63,29 @@
 </script>
 
 <script>
-   async function getUsers() {
+    async function getUsers() {
         // setInterval(async function () {
-            const response = await fetch("/api/users",
-                {
-                    method: "GET"
-                });
-            const users =  await response.json();
-            document.getElementById("user-list").innerText = users;
-            console.log(users);
-            // show users on table
+        const response = await fetch("/api/users",
+            {
+                method: "GET"
+            });
+        const users = await response.json();
+        document.getElementById("user-list").innerText = users;
+
+        const ul = document.getElementById("ul");
+        ul.innerHTML = "";
+
+        users.forEach(function (user){
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode(user));
+            ul.appendChild(li);
+        });
+
+
+
+
+        console.log(users);
+        // show users on table
         // }, 50000)
     }
 </script>
