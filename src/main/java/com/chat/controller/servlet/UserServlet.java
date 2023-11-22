@@ -2,8 +2,11 @@ package com.chat.controller.servlet;
 
 import com.chat.model.entity.Attachment;
 import com.chat.model.entity.User;
+import com.chat.model.entity.UserRoles;
+import com.chat.model.entity.enums.FileType;
 import com.chat.model.service.AttachmentService;
 import com.chat.model.service.RoleService;
+import com.chat.model.service.UserRolesService;
 import com.chat.model.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
@@ -14,16 +17,21 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        fileSizeThreshold = 1024 * 1024 * 1,  // 1 MB
         maxFileSize = 1024 * 1024 * 10,      // 10 MB
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
 @WebServlet(urlPatterns = "/User")
 public class UserServlet extends HttpServlet {
     @Inject
+    private UserRolesService userRolesService;
+
+    @Inject
     private RoleService roleService;
+
     @Inject
     private UserService userService;
+
     @Inject
     private AttachmentService attachmentService;
 
@@ -46,10 +54,18 @@ public class UserServlet extends HttpServlet {
             String firstname = req.getParameter("firstname");
             String lastname = req.getParameter("lastname");
 //            boolean privateAcc = Boolean.parseBoolean(req.getParameter("privateAcc"));
-//            Attachment attachment = attachmentService.findById(Long.valueOf(req.getParameter("attachmentId")));
+            Part filePart = req.getPart("file");
+            String fileName = filePart.getSubmittedFileName();
+            System.out.println("File : " + fileName);
+            for (Part part : req.getParts()) {
+                part.write("c:\\root\\" + fileName);
+            }
 
+            Attachment attachment = Attachment.builder().title(username + " Image").filePath("c:\\root\\" + fileName).fileType(FileType.jpg).active(true).build();
+            attachmentService.save(attachment);
 
             User user = User.builder()
+                    .photo(attachment)
                     .username(username)
                     .password(password)
                     .nickname(nickname)
@@ -62,10 +78,13 @@ public class UserServlet extends HttpServlet {
                     .build();
             userService.save(user);
 
+            UserRoles userRoles = UserRoles.builder().roleName("customer").username(user.getUsername()).build();
+            userRolesService.save(userRoles);
+
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("User", user);
             resp.sendRedirect("/login.jsp");
-            System.out.println("person saved "+ user);
+            System.out.println("person saved " + user);
             resp.getWriter().println("User saved.");
 
 
