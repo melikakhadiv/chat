@@ -56,15 +56,13 @@ public class DispatcherServlet extends HttpServlet {
         try {
             String realUsername = request.getUserPrincipal().getName();
             role = userService.findByUsername(realUsername).getRole().getRole();
-            String username = String.valueOf(request.getSession().getAttribute("username"));
             request.getSession().setAttribute(
                     "username", realUsername);
             request.getSession().setAttribute(
                     "role", role);
             SessionManager.addHttpSession(request.getSession());
 //
-            System.out.println(role + " " + username + " " + realUsername);
-            System.out.println(request.getSession().getAttribute("realUsername"));
+            System.out.println(role + " "+ realUsername);
             System.out.println(request.getSession().getAttribute("role"));
 //            System.out.println(servletRequest.getAttribute("username"));
 //            System.out.println(servletRequest.getAttribute("role"));
