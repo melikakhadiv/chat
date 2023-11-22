@@ -82,11 +82,7 @@ public class UserServlet extends HttpServlet {
             UserRoles userRoles = UserRoles.builder().roleName("customer").username(user.getUsername()).build();
             userRolesService.save(userRoles);
 
-            HttpSession httpSession = req.getSession();
-            httpSession.setAttribute("User", user);
-            resp.sendRedirect("/login.jsp");
-            resp.getWriter().println("User saved.");
-
+            resp.sendRedirect("/user-panel");
         } catch (Exception e) {
             System.out.println("Error : " + e.getMessage());
             e.printStackTrace();
@@ -120,7 +116,6 @@ public class UserServlet extends HttpServlet {
 
             userService.edit(user);
             HttpSession httpSession = req.getSession();
-            httpSession.setAttribute("User", user);
             resp.sendRedirect("/jsp/" + user.getRole().getRole() + "/panel.jsp");
             resp.getWriter().println("User edited.");
 

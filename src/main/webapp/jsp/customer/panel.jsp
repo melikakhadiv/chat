@@ -39,7 +39,7 @@
             <div class="img-name">
                 <img src="" class="ava" alt="">
                 <div>
-                    <input type="text" id="username" class="in2" placeholder="username">
+                    <h3>${sessionScope.username}</h3>
                 </div>
             </div>
             <!--            put three dot icon (more menu)-->
@@ -64,14 +64,36 @@
                 method: "GET"
             });
         const users = await response.json();
-
+        console.log(users);
         const ul = document.getElementById("chat-users");
 
         ul.innerHTML = "";
 
-        users.forEach(function (user) {
-            const li = document.getElementById("user-info").cloneNode(true);
-            li.getElementById("usernameText").innerText = user;
+        users.forEach(await function (user) {
+            var li = document.createElement("li");
+            li.id = "user-info";
+
+            var friendDiv = document.createElement("div");
+            friendDiv.classList.add("friend");
+            li.appendChild(friendDiv);
+
+            var imgDiv = document.createElement("div");
+            imgDiv.classList.add("img-name");
+            friendDiv.appendChild(imgDiv);
+
+            var img = document.createElement("img");
+            img.id="usernameImage";
+            img.classList.add("ava");
+            imgDiv.appendChild(img);
+
+            var div = document.createElement("div");
+            imgDiv.appendChild(div);
+
+            var h3 = document.createElement("h3");
+            h3.id = "userNameText";
+            h3.innerText = user;
+
+            div.appendChild(h3);
             ul.appendChild(li);
         });
 

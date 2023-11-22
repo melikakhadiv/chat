@@ -11,6 +11,5 @@
 <br/>
 <a href="/user-panel">Login</a>
 <a href="/signup.jsp">Signup</a>
-<a href="/panel.jsp">chat</a>
 </body>
 </html>

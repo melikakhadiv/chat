@@ -51,9 +51,10 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Dispatch Get");
+        System.out.println("Dispatch Post");
         String role = null;
         try {
+            System.out.println(request.getUserPrincipal().getName());
             String realUsername = request.getUserPrincipal().getName();
             role = userService.findByUsername(realUsername).getRole().getRole();
             request.getSession().setAttribute(
@@ -70,6 +71,7 @@ public class DispatcherServlet extends HttpServlet {
             System.out.println("Redirect : "+"/jsp/" + role + "/panel.jsp");
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Redirect : "+"/login.jsp");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             System.out.println("Error : " +e.getMessage());
