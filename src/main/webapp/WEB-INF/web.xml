@@ -7,7 +7,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Admin</web-resource-name>
-            <url-pattern>/jsp/admin</url-pattern>
+            <url-pattern>/jsp/admin/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>PUT</http-method>
@@ -21,7 +21,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Customer</web-resource-name>
-            <url-pattern>/jsp/customer</url-pattern>
+            <url-pattern>/jsp/customer/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>PUT</http-method>
@@ -36,24 +36,24 @@
         <auth-method>FORM</auth-method>
         <form-login-config>
             <form-login-page>/login.jsp</form-login-page>
-            <form-error-page>/jsp/errors/NotFound.jsp</form-error-page>
+            <form-error-page>/errors/NotFound.jsp</form-error-page>
         </form-login-config>
     </login-config>
     
     <error-page>
         <error-code>403</error-code>
-        <location>/jsp/errors/Forbidden.jsp</location>
+        <location>/errors/Forbidden.jsp</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/jsp/errors/NotFound.jsp</location>
+        <location>/errors/NotFound.jsp</location>
     </error-page>
     <error-page>
         <error-code>406</error-code>
-        <location>/jsp/errors/NotAccepted.jsp</location>
+        <location>/errors/NotAccepted.jsp</location>
     </error-page>
     <error-page>
         <error-code>408</error-code>
-        <location>/jsp/errors/RequestTimeOut.jsp</location>
+        <location>/errors/RequestTimeOut.jsp</location>
     </error-page>
 </web-app>

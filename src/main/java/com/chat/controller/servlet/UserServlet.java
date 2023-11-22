@@ -63,7 +63,6 @@ public class UserServlet extends HttpServlet {
             }
 
             Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).fileType(FileType.jpg).active(true).build();
-            System.out.println(attachment);
 //            attachmentService.save(attachment);
 
             User user = User.builder()

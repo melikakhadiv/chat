@@ -22,7 +22,7 @@ import java.io.IOException;
         httpMethodConstraints = {
                 @HttpMethodConstraint(
                         value = "GET",
-                        rolesAllowed = {"admin"}
+                        rolesAllowed = {"admin", "customer"}
                 )
         }
 )
@@ -50,7 +50,7 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Dispatch Get");
         String role = null;
         try {
