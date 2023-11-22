@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>chat box</title>
-    <link rel="stylesheet" href="/assets/css/myCss.css">
+    <link rel="stylesheet" href="/jsp/assets/css/myCss.css">
 </head>
 <body>
 <div class="top"></div>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>chat box</title>
-    <link rel="stylesheet" href="assets/css/myCss.css">
+    <link rel="stylesheet" href="/jsp/assets/css/myCss.css">
 </head>
 <body>
 <div class="top"></div>
@@ -56,8 +56,8 @@
         </div>
     </div>
 </div>
-<jsp:include page="../js-import.jsp"></jsp:include>
-<script src="/assets/js/ws.js">
+<jsp:include page="/jsp/js-import.jsp"></jsp:include>
+<script>
     // setInterval(async function () {
     const response = await fetch("/api/users",
         {
