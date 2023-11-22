@@ -47,7 +47,7 @@
         </div>
 
         <div class="mid">
-            <div id="output"  class="${sessionScope.sender != null ? "sender" : "receiver"}" ></div>
+            <div id="output" class="${sessionScope.sender != null ? "sender" : "receiver"}"></div>
         </div>
         <div class="btm">
             <input type="text" id="message" class="in2" placeholder="typing...">
@@ -58,26 +58,25 @@
 </div>
 <jsp:include page="/jsp/js-import.jsp"></jsp:include>
 <script>
-    // setInterval(async function () {
-    const response = await fetch("/api/users",
-        {
-            method: "GET"
+    setInterval(async function () {
+        const response = await fetch("/api/users",
+            {
+                method: "GET"
+            });
+        const users = await response.json();
+
+        const ul = document.getElementById("chat-users");
+
+        ul.innerHTML = "";
+
+        users.forEach(function (user) {
+            const li = document.getElementById("user-info").cloneNode(true);
+            li.getElementById("usernameText").innerText = user;
+            ul.appendChild(li);
         });
-    const users = await response.json();
 
-    const ul = document.getElementById("chat-users");
-
-    ul.innerHTML = "";
-
-    users.forEach(function (user) {
-        const li = document.getElementById("user-info").cloneNode(true);
-        li.getElementById("usernameText").innerText = user;
-        ul.appendChild(li);
-    });
-
-    // show users on table
-    // }, 50000)
-    // }
+        // show users on table
+    }, 5000);
 </script>
 </body>
 </html>
