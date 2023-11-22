@@ -2,6 +2,7 @@ package com.example.chat.model.service;
 
 import com.example.chat.model.entity.Role;
 import com.example.chat.model.service.impl.ServiceImpl;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -10,7 +11,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 
-@RequestScoped
+@ApplicationScoped
 public class RoleService implements ServiceImpl<Role, Long> {
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
@@ -45,12 +46,15 @@ public class RoleService implements ServiceImpl<Role, Long> {
     @Override
     public List<Role> findAll() throws Exception {
         Query query = entityManager.createQuery("select oo from roleEntity oo");
-        List<Role> roles = query.getResultList();
-        if (roles.isEmpty()) {
-            return null;
-        } else {
-            return roles;
-        }
+
+//        todo : changed by messbah.a --> simple and clean code
+//        List<Role> roles = query.getResultList();
+//        if (roles.isEmpty()) {
+//            return null;
+//        } else {
+//            return roles;
+//        }
+        return (!query.getResultList().isEmpty()) ? query.getResultList() : null;
     }
 
 
@@ -61,8 +65,9 @@ public class RoleService implements ServiceImpl<Role, Long> {
     public Role findByRole(String role) throws Exception {
         Query query = entityManager.createNamedQuery("Role.FindByName")
                 .setParameter("role", role);
-        return (Role) query.getSingleResult();
 
+//        todo : changed by messbah.a --> because if there is not result, getSingleResult throws exception
+//        return (Role) query.getSingleResult();
+        return (!query.getResultList().isEmpty()) ? (Role) query.getResultList().get(0) : null;
     }
-
 }

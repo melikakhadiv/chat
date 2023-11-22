@@ -1,6 +1,8 @@
 package com.example.chat.controller.servlet;
 
 import com.example.chat.controller.session.SessionManager;
+import com.example.chat.model.entity.Role;
+import com.example.chat.model.service.RoleService;
 import com.example.chat.model.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
@@ -25,10 +27,27 @@ import java.io.IOException;
         }
 )
 
-@WebServlet(urlPatterns = "/user-panel")
+@WebServlet(urlPatterns = "/user-panel", loadOnStartup = 1)
 public class DispatcherServlet extends HttpServlet {
+
     @Inject
     private UserService userService;
+
+    @Inject
+    private RoleService roleService;
+
+    @Override
+    public void init() throws ServletException {
+        System.out.println("Initializing ...");
+        try {
+            Role admin = Role.builder().role("admin").build();
+            Role customer = Role.builder().role("customer").build();
+            roleService.save(admin);
+            roleService.save(customer);
+        } catch (Exception e) {
+            System.out.println("Init Error \n" + e.getMessage());
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

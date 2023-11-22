@@ -59,6 +59,8 @@ public class UserServlet extends HttpServlet {
                     .nickname(nickname)
                     .firstname(firstname)
                     .lastname(lastname)
+                    .role(roleService.findByRole("customer"))
+                    .active(true)
 //                    .privateAccount(privateAcc)
 //                    .photo(attachment)
                     .build();

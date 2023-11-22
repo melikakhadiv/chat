@@ -4,6 +4,7 @@ import com.example.chat.model.entity.Role;
 import com.example.chat.model.entity.User;
 import com.example.chat.model.entity.UserRoles;
 import com.example.chat.model.service.impl.ServiceImpl;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -13,28 +14,19 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-@RequestScoped
+@ApplicationScoped
 public class UserService implements ServiceImpl<User, Long> {
-    @Inject
-    RoleService roleService;
-
     @Inject
     UserRolesService userRolesService;
 
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
 
+
     @Override
     @Transactional
     public User save(User user) throws Exception {
         try {
-            UserRoles userRoles = UserRoles.builder()
-                    .username(user.getUsername())
-                    .roleName("costumer")
-                    .build();
-            user.setActive(true);
-            user.setRole(roleService.findByRole("costumer"));
-            userRolesService.save(userRoles);
             entityManager.persist(user);
             return user;
         } catch (Exception e) {

@@ -17,13 +17,13 @@
         <div class="search">
             <input class="in" type="text" placeholder="search buddy..">
         </div>
-        <ul>
-            <li>
+        <ul id="chat-users">
+            <li id="user-info">
                 <div class="friend">
                     <div class="img-name">
-                        <img src="" class="ava" alt="">
+                        <img id="usernameImage" src="" class="ava" alt="">
                         <div>
-                            <h3 id="user-list">Users</h3>
+                            <h3 id="usernameText">Users</h3>
                         </div>
                     </div>
                     <div class="time"><p class="p">Today</p></div>
@@ -63,31 +63,26 @@
 </script>
 
 <script>
-    async function getUsers() {
-        // setInterval(async function () {
-        const response = await fetch("/api/users",
-            {
-                method: "GET"
-            });
-        const users = await response.json();
-        document.getElementById("user-list").innerText = users;
-
-        const ul = document.getElementById("ul");
-        ul.innerHTML = "";
-
-        users.forEach(function (user){
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode(user));
-            ul.appendChild(li);
+    // setInterval(async function () {
+    const response = await fetch("/api/users",
+        {
+            method: "GET"
         });
+    const users = await response.json();
 
+    const ul = document.getElementById("chat-users");
 
+    ul.innerHTML = "";
 
+    users.forEach(function (user) {
+        const li = document.getElementById("user-info").cloneNode(true);
+        li.getElementById("usernameText").innerText = user;
+        ul.appendChild(li);
+    });
 
-        console.log(users);
-        // show users on table
-        // }, 50000)
-    }
+    // show users on table
+    // }, 50000)
+    // }
 </script>
 
 </body>
