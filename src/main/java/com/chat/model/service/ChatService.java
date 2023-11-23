@@ -26,19 +26,30 @@ public class ChatService implements ServiceImpl<Chat, Long> {
         return chat;
     }
 
+    @Transactional
     public Chat edit(Chat chat) throws Exception {
         entityManager.merge(chat);
         return chat;
     }
 
+    @Transactional
     public Chat remove(Long id) throws Exception {
         Chat chat = entityManager.find(Chat.class, id);
         entityManager.remove(chat);
         return chat;
     }
 
+    @Transactional
     public List<Chat> findAll() {
         Query query = entityManager.createQuery("select oo from chatEntity oo");
+        return query.getResultList();
+    }
+
+
+    @Transactional
+    public List<Chat> findByUsername(String username) {
+        Query query = entityManager.createQuery("select oo from chatEntity oo where oo.username=:username");
+        query.setParameter("username",username);
         return query.getResultList();
     }
 

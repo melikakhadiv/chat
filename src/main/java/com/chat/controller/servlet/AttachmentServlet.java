@@ -72,8 +72,8 @@ public class AttachmentServlet extends HttpServlet {
                     .builder()
                     .id(id)
                     .title(title)
-                    .fileType(fileType)
-                    .filePath(filePath)
+//                    .fileType(fileType)
+//                    .filePath(filePath)
                     .build();
 //            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
             attachmentService.edit(attachment);

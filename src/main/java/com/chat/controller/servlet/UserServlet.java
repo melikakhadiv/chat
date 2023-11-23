@@ -1,6 +1,7 @@
 package com.chat.controller.servlet;
 
 import com.chat.model.entity.Attachment;
+import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
 import com.chat.model.entity.UserRoles;
 import com.chat.model.entity.enums.FileType;
@@ -54,28 +55,28 @@ public class UserServlet extends HttpServlet {
             String nickname = req.getParameter("nickname");
             String firstname = req.getParameter("firstname");
             String lastname = req.getParameter("lastname");
+            Role role = roleService.findByRole("customer");
 //            boolean privateAcc = Boolean.parseBoolean(req.getParameter("privateAcc"));
             Part filePart = req.getPart("file");
-            String fileName = filePart.getSubmittedFileName();
-            fileName = "/" + username + "_" + fileName;
+            String fileName = "jsp/customer/image/" + filePart.getSubmittedFileName();
+            System.out.println(fileName);
+            System.out.println(getServletContext().getRealPath("/") + fileName);
             for (Part part : req.getParts()) {
-                part.write(fileName);
+                part.write(getServletContext().getRealPath("/") + fileName);
             }
 
-            Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).fileType(FileType.jpg).active(true).build();
-//            attachmentService.save(attachment);
+            Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).active(true).build();
 
             User user = User.builder()
-//                    .photo(attachment)
                     .username(username)
                     .password(password)
                     .nickname(nickname)
                     .firstname(firstname)
                     .lastname(lastname)
-                    .role(roleService.findByRole("customer"))
+                    .role(role)
                     .active(true)
 //                    .privateAccount(privateAcc)
-//                    .photo(attachment)
+                    .photo(attachment)
                     .build();
             userService.save(user);
 
@@ -115,11 +116,7 @@ public class UserServlet extends HttpServlet {
                     .build();
 
             userService.edit(user);
-            HttpSession httpSession = req.getSession();
-            resp.sendRedirect("/jsp/" + user.getRole().getRole() + "/panel.jsp");
-            resp.getWriter().println("User edited.");
-
-
+            resp.sendRedirect("/user-panel");
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
         }

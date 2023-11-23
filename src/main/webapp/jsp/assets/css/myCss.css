@@ -284,3 +284,6 @@ form {
     font-size: 15px;
 }
 
+.selected-user{
+    background:  #74d800;
+}

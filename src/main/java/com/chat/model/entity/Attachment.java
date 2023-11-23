@@ -28,9 +28,9 @@ public class Attachment extends Base {
 //    @Pattern(regexp = "^[A-Za-z\\s]{2,30}$", message = "Invalid Role")
     private String title;
 
-    @Enumerated(EnumType.ORDINAL)
+//    @Enumerated(EnumType.ORDINAL)
 //    @Column(name="a_file_type")
-    private FileType fileType;
+//    private FileType fileType;
 
     @Column(name="a_file_path")
     private String filePath;

@@ -55,26 +55,25 @@ public class DispatcherServlet extends HttpServlet {
         String role = null;
         try {
             System.out.println(request.getUserPrincipal().getName());
-            String realUsername = request.getUserPrincipal().getName();
-            role = userService.findByUsername(realUsername).getRole().getRole();
-            request.getSession().setAttribute(
-                    "username", realUsername);
-            request.getSession().setAttribute(
-                    "role", role);
+            String username = request.getUserPrincipal().getName();
+            role = userService.findByUsername(username).getRole().getRole();
+            request.getSession().setAttribute("username", username);
+            request.getSession().setAttribute("userImage", userService.findByUsername(username).getPhoto().getFilePath());
+            request.getSession().setAttribute("role", role);
             SessionManager.addHttpSession(request.getSession());
 //
-            System.out.println(role + " "+ realUsername);
+            System.out.println(role + " " + username);
             System.out.println(request.getSession().getAttribute("role"));
 //            System.out.println(servletRequest.getAttribute("username"));
 //            System.out.println(servletRequest.getAttribute("role"));
 //            System.out.println(servletRequest.getAttribute("realUsername"));
-            System.out.println("Redirect : "+"/jsp/" + role + "/panel.jsp");
+            System.out.println("Redirect : " + "/jsp/" + role + "/panel.jsp");
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Redirect : "+"/login.jsp");
+            System.out.println("Redirect : " + "/login.jsp");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
-            System.out.println("Error : " +e.getMessage());
+            System.out.println("Error : " + e.getMessage());
         }
     }
 }

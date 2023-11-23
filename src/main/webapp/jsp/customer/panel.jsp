@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>chat box</title>
+    <title>Chat Box Panel</title>
     <link rel="stylesheet" href="/jsp/assets/css/myCss.css">
 </head>
 <body>
@@ -14,57 +14,42 @@
             <h3>CHATBOX</h3>
         </div>
         <div class="search">
-            <input class="in" type="text" placeholder="search buddy..">
+            <input id="searchText" class="in" type="text" placeholder="search buddy.." name="search">
             <div class="ico">
-                <!--               put search icon-->
-                <img src="" class="icon1" alt="">
+                <i class="fa fa-search"></i>
             </div>
         </div>
         <ul id="chat-users">
-            <li id="user-info">
-                <div class="friend">
-                    <div class="img-name">
-                        <img id="usernameImage" src="" class="ava" alt="">
-                        <div>
-                            <h3 id="usernameText">Users</h3>
-                        </div>
-                    </div>
-                    <div class="time"><p class="p">Today</p></div>
-                </div>
-            </li>
+
         </ul>
     </div>
     <div class="right">
         <div class="right-top">
             <div class="img-name">
-                <img src="" class="ava" alt="">
+                <img src="${sessionScope.get("userImage")}" class="ava" alt="">
                 <div>
                     <h3>${sessionScope.username}</h3>
                 </div>
             </div>
-            <!--            put three dot icon (more menu)-->
-            <img src="" class="icon2" alt="">
         </div>
 
         <div class="mid">
             <div id="output" class="${sessionScope.sender != null ? "sender" : "receiver"}"></div>
         </div>
         <div class="btm">
-            <input type="text" id="message" class="in2" placeholder="typing...">
-            <button class="ico3" onclick="send()">Send</button>
-            <%--                        <ion-icon name="paper-plane-outline"></ion-icon>--%>
+            <input type="text" id="messageText" class="in2" placeholder="typing..." name="message">
+            <button class="ico3" onclick="send()">Send&ensp;<i class="fa fa-send"></i></button>
         </div>
     </div>
 </div>
 <jsp:include page="/jsp/js-import.jsp"></jsp:include>
 <script>
-    setInterval(async function () {
+    async function refreshUsers() {
         const response = await fetch("/api/users",
             {
                 method: "GET"
             });
         const users = await response.json();
-        console.log(users);
         const ul = document.getElementById("chat-users");
 
         ul.innerHTML = "";
@@ -72,6 +57,12 @@
         users.forEach(await function (user) {
             var li = document.createElement("li");
             li.id = "user-info";
+            li.onclick = function (event) {
+                const selectedUser = document.getElementsByClassName("selected-user")[0];
+                selectedUser.classList.remove("selected-user");
+                var target = event.target;
+                target.classList.add("selected-user");
+            };
 
             var friendDiv = document.createElement("div");
             friendDiv.classList.add("friend");
@@ -82,8 +73,9 @@
             friendDiv.appendChild(imgDiv);
 
             var img = document.createElement("img");
-            img.id="usernameImage";
+            img.id = "usernameImage";
             img.classList.add("ava");
+            img.src = user[1];
             imgDiv.appendChild(img);
 
             var div = document.createElement("div");
@@ -91,14 +83,16 @@
 
             var h3 = document.createElement("h3");
             h3.id = "userNameText";
-            h3.innerText = user;
+            h3.innerText = user[0];
 
             div.appendChild(h3);
             ul.appendChild(li);
         });
+    };
 
-        // show users on table
-    }, 5000);
+    refreshUsers();
+    // setInterval(refreshUsers(), 5000);
+
 </script>
 </body>
 </html>

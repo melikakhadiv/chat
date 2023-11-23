@@ -16,6 +16,8 @@ public class AttachmentService implements ServiceImpl<Attachment, Long> {
 
     @Override
     public Attachment save(Attachment attachment) throws Exception {
+        System.out.println("attachment service");
+        System.out.println(attachment);
         entityManager.persist(attachment);
         return attachment;
     }

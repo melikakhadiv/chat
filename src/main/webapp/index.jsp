@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Chat Box</title>
 </head>
 <body>
 <h1>Chat-App

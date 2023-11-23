@@ -1,5 +1,6 @@
 package com.chat.model.service;
 
+import com.chat.controller.session.SessionManager;
 import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.User;
 import com.chat.model.entity.UserRoles;
@@ -11,6 +12,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @ApplicationScoped
 public class UserService implements ServiceImpl<User, Long> {
@@ -97,6 +99,20 @@ public class UserService implements ServiceImpl<User, Long> {
 
     public List<User> publicAcc() throws Exception {
         Query query = entityManager.createNamedQuery("User.FindByPublicAccount");
+        return query.getResultList();
+    }
+
+    public List findOtherUsers(String currentUsername) {
+        Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users and oo.username!=:currentUsername");
+        query.setParameter("users",SessionManager.getUsernames());
+        query.setParameter("currentUsername",currentUsername);
+        System.out.println(query.getResultList());
+        return query.getResultList();
+    }
+
+    public List findUsers() {
+        Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users");
+        query.setParameter("users",SessionManager.getUsernames());
         return query.getResultList();
     }
 }

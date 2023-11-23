@@ -1,7 +1,6 @@
 package com.chat.controller.api;
 
-import com.chat.controller.session.SessionManager;
-import com.chat.model.service.UserService;
+import com.chat.model.service.ChatService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -9,14 +8,14 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/users")
-public class UserApi {
+@Path("/chat")
+public class ChatApi {
     @Inject
-    private UserService userService;
+    private ChatService chatService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers(){
-        return Response.ok().entity(userService.findUsers()).build();
+    public Response getChatsByUsername(String username){
+        return Response.ok().entity(chatService.findByUsername(username)).build();
     }
 }

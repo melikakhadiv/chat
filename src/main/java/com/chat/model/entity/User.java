@@ -52,7 +52,7 @@ public class User extends Base{
     @Column(name = "u_privateAccount" )
     private boolean privateAccount;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "u_photo_id")
     private Attachment photo;
 
