@@ -61,7 +61,7 @@ public class UserServlet extends HttpServlet {
             boolean account = false;
             account = privateAcc != null;
             Part filePart = req.getPart("file");
-            String fileName = "jsp/customer/image/" + filePart.getSubmittedFileName();
+            String fileName = "jsp/customer/image/" + username + "_" + filePart.getSubmittedFileName();
             System.out.println(fileName);
             System.out.println(getServletContext().getRealPath("/") + fileName);
             for (Part part : req.getParts()) {

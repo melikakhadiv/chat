@@ -111,7 +111,7 @@ public class UserService implements ServiceImpl<User, Long> {
     }
 
     public List findUsers() {
-        Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users");
+        Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users and oo.privateAccount=false");
         query.setParameter("users",SessionManager.getUsernames());
         return query.getResultList();
     }
