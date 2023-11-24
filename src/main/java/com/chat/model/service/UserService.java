@@ -3,7 +3,7 @@ package com.chat.model.service;
 import com.chat.controller.session.SessionManager;
 import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.User;
-import com.chat.model.entity.UserRoles;
+import com.chat.model.entity.UserRole;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -17,7 +17,7 @@ import java.util.Set;
 @ApplicationScoped
 public class UserService implements ServiceImpl<User, Long> {
     @Inject
-    UserRolesService userRolesService;
+    UserRoleService UserRoleService;
 
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
@@ -40,11 +40,11 @@ public class UserService implements ServiceImpl<User, Long> {
     @Transactional
     public User edit(User user) throws Exception {
         try {
-            UserRoles userRoles = UserRoles.builder()
+            UserRole userRole = UserRole.builder()
                     .username(user.getUsername())
                     .roleName(user.getRole().getRole())
                     .build();
-            userRolesService.edit(userRoles);
+            UserRoleService.edit(userRole);
             entityManager.merge(user);
             return user;
         } catch (Exception e) {

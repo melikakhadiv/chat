@@ -3,11 +3,11 @@ package com.chat.controller.servlet;
 import com.chat.model.entity.Attachment;
 import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
-import com.chat.model.entity.UserRoles;
+import com.chat.model.entity.UserRole;
 import com.chat.model.entity.enums.FileType;
 import com.chat.model.service.AttachmentService;
 import com.chat.model.service.RoleService;
-import com.chat.model.service.UserRolesService;
+import com.chat.model.service.UserRoleService;
 import com.chat.model.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
+import javax.swing.*;
 import java.io.IOException;
 
 @MultipartConfig(
@@ -25,7 +26,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/User")
 public class UserServlet extends HttpServlet {
     @Inject
-    private UserRolesService userRolesService;
+    private UserRoleService UserRoleService;
 
     @Inject
     private RoleService roleService;
@@ -56,7 +57,9 @@ public class UserServlet extends HttpServlet {
             String firstname = req.getParameter("firstname");
             String lastname = req.getParameter("lastname");
             Role role = roleService.findByRole("customer");
-//            boolean privateAcc = Boolean.parseBoolean(req.getParameter("privateAcc"));
+            String privateAcc = req.getParameter("privateAcc");
+            boolean account = false;
+            account = privateAcc != null;
             Part filePart = req.getPart("file");
             String fileName = "jsp/customer/image/" + filePart.getSubmittedFileName();
             System.out.println(fileName);
@@ -75,13 +78,13 @@ public class UserServlet extends HttpServlet {
                     .lastname(lastname)
                     .role(role)
                     .active(true)
-//                    .privateAccount(privateAcc)
+                    .privateAccount(account)
                     .photo(attachment)
                     .build();
             userService.save(user);
 
-            UserRoles userRoles = UserRoles.builder().roleName("customer").username(user.getUsername()).build();
-            userRolesService.save(userRoles);
+            UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
+            UserRoleService.save(userRole);
 
             resp.sendRedirect("/user-panel");
         } catch (Exception e) {

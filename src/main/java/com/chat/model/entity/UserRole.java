@@ -11,9 +11,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 
-@Entity(name ="userRolesEntity")
-@Table(name = "user_roles")
-public class UserRoles {
+@Entity(name ="UserRoleEntity")
+@Table(name = "user_role")
+public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

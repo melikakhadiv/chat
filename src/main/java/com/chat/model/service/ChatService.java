@@ -53,6 +53,14 @@ public class ChatService implements ServiceImpl<Chat, Long> {
         return query.getResultList();
     }
 
+    @Transactional
+    public List<Chat> findBySenderAndReceiver(String sender , String receiver) {
+        Query query = entityManager.createNamedQuery("Chat.FindBySenderAndReceiver");
+        query.setParameter("sender",sender);
+        query.setParameter("receiver",receiver);
+        return query.getResultList();
+    }
+
     @Override
     public Chat findById(Long id) throws Exception {
         return entityManager.find(Chat.class, id);

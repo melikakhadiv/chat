@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chat Box Panel</title>
+    <title>chat box</title>
     <link rel="stylesheet" href="/jsp/assets/css/myCss.css">
 </head>
 <body>
@@ -14,85 +14,71 @@
             <h3>CHATBOX</h3>
         </div>
         <div class="search">
-            <input id="searchText" class="in" type="text" placeholder="search buddy.." name="search">
+            <input class="in" type="text" placeholder="search buddy..">
             <div class="ico">
-                <i class="fa fa-search"></i>
+                <!--               put search icon-->
+                <img src="" class="icon1" alt="">
             </div>
         </div>
         <ul id="chat-users">
-
+            <li id="user-info">
+                <div class="friend">
+                    <div class="img-name">
+                        <img id="usernameImage" src="" class="ava" alt="">
+                        <div>
+                            <h3 id="usernameText">Users</h3>
+                        </div>
+                    </div>
+                    <div class="time"><p class="p">Today</p></div>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="right">
         <div class="right-top">
             <div class="img-name">
-                <img src="${sessionScope.get("userImage")}" class="ava" alt="">
+                <img src="" class="ava" alt="">
                 <div>
-                    <h3>${sessionScope.username}</h3>
+                    <input type="text" id="username" class="in2" placeholder="username">
                 </div>
             </div>
+            <!--            put three dot icon (more menu)-->
+            <img src="" class="icon2" alt="">
         </div>
 
         <div class="mid">
             <div id="output" class="${sessionScope.sender != null ? "sender" : "receiver"}"></div>
         </div>
         <div class="btm">
-            <input type="text" id="messageText" class="in2" placeholder="typing..." name="message">
-            <button class="ico3" onclick="send()">Send&ensp;<i class="fa fa-send"></i></button>
+            <input type="text" id="message" class="in2" placeholder="typing...">
+            <button class="ico3" onclick="send()">Send</button>
+            <%--                        <ion-icon name="paper-plane-outline"></ion-icon>--%>
         </div>
     </div>
 </div>
+<jsp:include page="../assets/js/ws.js"></jsp:include>
 <jsp:include page="/jsp/js-import.jsp"></jsp:include>
+
 <script>
-    async function refreshUsers() {
+    setInterval(async function () {
         const response = await fetch("/api/users",
             {
                 method: "GET"
             });
         const users = await response.json();
+
         const ul = document.getElementById("chat-users");
 
         ul.innerHTML = "";
 
-        users.forEach(await function (user) {
-            var li = document.createElement("li");
-            li.id = "user-info";
-            li.onclick = function (event) {
-                const selectedUser = document.getElementsByClassName("selected-user")[0];
-                selectedUser.classList.remove("selected-user");
-                var target = event.target;
-                target.classList.add("selected-user");
-            };
-
-            var friendDiv = document.createElement("div");
-            friendDiv.classList.add("friend");
-            li.appendChild(friendDiv);
-
-            var imgDiv = document.createElement("div");
-            imgDiv.classList.add("img-name");
-            friendDiv.appendChild(imgDiv);
-
-            var img = document.createElement("img");
-            img.id = "usernameImage";
-            img.classList.add("ava");
-            img.src = user[1];
-            imgDiv.appendChild(img);
-
-            var div = document.createElement("div");
-            imgDiv.appendChild(div);
-
-            var h3 = document.createElement("h3");
-            h3.id = "userNameText";
-            h3.innerText = user[0];
-
-            div.appendChild(h3);
+        users.forEach(function (user) {
+            const li = document.getElementById("userF-info").cloneNode(true);
+            li.getElementById("usernameText").innerText = user;
             ul.appendChild(li);
         });
-    };
 
-    refreshUsers();
-    // setInterval(refreshUsers(), 5000);
-
+        // show users on table
+    }, 5000);
 </script>
 </body>
 </html>

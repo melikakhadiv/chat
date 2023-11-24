@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>chat box</title>
-    <link rel="stylesheet" href="/jsp/assets/css/myCss.css">
+    <link rel="stylesheet" href="/assets/css/myCss.css">
 </head>
 <body>
 <div class="top"></div>
@@ -59,27 +59,26 @@
 
 <jsp:include page="/jsp/js-import.jsp"></jsp:include>
 <script>
-    setInterval(async function () {
-        const response = await fetch("/api/users",
-            {
-                method: "GET"
-            });
-        const users = await response.json();
-
-        const ul = document.getElementById("chat-users");
-
-        ul.innerHTML = "";
-
-        console.log(users);
-
-        users.forEach(function (user) {
-            const li = document.getElementById("user-info").cloneNode(true);
-            li.getElementById("usernameText").innerText = user;
-            ul.appendChild(li);
+    // setInterval(async function () {
+    const response = await fetch("/api/users",
+        {
+            method: "GET"
         });
+    const users = await response.json();
 
-        // show users on table
-    }, 5000);
+    const ul = document.getElementById("chat-users");
+
+    ul.innerHTML = "";
+
+    users.forEach(function (user) {
+        const li = document.getElementById("user-info").cloneNode(true);
+        li.getElementById("usernameText").innerText = user;
+        ul.appendChild(li);
+    });
+
+    // show users on table
+    // }, 50000)
+    // }
 </script>
 
 </body>

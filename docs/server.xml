@@ -132,7 +132,7 @@
        userTable="chat_user_tbl"
        userNameCol="u_username"
        userCredCol="u_password"
-       userRoleTable="user_roles"
+       userRoleTable="user_role"
        roleNameCol="role_name"/>
 
       <Host name="localhost"  appBase="webapps"

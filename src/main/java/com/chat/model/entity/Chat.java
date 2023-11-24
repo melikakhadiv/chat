@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 
 @Entity(name = "chatEntity")
 @Table(name = "chat_tbl")
+@NamedQueries(
+        {@NamedQuery(name = "Chat.FindBySenderAndReceiver", query = "select oo from chatEntity oo where oo.sender=:sender and  oo.receiver=:receiver")
+        })
 public class Chat extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
