@@ -25,7 +25,7 @@ public class Attachment extends Base {
     private long id;
 
     @Column(name="a_title",length = 30)
-//    @Pattern(regexp = "^[A-Za-z\\s]{2,30}$", message = "Invalid Role")
+//    @Pattern(regexp = "^[A-Za-z\\s]{2,30}$", message = "Invalid title")
     private String title;
 
 //    @Enumerated(EnumType.ORDINAL)

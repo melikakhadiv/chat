@@ -16,8 +16,6 @@ import java.util.Set;
 
 @ApplicationScoped
 public class UserService implements ServiceImpl<User, Long> {
-    @Inject
-    UserRoleService UserRoleService;
 
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
@@ -27,6 +25,7 @@ public class UserService implements ServiceImpl<User, Long> {
     @Transactional
     public User save(User user) throws Exception {
         try {
+            user.setActive(true);
             entityManager.persist(user);
             return user;
         } catch (Exception e) {
@@ -40,11 +39,6 @@ public class UserService implements ServiceImpl<User, Long> {
     @Transactional
     public User edit(User user) throws Exception {
         try {
-            UserRole userRole = UserRole.builder()
-                    .username(user.getUsername())
-                    .roleName(user.getRole().getRole())
-                    .build();
-            UserRoleService.edit(userRole);
             entityManager.merge(user);
             return user;
         } catch (Exception e) {
@@ -78,14 +72,6 @@ public class UserService implements ServiceImpl<User, Long> {
         return entityManager.find(User.class, id);
     }
 
-
-    public User login(String username, String password) throws Exception {
-        Query query = entityManager.createNamedQuery("User.FindByUsernameAndPassWord")
-                .setParameter("username", username)
-                .setParameter("password", password);
-        return (User) query.getSingleResult();
-    }
-
     public User findByUsername(String username) throws Exception {
         Query query = entityManager.createNamedQuery("User.FindRoleByUsername")
                 .setParameter("username", username);
@@ -98,21 +84,27 @@ public class UserService implements ServiceImpl<User, Long> {
     }
 
     public List<User> publicAcc() throws Exception {
-        Query query = entityManager.createNamedQuery("User.FindByPublicAccount");
+        Query query = entityManager.createNamedQuery("User.FindPublicAccount");
         return query.getResultList();
     }
 
-    public List findOtherUsers(String currentUsername) {
+    public List<User> findOtherUsers(String currentUsername) {
         Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users and oo.username!=:currentUsername");
-        query.setParameter("users",SessionManager.getUsernames());
-        query.setParameter("currentUsername",currentUsername);
+        query.setParameter("users", SessionManager.getUsernames());
+        query.setParameter("currentUsername", currentUsername);
         System.out.println(query.getResultList());
         return query.getResultList();
     }
 
-    public List findUsers() {
+    public List<User> findPublicUsers() {
         Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users and oo.privateAccount=false");
-        query.setParameter("users",SessionManager.getUsernames());
+        query.setParameter("users", SessionManager.getUsernames());
+        return query.getResultList();
+    }
+
+    public List<User> findUsers() {
+        Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users");
+        query.setParameter("users", SessionManager.getUsernames());
         return query.getResultList();
     }
 }

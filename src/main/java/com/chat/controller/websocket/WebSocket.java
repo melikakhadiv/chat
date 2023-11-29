@@ -2,6 +2,7 @@ package com.chat.controller.websocket;
 
 import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Chat;
+import com.chat.model.entity.User;
 import com.chat.model.service.ChatService;
 import com.chat.model.service.UserService;
 import jakarta.enterprise.context.RequestScoped;
@@ -35,15 +36,16 @@ public class WebSocket {
     @OnMessage
     public void onMessage(Session session, Chat chat) throws Exception {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-        SessionManager.getWebSocketSession(chat.getReceiver().getUsername()).getBasicRemote().sendText(chat.getMessage());
+//        SessionManager.getWebSocketSession(chat.getReceiver().getUsername()).getBasicRemote().sendText(chat.getMessage());
+        session.getBasicRemote().sendObject(chat);
 //        send();
 //        httpSession.setAttribute("message", chat.getMessage());
-//        httpSession.setAttribute("sender", HttpSession.class.getName());
+        httpSession.setAttribute("sender", HttpSession.class.getName());
 //        broadcast(chat);
-//        User sender = userService.findByUsername(chat.getUsername());
-//        chat.setSender(sender);
+        User sender = userService.findByUsername(chat.getUsername());
+        chat.setSender(sender);
 //        chatService.save(chat);
-//        System.out.println("user" + session.getId() + "sent :" + chat);
+        System.out.println("user" + session.getId() + "sent :" + chat);
     }
 
     public static void broadcast(Chat chat) throws Exception {

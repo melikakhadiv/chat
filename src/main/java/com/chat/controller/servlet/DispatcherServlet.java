@@ -2,8 +2,12 @@ package com.chat.controller.servlet;
 
 import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Role;
+import com.chat.model.entity.User;
+import com.chat.model.entity.UserRole;
 import com.chat.model.service.RoleService;
+import com.chat.model.service.UserRoleService;
 import com.chat.model.service.UserService;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.HttpConstraint;
@@ -36,7 +40,11 @@ public class DispatcherServlet extends HttpServlet {
     @Inject
     private RoleService roleService;
 
+    @Inject
+    private UserRoleService userRoleService;
+
     @Override
+    @RequestScoped
     public void init() throws ServletException {
         System.out.println("Initializing ...");
         try {
@@ -44,8 +52,25 @@ public class DispatcherServlet extends HttpServlet {
             Role customer = Role.builder().role("customer").build();
             roleService.save(admin);
             roleService.save(customer);
+
+//            User user = User.builder().firstname("admin")
+//                    .lastname("admin")
+//                    .nickname("admin")
+//                    .password("123")
+//                    .username("admin")
+//                    .privateAccount(true)
+//                    .role(roleService.findByRole("admin"))
+//                    .build();
+//            userService.save(user);
+//            UserRole userRole = UserRole.builder()
+//                    .username(user.getUsername())
+//                    .roleName("admin")
+//                    .build();
+//            userRoleService.save(userRole);
+//            System.out.println(userRole);
         } catch (Exception e) {
             System.out.println("Init Error \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -54,20 +79,16 @@ public class DispatcherServlet extends HttpServlet {
         System.out.println("Dispatch Post");
         String role = null;
         try {
-            System.out.println(request.getUserPrincipal().getName());
+            System.out.println("getname: " +request.getUserPrincipal().getName());
             String username = request.getUserPrincipal().getName();
             role = userService.findByUsername(username).getRole().getRole();
             request.getSession().setAttribute("username", username);
             request.getSession().setAttribute("userImage", userService.findByUsername(username).getPhoto().getFilePath());
             request.getSession().setAttribute("role", role);
             SessionManager.addHttpSession(request.getSession());
-//
+
             System.out.println(role + " " + username);
-            System.out.println(request.getSession().getAttribute("role"));
-//            System.out.println(servletRequest.getAttribute("username"));
-//            System.out.println(servletRequest.getAttribute("role"));
-//            System.out.println(servletRequest.getAttribute("realUsername"));
-            System.out.println("Redirect : " + "/jsp/" + role + "/panel.jsp");
+            System.out.println("role: " + request.getSession().getAttribute("role"));
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

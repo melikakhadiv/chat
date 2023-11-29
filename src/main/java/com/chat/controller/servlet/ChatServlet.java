@@ -21,8 +21,8 @@ public class ChatServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.getSession().setAttribute("chatList", chatService.findAll());
-            resp.sendRedirect("/admin-chat.jsp");
-        }catch(Exception e){
+            resp.sendRedirect("/jsp/admin/panel.jsp");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -31,13 +31,13 @@ public class ChatServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String message = req.getParameter("message");
-            User sender= (User) req.getSession().getAttribute("user");
+            User sender = (User) req.getSession().getAttribute("user");
 
 //            User receiver=req.getSession();
 
 
             HttpSession httpSession = req.getSession();
-            resp.sendRedirect("/admin-chat.jsp");
+            resp.sendRedirect("/jsp/" + sender.getRole().getRole() + "/panel.jsp");
 
 
         } catch (Exception e) {

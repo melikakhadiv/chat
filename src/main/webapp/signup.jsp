@@ -18,7 +18,7 @@
     <input type="text" name="firstname" placeholder="firstname"><br>
     <input type="text" name="lastname" placeholder="lastname"><br>
     <input type="text" name="nickname" placeholder="nickname"><br>
-    <input type="radio" name="privateAcc" id="privateAcc" value="privateAcc">
+    <input type="checkbox" name="privateAcc" id="privateAcc" value="privateAcc">
     <label for="privateAcc"> Private Account</label><br>
     <input type="file" name="file" placeholder="img"><br>
     <input type="submit" value="sign up">

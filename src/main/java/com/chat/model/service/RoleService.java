@@ -41,21 +41,11 @@ public class RoleService implements ServiceImpl<Role, Long> {
         }
     }
 
-
     @Override
     public List<Role> findAll() throws Exception {
         Query query = entityManager.createQuery("select oo from roleEntity oo");
-
-//        todo : changed by messbah.a --> simple and clean code
-//        List<Role> roles = query.getResultList();
-//        if (roles.isEmpty()) {
-//            return null;
-//        } else {
-//            return roles;
-//        }
         return (!query.getResultList().isEmpty()) ? query.getResultList() : null;
     }
-
 
     public Role findById(Long id) throws Exception {
         return entityManager.find(Role.class, id);
@@ -64,9 +54,6 @@ public class RoleService implements ServiceImpl<Role, Long> {
     public Role findByRole(String role) throws Exception {
         Query query = entityManager.createNamedQuery("Role.FindByName")
                 .setParameter("role", role);
-
-//        todo : changed by messbah.a --> because if there is not result, getSingleResult throws exception
-//        return (Role) query.getSingleResult();
         return (!query.getResultList().isEmpty()) ? (Role) query.getResultList().get(0) : null;
     }
 }

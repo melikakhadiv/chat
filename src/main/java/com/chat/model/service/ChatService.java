@@ -34,9 +34,13 @@ public class ChatService implements ServiceImpl<Chat, Long> {
 
     @Transactional
     public Chat remove(Long id) throws Exception {
-        Chat chat = entityManager.find(Chat.class, id);
+        Chat chat = findById(id);
+        if ( chat!= null){
         entityManager.remove(chat);
-        return chat;
+        return chat;}
+        else {
+            return null;
+        }
     }
 
     @Transactional
@@ -55,9 +59,9 @@ public class ChatService implements ServiceImpl<Chat, Long> {
 
     @Transactional
     public List<Chat> findBySenderAndReceiver(String sender , String receiver) {
-        Query query = entityManager.createNamedQuery("Chat.FindBySenderAndReceiver");
-        query.setParameter("sender",sender);
-        query.setParameter("receiver",receiver);
+        Query query = entityManager.createNamedQuery("Chat.FindBySenderAndReceiver")
+        .setParameter("sender",sender)
+        .setParameter("receiver",receiver);
         return query.getResultList();
     }
 

@@ -1,6 +1,6 @@
 package com.chat.controller.api;
 
-import com.chat.controller.session.SessionManager;
+
 import com.chat.model.service.UserService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -17,6 +17,6 @@ public class UserApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers(){
-        return Response.ok().entity(userService.findUsers()).build();
+        return Response.ok().entity(userService.findPublicUsers()).build();
     }
 }

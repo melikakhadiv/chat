@@ -18,8 +18,8 @@ public class AttachmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            req.getSession().setAttribute("attachments", attachmentService.findAll());
-            resp.sendRedirect("/panel.jsp");
+            req.getSession().setAttribute("attachmentList", attachmentService.findAll());
+            resp.sendRedirect("/jsp/admin/attachment-list.jsp");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -29,30 +29,17 @@ public class AttachmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-                /* Receive file uploaded to the Servlet from the HTML5 form */
-                Part filePart = req.getPart("file");
-                String fileName = filePart.getSubmittedFileName() + req.getSession().getAttribute("username");
-                System.out.println("File : "+ fileName);
-                for (Part part : req.getParts()) {
-                    part.write("c:\\root\\"+fileName);
-                }
-                resp.getWriter().print("The file uploaded sucessfully.");
-
-//            String title = req.getParameter("title");
-//            String filePath = req.getParameter("filePath");
-//            FileType fileType = FileType.valueOf(req.getParameter("fileType"));
-//            Attachment attachment = Attachment
-//                    .builder()
-//                    .title(title)
-//                    .fileType(fileType)
-//                    .filePath(filePath)
-//                    .build();
-//            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
-//            attachmentService.save(attachment);
-//            HttpSession httpSession = req.getSession();
-//            httpSession.setAttribute("Attachment", attachment);
-//            resp.sendRedirect("/panel.jsp");
-//            resp.getWriter().println("Attachment is successfully saved");
+            Part filePart = req.getPart("file");
+            String fileName = "jsp/customer/attachment/" + filePart.getSubmittedFileName();
+            for (Part part : req.getParts()) {
+                part.write(getServletContext().getRealPath("/") + fileName);
+            }
+            Attachment attachment = Attachment.builder().title("User attachment").filePath(fileName).active(true).build();
+            attachmentService.save(attachment);
+            HttpSession httpSession = req.getSession();
+            httpSession.setAttribute("Attachment", attachment);
+            resp.sendRedirect("/jsp/admin/attachment-list.jsp");
+            resp.getWriter().println("Attachment is successfully saved");
 
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
@@ -64,22 +51,16 @@ public class AttachmentServlet extends HttpServlet {
 
 
         try {
-            Long id= Long.valueOf(req.getParameter("id"));
-            String title = req.getParameter("title");
-            String filePath = req.getParameter("filePath");
-            FileType fileType = FileType.valueOf(req.getParameter("fileType"));
-            Attachment attachment = Attachment
-                    .builder()
-                    .id(id)
-                    .title(title)
-//                    .fileType(fileType)
-//                    .filePath(filePath)
-                    .build();
-//            MultipartRequest multipartRequest = new MultipartRequest(req,filePath);
-            attachmentService.edit(attachment);
+            Part filePart = req.getPart("file");
+            String fileName = "jsp/customer/attachment/" + filePart.getSubmittedFileName();
+            for (Part part : req.getParts()) {
+                part.write(getServletContext().getRealPath("/") + fileName);
+            }
+            Attachment attachment = Attachment.builder().title("User attachment").filePath(fileName).active(true).build();
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("Attachment", attachment);
-            resp.sendRedirect("/panel.jsp");
+            resp.sendRedirect("/jsp/admin/attachment-list.jsp");
+            attachmentService.edit(attachment);
             resp.getWriter().println("Attachment is successfully edited");
 
         } catch (Exception e) {
@@ -90,7 +71,7 @@ public class AttachmentServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
             attachmentService.remove(Long.valueOf(req.getParameter("id")));
-            resp.sendRedirect("/panel.jsp");
+            resp.sendRedirect("/jsp/admin/attachment-list.jsp");
         }catch (Exception e){
             System.out.println("Error: " + e.getMessage());
         }

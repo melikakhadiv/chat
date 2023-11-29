@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+
 import java.util.List;
 
 @ApplicationScoped
@@ -18,8 +19,14 @@ public class AttachmentService implements ServiceImpl<Attachment, Long> {
     public Attachment save(Attachment attachment) throws Exception {
         System.out.println("attachment service");
         System.out.println(attachment);
-        entityManager.persist(attachment);
-        return attachment;
+        try {
+            entityManager.persist(attachment);
+            return attachment;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     @Override
@@ -31,8 +38,12 @@ public class AttachmentService implements ServiceImpl<Attachment, Long> {
     @Override
     public Attachment remove(Long id) throws Exception {
         Attachment attachment = findById(id);
-        attachment.setActive(false);
-        return entityManager.merge(attachment);
+        if (attachment != null) {
+            attachment.setActive(false);
+            return entityManager.merge(attachment);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -41,7 +52,7 @@ public class AttachmentService implements ServiceImpl<Attachment, Long> {
         return query.getResultList();
     }
 
-    public  Attachment findById(Long id) throws Exception {
+    public Attachment findById(Long id) throws Exception {
         return entityManager.find(Attachment.class, id);
     }
 }

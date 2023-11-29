@@ -9,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
+import java.awt.event.WindowListener;
 import java.util.List;
 
 @RequestScoped
@@ -19,24 +20,28 @@ public class UserRoleService implements ServiceImpl<UserRole, String> {
 
     @Override
     @Transactional
-    public UserRole save(UserRole UserRole) throws Exception {
-        entityManager.persist(UserRole);
-        return UserRole;
+    public UserRole save(UserRole userRole) throws Exception {
+        entityManager.persist(userRole);
+        return userRole;
     }
 
     @Override
     @Transactional
-    public UserRole edit(UserRole UserRole) throws Exception {
-        entityManager.merge(UserRole);
-        return UserRole;
+    public UserRole edit(UserRole userRole) throws Exception {
+        entityManager.merge(userRole);
+        return userRole;
     }
 
     @Override
     @Transactional
     public UserRole remove(String username) throws Exception {
-        UserRole UserRole = entityManager.find(UserRole.class, username);
-        entityManager.remove(username);
-        return UserRole;
+        UserRole userRole = findById(username);
+        if (userRole != null) {
+            entityManager.remove(username);
+            return userRole;
+        } else {
+            return null;
+        }
     }
 
     @Override

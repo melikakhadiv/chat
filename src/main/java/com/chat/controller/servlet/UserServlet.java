@@ -4,7 +4,6 @@ import com.chat.model.entity.Attachment;
 import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
 import com.chat.model.entity.UserRole;
-import com.chat.model.entity.enums.FileType;
 import com.chat.model.service.AttachmentService;
 import com.chat.model.service.RoleService;
 import com.chat.model.service.UserRoleService;
@@ -15,7 +14,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
-import javax.swing.*;
+
 import java.io.IOException;
 
 @MultipartConfig(
@@ -26,7 +25,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/User")
 public class UserServlet extends HttpServlet {
     @Inject
-    private UserRoleService UserRoleService;
+    private UserRoleService userRoleService;
 
     @Inject
     private RoleService roleService;
@@ -41,7 +40,7 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.getSession().setAttribute("userList", userService.findAll());
-            resp.sendRedirect("/jsp/admin/panel.jsp");
+            resp.sendRedirect("/jsp/admin/user-list.jsp");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -69,6 +68,7 @@ public class UserServlet extends HttpServlet {
             }
 
             Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).active(true).build();
+//            attachmentService.save(attachment);
 
             User user = User.builder()
                     .username(username)
@@ -84,7 +84,9 @@ public class UserServlet extends HttpServlet {
             userService.save(user);
 
             UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
-            UserRoleService.save(userRole);
+            userRoleService.save(userRole);
+            System.out.println(userService.findUsers());
+            System.out.println(userService.findPublicUsers());
 
             resp.sendRedirect("/user-panel");
         } catch (Exception e) {
@@ -105,7 +107,13 @@ public class UserServlet extends HttpServlet {
             String lastname = req.getParameter("lastname");
             boolean privateAcc = Boolean.parseBoolean(req.getParameter("privateAcc"));
             boolean active = Boolean.parseBoolean(req.getParameter("active"));
-            Attachment attachment = attachmentService.findById(Long.valueOf(req.getParameter("attachmentId")));
+
+            Part filePart = req.getPart("file");
+            String fileName = "jsp/customer/image/" + username + "_" + filePart.getSubmittedFileName();
+            for (Part part : req.getParts()) {
+                part.write(getServletContext().getRealPath("/") + fileName);
+            }
+            Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).active(true).build();
 
             User user = User.builder()
                     .id(id)
@@ -129,7 +137,7 @@ public class UserServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             userService.remove(Long.valueOf(req.getParameter("id")));
-            resp.sendRedirect("/jsp/admin/panel.jsp");
+            resp.sendRedirect("/jsp/admin/user-list.jsp");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
