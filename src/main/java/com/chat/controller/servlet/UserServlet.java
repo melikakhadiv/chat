@@ -68,6 +68,7 @@ public class UserServlet extends HttpServlet {
             }
 
             Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).active(true).build();
+//            todo: saving attachment has an error
 //            attachmentService.save(attachment);
 
             User user = User.builder()

@@ -52,7 +52,7 @@ public class DispatcherServlet extends HttpServlet {
             Role customer = Role.builder().role("customer").build();
             roleService.save(admin);
             roleService.save(customer);
-
+//todo: create admin in init has an error
 //            User user = User.builder().firstname("admin")
 //                    .lastname("admin")
 //                    .nickname("admin")

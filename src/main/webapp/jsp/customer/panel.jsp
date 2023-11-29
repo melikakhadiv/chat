@@ -158,6 +158,7 @@ ul.appendChild(li);
 
 <jsp:include page="/jsp/js-import.jsp"></jsp:include>
 <%--<jsp:include page="../assets/js/ws.js"></jsp:include>--%>
+<%-- todo: ws.js notfound + cloneNode has an error--%>
 <%--<script type="text/javascript" src="../assets/js/ws.js"></script>--%>
 </body>
 </html>
