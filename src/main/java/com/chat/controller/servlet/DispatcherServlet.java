@@ -79,7 +79,7 @@ public class DispatcherServlet extends HttpServlet {
         System.out.println("Dispatch Post");
         String role = null;
         try {
-            System.out.println("getname: " +request.getUserPrincipal().getName());
+            System.out.println("getName: " +request.getUserPrincipal().getName());
             String username = request.getUserPrincipal().getName();
             role = userService.findByUsername(username).getRole().getRole();
             request.getSession().setAttribute("username", username);

@@ -1,5 +1,7 @@
-let wsUrl = "ws://localhost/chat";
+let wsUrl = "ws://localhost:80/chat";
 let ws = new WebSocket(wsUrl);
+
+
 
 ws.onmessage = function (event) {
     onMessage(event);
@@ -38,6 +40,7 @@ function display(dataString) {
 }
 
 function send() {
+    console.log("sed meethod")
     let message = document.getElementById("message").value;
     let username = document.getElementById("username").innerText;
     let msg = {

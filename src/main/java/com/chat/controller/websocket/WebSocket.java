@@ -46,7 +46,7 @@ public class WebSocket {
         //todo: set receiver
         chat.setSender(sender);
 //        chatService.save(chat);
-        System.out.println("user" + session.getId() + "sent :" + chat);
+//        System.out.println("user" + session.getId() + "sent :" + chat);
     }
 //todo: how to choose broadcast or private send in js onMessage
     public static void broadcast(Chat chat) throws Exception {
