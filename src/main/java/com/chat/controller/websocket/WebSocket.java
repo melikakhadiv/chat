@@ -39,12 +39,13 @@ public class WebSocket {
 //        SessionManager.getWebSocketSession(chat.getReceiver().getUsername()).getBasicRemote().sendText(chat.getMessage());
         session.getBasicRemote().sendObject(chat);
 //        send();
-//        httpSession.setAttribute("message", chat.getMessage());
+        httpSession.setAttribute("message", chat.getMessage());
         httpSession.setAttribute("sender", HttpSession.class.getName());
-//        broadcast(chat);
+        broadcast(chat);
         User sender = userService.findByUsername(chat.getUsername());
         //todo: set receiver
         chat.setSender(sender);
+        System.out.println("receiver: " + httpSession.getAttribute("receiver"));
 //        chatService.save(chat);
 //        System.out.println("user" + session.getId() + "sent :" + chat);
     }

@@ -53,19 +53,19 @@ public class DispatcherServlet extends HttpServlet {
             roleService.save(admin);
             roleService.save(customer);
 //todo: create admin in init has an error
-//            User user = User.builder().firstname("admin")
-//                    .lastname("admin")
-//                    .nickname("admin")
-//                    .password("123")
-//                    .username("admin")
-//                    .privateAccount(true)
-//                    .role(roleService.findByRole("admin"))
-//                    .build();
-//            userService.save(user);
-//            UserRole userRole = UserRole.builder()
-//                    .username(user.getUsername())
-//                    .roleName("admin")
-//                    .build();
+            User user = User.builder().firstname("admin")
+                    .lastname("admin")
+                    .nickname("admin")
+                    .password("123")
+                    .username("admin")
+                    .privateAccount(true)
+                    .role(roleService.findByRole("admin"))
+                    .build();
+            userService.save(user);
+            UserRole userRole = UserRole.builder()
+                    .username("admin")
+                    .roleName("admin")
+                    .build();
 //            userRoleService.save(userRole);
 //            System.out.println(userRole);
         } catch (Exception e) {
@@ -86,7 +86,6 @@ public class DispatcherServlet extends HttpServlet {
             request.getSession().setAttribute("userImage", userService.findByUsername(username).getPhoto().getFilePath());
             request.getSession().setAttribute("role", role);
             SessionManager.addHttpSession(request.getSession());
-
             System.out.println(role + " " + username);
             System.out.println("role: " + request.getSession().getAttribute("role"));
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);

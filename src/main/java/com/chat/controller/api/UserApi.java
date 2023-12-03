@@ -8,6 +8,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.apache.openejb.server.httpd.HttpRequest;
 
 @Path("/users")
 public class UserApi {
@@ -17,6 +18,6 @@ public class UserApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers(){
-        return Response.ok().entity(userService.findPublicUsers()).build();
+        return Response.ok().entity(userService.findOnlineUsers()).build();
     }
 }

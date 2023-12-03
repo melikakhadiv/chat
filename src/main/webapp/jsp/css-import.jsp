@@ -4,4 +4,5 @@
 <link rel="stylesheet" href="/jsp/assets/css/fontawesome/all.css">
 <link rel="stylesheet" href="/jsp/assets/css/animate.min.css">
 <link rel="stylesheet" href="/jsp/assets/css/fonts.min.css">
+<link rel="stylesheet" href="/jsp/assets/css/myCss.css">
 

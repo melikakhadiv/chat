@@ -78,12 +78,12 @@ public class UserService implements ServiceImpl<User, Long> {
         return (User) query.getSingleResult();
     }
 
-    public List<User> privateAcc() throws Exception {
+    public List<User> findPrivateAcc() throws Exception {
         Query query = entityManager.createNamedQuery("User.FindPrivateAccount");
         return query.getResultList();
     }
 
-    public List<User> publicAcc() throws Exception {
+    public List<User> findPublicAcc() throws Exception {
         Query query = entityManager.createNamedQuery("User.FindPublicAccount");
         return query.getResultList();
     }
@@ -96,7 +96,7 @@ public class UserService implements ServiceImpl<User, Long> {
         return query.getResultList();
     }
 
-    public List<User> findPublicUsers() {
+    public List<User> findOnlineUsers() {
         Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users and oo.privateAccount=false");
         query.setParameter("users", SessionManager.getUsernames());
         return query.getResultList();

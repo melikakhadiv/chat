@@ -87,7 +87,7 @@ public class UserServlet extends HttpServlet {
             UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
             userRoleService.save(userRole);
             System.out.println(userService.findUsers());
-            System.out.println(userService.findPublicUsers());
+            System.out.println(userService.findOnlineUsers());
 
             resp.sendRedirect("/user-panel");
         } catch (Exception e) {
