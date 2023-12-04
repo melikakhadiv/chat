@@ -42,12 +42,11 @@ public class WebSocket {
         httpSession.setAttribute("message", chat.getMessage());
         httpSession.setAttribute("sender", HttpSession.class.getName());
         broadcast(chat);
-        User sender = userService.findByUsername(chat.getUsername());
+//        User sender = userService.findByUsername(chat.getUsername());
         //todo: set receiver
-        chat.setSender(sender);
-        System.out.println("receiver: " + httpSession.getAttribute("receiver"));
+//        chat.setSender(sender);
 //        chatService.save(chat);
-//        System.out.println("user" + session.getId() + "sent :" + chat);
+        System.out.println("user" + session.getId() + "sent :" + chat);
     }
 //todo: how to choose broadcast or private send in js onMessage
     public static void broadcast(Chat chat) throws Exception {

@@ -73,7 +73,7 @@ public class UserService implements ServiceImpl<User, Long> {
     }
 
     public User findByUsername(String username) throws Exception {
-        Query query = entityManager.createNamedQuery("User.FindRoleByUsername")
+        Query query = entityManager.createNamedQuery("User.FindByUsername")
                 .setParameter("username", username);
         return (User) query.getSingleResult();
     }

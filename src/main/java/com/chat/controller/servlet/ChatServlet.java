@@ -36,15 +36,15 @@ public class ChatServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String message = req.getParameter("message");
-            User sender = (User) req.getSession().getAttribute(("sender"));
-            User receiver=(userService.findByUsername(req.getParameter("receiver")));
+            User sender = userService.findByUsername(req.getParameter("sender"));
+            User receiver=userService.findByUsername(req.getParameter("receiver"));
             Chat chat = Chat.builder().
                     message(message)
                     .sender(sender)
                     .receiver(receiver)
                     .build();
             chatService.save(chat);
-
+            System.out.println("receiver:" + receiver);
             HttpSession httpSession = req.getSession();
             resp.sendRedirect("/jsp/" + sender.getRole().getRole() + "/panel.jsp");
 

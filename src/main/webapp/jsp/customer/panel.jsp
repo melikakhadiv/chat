@@ -67,7 +67,7 @@
         </div>
 
         <div class="mid">
-            <div id="output" class="${sessionScope.sender != null ? "sender" : "receiver"}"></div>
+            <div id="output" class="${sessionScope.sender == username ? "sender" : "receiver"}"></div>
         </div>
         <div class="btm">
             <input type="text" id="message" class="in2" placeholder="typing...">

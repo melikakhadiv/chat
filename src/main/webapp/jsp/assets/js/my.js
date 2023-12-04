@@ -1,12 +1,17 @@
 const userInfo = document.getElementById("user-info");
 userInfo.addEventListener("click", async function () {
-    // todo: set receiver on session
-    var receiver = document.getElementById("user-info").innerText;
-    const response = await fetch("/Chat?" + new URLSearchParams({
-        receiver: receiver,
-    }),
-        {
-            method: "POST"
-        })
+    let receiver = document.getElementById("receiver").innerText;
+    setUserAsReceiver(receiver)
     console.log("Div was clicked!" + receiver);
 });
+
+function setUserAsReceiver(receiverName) {
+    let receiver = document.getElementById("receiver").innerText;
+    let message = document.getElementById("message").value;
+    let sender = document.getElementById("username").innerText;
+    console.log(receiver)
+    const response = fetch("/api/chat/" + receiver + "/" + sender + "/" + message,
+        {
+            method: "POST"
+        });
+}

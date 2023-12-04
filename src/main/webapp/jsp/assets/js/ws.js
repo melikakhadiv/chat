@@ -2,7 +2,6 @@ let wsUrl = "ws://localhost:80/chat";
 let ws = new WebSocket(wsUrl);
 
 
-
 ws.onmessage = function (event) {
     onMessage(event);
 };
@@ -40,19 +39,34 @@ function display(dataString) {
 }
 
 function send() {
-    console.log("sed meethod")
+    console.log("send method")
     let message = document.getElementById("message").value;
     let username = document.getElementById("username").innerText;
-    let msg = {
-        "message": message,
-        "username": username,
+    let receiver = document.getElementById("receiver").innerText;
+    let sender = document.getElementById("username").innerText;
+    let chat = {
+        message: message,
+        username: username,
+        sender: sender,
+        receiver: receiver
     };
+    const response = fetch("/api/chat" + new URLSearchParams({
+        username: username,
+        message: message,
+        sender: sender,
+        receiver: receiver
+    }),
+        {
+            method: "POST"
+        });
+    console.log("this is receiver:" + receiver)
     console.log("sending " + message)
-    ws.send(JSON.stringify(msg))
+    ws.send(JSON.stringify(chat))
 }
+
 const btn = document.getElementById("sendBtn");
 var input = document.getElementById("message");
-input.addEventListener("keypress", function(event) {
+input.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
         btn.click();

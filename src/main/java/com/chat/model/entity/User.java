@@ -16,7 +16,7 @@ import java.util.List;
 @Entity(name = "userEntity")
 @Table(name = "chat_user_tbl")
 @NamedQueries({@NamedQuery(name = "User.FindPrivateAccount", query = "select oo from userEntity oo where oo.privateAccount=true"),
-        @NamedQuery(name = "User.FindRoleByUsername", query = "select oo from userEntity oo where oo.username=:username"),
+        @NamedQuery(name = "User.FindByUsername", query = "select oo from userEntity oo where oo.username=:username"),
         @NamedQuery(name = "User.FindPublicAccount", query = "select oo from userEntity oo where oo.privateAccount=false")})
 
 public class User extends Base {
@@ -56,9 +56,9 @@ public class User extends Base {
     @JoinColumn(name = "u_photo_id")
     private Attachment photo;
 
-    @OneToMany
-    @JoinColumn(name = "u_chat_id")
-    private List<Chat> chat;
+//    @OneToMany
+//    @JoinColumn(name = "u_chat_id")
+//    private List<Chat> chat;
 
 }
 
