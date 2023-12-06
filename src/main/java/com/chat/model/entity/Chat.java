@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity(name = "chatEntity")
 @Table(name = "chat_tbl")
 @NamedQueries(
-        {@NamedQuery(name = "Chat.FindBySenderAndReceiver", query = "select oo from chatEntity oo where oo.sender=:sender and  oo.receiver=:receiver order by local_datetime ")
+        {@NamedQuery(name = "Chat.FindBySenderAndReceiver", query = "select oo from chatEntity oo where oo.sender.username=:sender and  oo.receiver.username=:receiver order by local_datetime ")
         })
 public class Chat extends Base {
     @Id
@@ -26,9 +26,6 @@ public class Chat extends Base {
 
     @Column(name = "c_message")
     private String message;
-
-    @Column(name = "c_user")
-    private String username;
 
     @JoinColumn(name = "c_sender_id")
     @OneToOne

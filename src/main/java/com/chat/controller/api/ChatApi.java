@@ -11,6 +11,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.List;
+
 @Path("/chat")
 public class ChatApi {
     @Inject
@@ -32,13 +34,12 @@ public class ChatApi {
                             @PathParam("sender") String sender,
                             @PathParam("message") String message) throws Exception {
         try {
-            System.out.println(" aaaa " + receiver);
-            System.out.println(" bbbb " + sender);
-            System.out.println(" cccc " + message);
+            System.out.println(" receiver: " + receiver);
+            System.out.println(" sender: " + sender);
+            System.out.println(" message: " + message);
             User senderUser = userService.findByUsername(sender);
             User receiverUser = userService.findByUsername(receiver);
             Chat chat = Chat.builder().message(message).sender(senderUser).receiver(receiverUser).build();
-//          System.out.println("chat saved : " + chat);
             return Response.ok().entity(chatService.save(chat)).build();
 
         } catch (Exception e) {
@@ -49,10 +50,15 @@ public class ChatApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getChatBySenderReceiver(String sender, String receiver) {
-        try {
+    @Path("/{receiver}/{sender}")
+    public Response getChatBySenderReceiver(@PathParam("sender") String sender,
+                                            @PathParam("receiver") String receiver) {
 
-            return Response.ok().entity(chatService.findBySenderAndReceiver(sender, receiver)).build();
+// TODO: 12/6/2023  show chat in ui
+  try {
+            List<Chat> chat = chatService.findBySenderAndReceiver(sender,receiver);
+            System.out.println("chat: " + chat);
+            return Response.ok().entity(chat).build();
         }
         catch (Exception e) {
             e.printStackTrace();

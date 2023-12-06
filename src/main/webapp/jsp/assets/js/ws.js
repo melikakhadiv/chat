@@ -50,18 +50,13 @@ function send() {
         sender: sender,
         receiver: receiver
     };
-    const response = fetch("/api/chat" + new URLSearchParams({
-        username: username,
-        message: message,
-        sender: sender,
-        receiver: receiver
-    }),
-        {
-            method: "POST"
-        });
     console.log("this is receiver:" + receiver)
     console.log("sending " + message)
     ws.send(JSON.stringify(chat))
+    const response = fetch("/api/chat/" + receiver + "/" + sender + "/" + message,
+        {
+            method: "POST"
+        });
 }
 
 const btn = document.getElementById("sendBtn");

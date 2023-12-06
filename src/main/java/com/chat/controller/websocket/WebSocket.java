@@ -34,22 +34,18 @@ public class WebSocket {
     }
 
     @OnMessage
-    public void onMessage(Session session, Chat chat) throws Exception {
+    public void onMessage(Session session, String chat) throws Exception {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
 //        SessionManager.getWebSocketSession(chat.getReceiver().getUsername()).getBasicRemote().sendText(chat.getMessage());
-        session.getBasicRemote().sendObject(chat);
+        session.getBasicRemote().sendText(chat);
 //        send();
-        httpSession.setAttribute("message", chat.getMessage());
+        httpSession.setAttribute("message", chat);
         httpSession.setAttribute("sender", HttpSession.class.getName());
         broadcast(chat);
-//        User sender = userService.findByUsername(chat.getUsername());
-        //todo: set receiver
-//        chat.setSender(sender);
-//        chatService.save(chat);
         System.out.println("user" + session.getId() + "sent :" + chat);
     }
 //todo: how to choose broadcast or private send in js onMessage
-    public static void broadcast(Chat chat) throws Exception {
+    public static void broadcast(String chat) throws Exception {
         for (Session socketSessions : SessionManager.getWebSocketSessions()) {
           socketSessions.getBasicRemote().sendObject(chat);
         }
