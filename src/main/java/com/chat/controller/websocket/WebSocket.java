@@ -1,8 +1,6 @@
 package com.chat.controller.websocket;
 
-import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Chat;
-import com.chat.model.entity.User;
 import com.chat.model.service.ChatService;
 import com.chat.model.service.UserService;
 import jakarta.enterprise.context.RequestScoped;

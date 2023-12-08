@@ -1,18 +1,14 @@
 package com.chat.model.service;
 
-import com.chat.controller.session.SessionManager;
 import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.User;
-import com.chat.model.entity.UserRole;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @ApplicationScoped
 public class UserService implements ServiceImpl<User, Long> {

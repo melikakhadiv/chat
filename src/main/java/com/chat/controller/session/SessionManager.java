@@ -2,62 +2,54 @@ package com.chat.controller.session;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
-import lombok.Getter;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class SessionManager {
-    @Getter
-    public static Map<String, HttpSession> sessionMap = new HashMap<>();
+    private static Map<String, HttpSession> httpSessionMap = new HashMap<>();
+    private static Map<String , Session> webSessionMap = new HashMap<>();
 
-    public static void addWebSocketSession(String username, Session wsSession) {
-        sessionMap.get(username).setAttribute("wsSession", wsSession);
+    public static void addHttpSession(HttpSession httpSession){
+        httpSessionMap.put((String) httpSession.getAttribute("username"),httpSession);
     }
 
-    public static Set<Session> getWebSocketSessions() {
-        Set<Session> sessionSet = new HashSet<>();
-        for (HttpSession httpSession : sessionMap.values()) {
-            sessionSet.add((Session) httpSession.getAttribute("wsSession"));
-        }
-        return sessionSet;
+    public static void addWebSocketSession(String username , Session session){
+        webSessionMap.put(username,session);
     }
 
-    public static Session getWebSocketSession(String username) {
-        return (Session) sessionMap.get(username).getAttribute("wsSession");
+    public static void removeHttpSession(HttpSession httpSession){
+        httpSessionMap.remove(httpSession.getAttribute("username"));
     }
 
-    public static void addHttpSession(HttpSession httpSession) {
-        sessionMap.put(String.valueOf(httpSession.getAttribute("username")), httpSession);
+    public static void removeWebSocketSession(Session session){
+        webSessionMap.remove(session);
     }
 
-    public static boolean validateHttpSession(HttpSession httpSession) {
-        return sessionMap.containsValue(httpSession);
+    public static void onClose(String username){
+        webSessionMap.remove(username);
+        httpSessionMap.remove(username);
     }
 
-    public static boolean validateWebSocketSession(Session session) {
-        for (HttpSession httpSession : sessionMap.values()) {
-            if(httpSession.getAttribute("wsSession")==session){
-                return true;
-            }
-        }
-        return false;
+    public static Set<String> getUsers(){
+        return httpSessionMap.keySet();
     }
 
-    public static boolean invalidateHttpSession(String username) {
-        if (sessionMap.containsKey(username)) {
-            sessionMap.get(username).invalidate();
-            return true;
-        }
-        return false;
+    public static Set<HttpSession> getHttpSessions(){
+        return (Set<HttpSession>) httpSessionMap.values();
     }
 
-    public static Set<HttpSession> getHttpSessions() {
-        return (Set<HttpSession>) sessionMap.values();
+    public static Set<Session> getWebSocketSessions(){
+        return (Set<Session>) webSessionMap.values();
     }
 
-    public static Set<String> getUsernames() {
-        return sessionMap.keySet();
+    public static Map<String,HttpSession> getHttpSessionMap(){
+        return httpSessionMap;
     }
 
+    public static Map<String,Session> getWebSessionMap(){
+        return webSessionMap;
+    }
 }
 

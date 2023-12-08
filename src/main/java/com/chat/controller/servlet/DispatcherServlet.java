@@ -1,6 +1,5 @@
 package com.chat.controller.servlet;
 
-import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
 import com.chat.model.entity.UserRole;
