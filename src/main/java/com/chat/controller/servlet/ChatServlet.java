@@ -24,12 +24,13 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            req.getSession().setAttribute("chatList", chatService.findAll());
-            resp.sendRedirect("/jsp/admin/panel.jsp");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            req.getSession().setAttribute("chatList", chatService.findAll());
+//            resp.sendRedirect("/jsp/admin/panel.jsp");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        req.getRequestDispatcher("chat.jsp").forward(req,resp);
     }
 
     @Override
@@ -53,4 +54,5 @@ public class ChatServlet extends HttpServlet {
             System.out.println("Error" + e.getMessage());
         }
     }
+
 }
