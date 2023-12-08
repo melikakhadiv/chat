@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>chat box</title>
-    <jsp:include page="../css-import.jsp"></jsp:include>
+    <title>Chat Box Panel</title>
+    <link rel="stylesheet" href="/jsp/assets/css/myCss.css">
 </head>
 <body>
 <div class="top"></div>
@@ -14,69 +14,85 @@
             <h3>CHATBOX</h3>
         </div>
         <div class="search">
+            <input id="searchText" class="in" type="text" placeholder="search buddy.." name="search">
             <div class="ico">
-              <button id="sendToAll"  class="ico3" onclick="send()">Send To All</button>
+                <i class="fa fa-search"></i>
             </div>
         </div>
-        <button onclick="getOnlineUsers()">Get Users</button>
-        <form action="/chat" method="post">
-            <div class="select m-auto">
-                <select name="receiver" id="users">
-                </select>
-            </div>
+        <ul id="chat-users">
 
-            <%--    <input  type="text" name="receiver">--%>
-            <input  type="text" name="message">
-            <input type="submit" value="Send">
-        </form>
+        </ul>
     </div>
     <div class="right">
         <div class="right-top">
             <div class="img-name">
-                <%--                <img src="" class="bi bi-person" alt="-">--%>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-person-fill" viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                </svg>
+                <img src="${sessionScope.get("userImage")}" class="ava" alt="">
                 <div>
-                    <h3 id="username" class="in2">${username}</h3>
+                    <h3>${sessionScope.username}</h3>
                 </div>
             </div>
         </div>
 
         <div class="mid">
-            <div id="output" class="${sender == username ? "sender" : "receiver"}"></div>
+            <div id="output" class="${sessionScope.sender != null ? "sender" : "receiver"}"></div>
         </div>
         <div class="btm">
-            <input type="text" id="message" class="in2" placeholder="typing...">
-<%--            <button class="ico3" id="sendBtn" onclick="send()">Send</button>--%>
+            <input type="text" id="messageText" class="in2" placeholder="typing..." name="message">
+            <button class="ico3" onclick="send()">Send&ensp;<i class="fa fa-send"></i></button>
         </div>
     </div>
 </div>
-
+<jsp:include page="/jsp/js-import.jsp"></jsp:include>
 <script>
-    // setInterval(
-        async function getOnlineUsers() {
+    async function refreshUsers() {
         const response = await fetch("/api/users",
             {
                 method: "GET"
             });
         const users = await response.json();
+        const ul = document.getElementById("chat-users");
 
-        const usersCmb = document.getElementById("users");
-        users.forEach(function (user){
-            const userOption = document.createElement("option");
-            userOption.innerHTML = user;
-            userOption.value = user;
-            usersCmb.appendChild(userOption);
+        ul.innerHTML = "";
+
+        users.forEach(await function (user) {
+            var li = document.createElement("li");
+            li.id = "user-info";
+            li.onclick = function (event) {
+                const selectedUser = document.getElementsByClassName("selected-user")[0];
+                var target = event.target;
+                target.classList.add("selected-user");
+                selectedUser.classList.remove("selected-user");
+            };
+
+            var friendDiv = document.createElement("div");
+            friendDiv.classList.add("friend");
+            li.appendChild(friendDiv);
+
+            var imgDiv = document.createElement("div");
+            imgDiv.classList.add("img-name");
+            friendDiv.appendChild(imgDiv);
+
+            var img = document.createElement("img");
+            img.id = "usernameImage";
+            img.classList.add("ava");
+            img.src = user[1];
+            imgDiv.appendChild(img);
+
+            var div = document.createElement("div");
+            imgDiv.appendChild(div);
+
+            var h3 = document.createElement("h3");
+            h3.id = "userNameText";
+            h3.innerText = user[0];
+
+            div.appendChild(h3);
+            ul.appendChild(li);
         });
-        console.log(users);
+    };
 
-    }
-    // , 5000);
+    // refreshUsers();
+    setInterval(await refreshUsers(), 5000);
+
 </script>
-
-<jsp:include page="/jsp/js-import.jsp"></jsp:include>
-<script src="jsp/assets/js/ws.js"></script>
 </body>
 </html>
