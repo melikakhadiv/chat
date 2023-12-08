@@ -32,7 +32,7 @@ public class SessionManager {
         httpSessionMap.remove(username);
     }
 
-    public static Set<String> getUsers(){
+    public static Set<String> getOnlineUsers(){
         return httpSessionMap.keySet();
     }
 

@@ -1,5 +1,6 @@
 package com.chat.controller.servlet;
 
+import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
 import com.chat.model.entity.UserRole;
@@ -91,8 +92,13 @@ public class DispatcherServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Redirect : " + "/login.jsp");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/chat").forward(request, response);
             System.out.println("Error : " + e.getMessage());
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
     }
 }

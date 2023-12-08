@@ -1,5 +1,6 @@
 package com.chat.model.service;
 
+import com.chat.controller.session.SessionManager;
 import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.User;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -86,7 +87,7 @@ public class UserService implements ServiceImpl<User, Long> {
 
     public List<User> findOtherUsers(String currentUsername) {
         Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users and oo.username!=:currentUsername");
-        query.setParameter("users", SessionManager.getUsernames());
+        query.setParameter("users", SessionManager.getOnlineUsers());
         query.setParameter("currentUsername", currentUsername);
         System.out.println(query.getResultList());
         return query.getResultList();
@@ -94,13 +95,13 @@ public class UserService implements ServiceImpl<User, Long> {
 
     public List<User> findOnlineUsers() {
         Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users and oo.privateAccount=false");
-        query.setParameter("users", SessionManager.getUsernames());
+        query.setParameter("users", SessionManager.getOnlineUsers());
         return query.getResultList();
     }
 
     public List<User> findUsers() {
         Query query = entityManager.createQuery("select oo.username, oo.photo.filePath from userEntity oo where oo.username in :users");
-        query.setParameter("users", SessionManager.getUsernames());
+        query.setParameter("users", SessionManager.getOnlineUsers());
         return query.getResultList();
     }
 }
