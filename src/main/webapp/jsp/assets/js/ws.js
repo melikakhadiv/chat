@@ -48,10 +48,10 @@ function send() {
         username: username
     };
     console.log("sending " + message)
-    ws.send(JSON.stringify(message))
+    ws.send(JSON.stringify(chat))
 }
 
-const btn = document.getElementById("sendBtn");
+const btn = document.getElementById("sendToAll");
 var input = document.getElementById("message");
 input.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {

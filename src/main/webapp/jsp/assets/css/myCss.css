@@ -287,13 +287,13 @@ form {
 .selected-user{
     background:  #74d800;
 }
-. select {
+.select {
     background-color: transparent;
     border: none;
     margin: 0;
     width: 100%;
     font-family: inherit;
-    font-size: 14;
+    font-size: 14px;
     cursor: inherit;
     line-height: inherit;
     outline: none;

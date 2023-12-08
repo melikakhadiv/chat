@@ -31,21 +31,25 @@ public class ChatServlet extends HttpServlet {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        req.getRequestDispatcher("chat.jsp").forward(req,resp);
+        String role = req.getParameter("role");
+        req.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String message = req.getParameter("message");
-            User sender = userService.findByUsername(req.getParameter("username"));
-            User receiver=userService.findByUsername(req.getParameter("receiver"));
-            Chat chat = Chat.builder().
-                    message(message)
-                    .sender(sender)
-                    .receiver(receiver)
-                    .build();
-            chatService.save(chat);
+            System.out.println("debug message: " + message);
+//            User sender = userService.findByUsername(req.getParameter("username"));
+            System.out.println("debug sender: " + req.getUserPrincipal().getName());
+//            User receiver=userService.findByUsername(req.getParameter("receiver"));
+            System.out.println("debug receiver: " + req.getParameter("receiver"));
+//            Chat chat = Chat.builder().
+//                    message(message)
+//                    .sender(sender)
+//                    .receiver(receiver)
+//                    .build();
+//            chatService.save(chat);
 //            System.out.println("receiver:" + receiver);
 //            HttpSession httpSession = req.getSession();
 //            resp.sendRedirect("/jsp/" + sender.getRole().getRole() + "/panel.jsp");

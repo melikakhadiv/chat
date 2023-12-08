@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
+import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
 
@@ -33,14 +34,17 @@ public class WebSocket {
     }
 
     public static void broadcast(String chat) throws Exception {
+        System.out.println("send to all");
         for (Session socketSessions : SessionManager.getWebSocketSessions()) {
             socketSessions.getBasicRemote().sendText(chat);
         }
     }
 
     public static void send(String username, String chat) throws Exception {
-        System.out.println("private message to: " + username + " message:" + chat);
-      SessionManager.getWebSessionMap().get(username).getBasicRemote().sendText(chat);
+        System.out.println("private message to: " + username + " message: " + chat);
+//        todo: getWebSocketMap is null
+        System.out.println(SessionManager.getWebSocketSessionMap().get(username));
+      SessionManager.getWebSocketSessionMap().get(username).getBasicRemote().sendText(chat);
     }
 
 

@@ -15,14 +15,13 @@
         </div>
         <div class="search">
             <div class="ico">
-              <button id="sendToAll" class="ico3" onclick="">Send To All</button>
+              <button id="sendToAll"  class="ico3" onclick="send()">Send To All</button>
             </div>
         </div>
         <button onclick="getOnlineUsers()">Get Users</button>
         <form action="/chat" method="post">
             <div class="select m-auto">
                 <select name="receiver" id="users">
-
                 </select>
             </div>
 
@@ -50,7 +49,7 @@
         </div>
         <div class="btm">
             <input type="text" id="message" class="in2" placeholder="typing...">
-            <button class="ico3" id="sendBtn" onclick="send()">Send</button>
+<%--            <button class="ico3" id="sendBtn" onclick="send()">Send</button>--%>
         </div>
     </div>
 </div>
@@ -78,7 +77,6 @@
 </script>
 
 <jsp:include page="/jsp/js-import.jsp"></jsp:include>
-<%-- todo:  cloneNode has an error--%>
 <script src="jsp/assets/js/ws.js"></script>
 </body>
 </html>
