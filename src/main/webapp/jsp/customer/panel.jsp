@@ -20,7 +20,7 @@
         </div>
         <button onclick="getOnlineUsers()">Get Users</button>
         <form action="/chat" method="post">
-            <div>
+            <div class="select m-auto">
                 <select name="receiver" id="users">
 
                 </select>
