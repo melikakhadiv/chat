@@ -18,33 +18,18 @@
               <button id="sendToAll" class="ico3" onclick="">Send To All</button>
             </div>
         </div>
-        <ul id="chat-users">
-            <li id="user-info">
-                <div class="friend">
-<%--                    <div class="img-name">--%>
-<%--                        &lt;%&ndash;                        <img id="usernameImage" src="image/person.jpeg" alt="img">&ndash;%&gt;--%>
-<%--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"--%>
-<%--                             class="bi bi-person-fill" viewBox="0 0 16 16">--%>
-<%--                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>--%>
-<%--                        </svg>--%>
-<%--    <c:forEach var="user" items="${onlineUsers}">--%>
-<%--                        <div>--%>
-<%--                            <h6 id="usernameText">${user.username}</h6>--%>
-<%--                        </div>--%>
-<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
-<%--                </c:forEach>--%>
-    <div>
-        <h6 id="receiver">melika</h6>
-    </div>
-                    <div class="time"><p class="p">Today</p></div>
-                </div>
-            </li>
-            <li>
-                <div class="friend">
-                    <h6>sara</h6>
-                </div>
-            </li>
-        </ul>
+        <button onclick="getOnlineUsers()">Get Users</button>
+        <form action="/chat" method="post">
+            <div>
+                <select name="receiver" id="users">
+
+                </select>
+            </div>
+
+            <%--    <input  type="text" name="receiver">--%>
+            <input  type="text" name="message">
+            <input type="submit" value="Send">
+        </form>
     </div>
     <div class="right">
         <div class="right-top">
@@ -70,27 +55,27 @@
     </div>
 </div>
 
-<%--<script>--%>
-<%--    setInterval(async function () {--%>
-<%--        const response = await fetch("/api/users",--%>
-<%--            {--%>
-<%--                method: "GET"--%>
-<%--            });--%>
-<%--        const users = await response.json();--%>
+<script>
+    // setInterval(
+        async function getOnlineUsers() {
+        const response = await fetch("/api/users",
+            {
+                method: "GET"
+            });
+        const users = await response.json();
 
-<%--        const ul = document.getElementById("chat-users");--%>
+        const usersCmb = document.getElementById("users");
+        users.forEach(function (user){
+            const userOption = document.createElement("option");
+            userOption.innerHTML = user;
+            userOption.value = user;
+            usersCmb.appendChild(userOption);
+        });
+        console.log(users);
 
-<%--        ul.innerHTML = "";--%>
-
-<%--        users.forEach(function (user) {--%>
-<%--            const li = document.getElementById("user-info").cloneNode(true);--%>
-<%--            li.getElementById("usernameText").innerText = user;--%>
-<%--            ul.appendChild(li);--%>
-<%--        });--%>
-
-<%--// show users on table--%>
-<%--    }, 5000);--%>
-<%--</script>--%>
+    }
+    // , 5000);
+</script>
 
 <jsp:include page="/jsp/js-import.jsp"></jsp:include>
 <%-- todo:  cloneNode has an error--%>

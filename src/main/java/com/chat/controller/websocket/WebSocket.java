@@ -1,5 +1,6 @@
 package com.chat.controller.websocket;
 
+import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Chat;
 import com.chat.model.service.ChatService;
 import com.chat.model.service.UserService;
@@ -17,48 +18,34 @@ import java.io.IOException;
         decoders = {MessageModelDecoder.class})
 @RequestScoped
 public class WebSocket {
-    @Inject
-    ChatService chatService;
-    @Inject
-    UserService userService;
+
 
     @OnOpen
     public void onOpen(Session session) throws EncodeException, IOException {
-        HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-        SessionManager.addWebSocketSession(String.valueOf(httpSession.getAttribute("username")), session);
-        System.out.println("web socket opened " + session.getId());
-//        String msg = "--new user joined!--";
-//        broadcast(msg);
+        SessionManager.addWebSocketSession(String.valueOf(session.getUserProperties().get("username")), session);
+        System.out.println("session opened: " + session.getId() + " username: " + session.getUserProperties().get("username"));
     }
 
     @OnMessage
     public void onMessage(Session session, String chat) throws Exception {
-        HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-//        SessionManager.getWebSocketSession(chat.getReceiver().getUsername()).getBasicRemote().sendText(chat.getMessage());
-        session.getBasicRemote().sendText(chat);
-//        send();
-        httpSession.setAttribute("message", chat);
-        httpSession.setAttribute("sender", HttpSession.class.getName());
-        broadcast(chat);
-        System.out.println("user" + session.getId() + "sent :" + chat);
+        System.out.println("message: " + chat);
     }
-//todo: how to choose broadcast or private send in js onMessage
+
     public static void broadcast(String chat) throws Exception {
         for (Session socketSessions : SessionManager.getWebSocketSessions()) {
-          socketSessions.getBasicRemote().sendObject(chat);
+            socketSessions.getBasicRemote().sendText(chat);
         }
     }
 
-    public void send(Session session, Chat chat) throws Exception {
-        HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-        SessionManager.getWebSocketSession(String.valueOf(httpSession.getAttribute("username"))).getBasicRemote().sendObject(chat);
+    public void send(String username, String chat) throws Exception {
+        System.out.println("private message to: " + username + " message:" + chat);
+      SessionManager.getWebSessionMap().get(username).getBasicRemote().sendText(chat);
     }
 
 
     @OnClose
     public void onClose(Session session) {
-        HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-        SessionManager.invalidateHttpSession(String.valueOf(httpSession.getAttribute("username")));
-        System.out.println("web socket closed " + session.getId());
+     SessionManager.onClose(String.valueOf(session.getUserProperties().get("username")));
+        System.out.println("session : " + session.getUserProperties().get("username") + " closed.");
     }
 }

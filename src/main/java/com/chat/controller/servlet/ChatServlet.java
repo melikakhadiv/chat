@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import javax.sound.midi.Receiver;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/Chat")
+@WebServlet(urlPatterns = "/chat")
 public class ChatServlet extends HttpServlet {
     @Inject
     private ChatService chatService;
