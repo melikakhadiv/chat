@@ -91,7 +91,7 @@
     };
 
     // refreshUsers();
-    setInterval(await refreshUsers(), 5000);
+    setInterval(refreshUsers(), 5000);
 
 </script>
 </body>
