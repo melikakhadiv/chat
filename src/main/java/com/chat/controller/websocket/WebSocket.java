@@ -29,6 +29,7 @@ public class WebSocket {
     @OnMessage
     public void onMessage(Session session, String chat) throws Exception {
         System.out.println("message: " + chat);
+        broadcast(chat);
     }
 
     public static void broadcast(String chat) throws Exception {
@@ -37,7 +38,7 @@ public class WebSocket {
         }
     }
 
-    public void send(String username, String chat) throws Exception {
+    public static void send(String username, String chat) throws Exception {
         System.out.println("private message to: " + username + " message:" + chat);
       SessionManager.getWebSessionMap().get(username).getBasicRemote().sendText(chat);
     }

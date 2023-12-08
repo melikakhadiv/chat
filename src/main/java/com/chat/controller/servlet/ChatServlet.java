@@ -1,5 +1,6 @@
 package com.chat.controller.servlet;
 
+import com.chat.controller.websocket.WebSocket;
 import com.chat.model.entity.Chat;
 import com.chat.model.entity.User;
 import com.chat.model.service.ChatService;
@@ -37,7 +38,7 @@ public class ChatServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String message = req.getParameter("message");
-            User sender = userService.findByUsername(req.getParameter("sender"));
+            User sender = userService.findByUsername(req.getParameter("username"));
             User receiver=userService.findByUsername(req.getParameter("receiver"));
             Chat chat = Chat.builder().
                     message(message)
@@ -45,10 +46,10 @@ public class ChatServlet extends HttpServlet {
                     .receiver(receiver)
                     .build();
             chatService.save(chat);
-            System.out.println("receiver:" + receiver);
-            HttpSession httpSession = req.getSession();
-            resp.sendRedirect("/jsp/" + sender.getRole().getRole() + "/panel.jsp");
-
+//            System.out.println("receiver:" + receiver);
+//            HttpSession httpSession = req.getSession();
+//            resp.sendRedirect("/jsp/" + sender.getRole().getRole() + "/panel.jsp");
+            WebSocket.send(req.getParameter("receiver") , req.getParameter("message"));
 
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());

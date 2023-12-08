@@ -27,26 +27,26 @@ public class ChatApi {
     //  return Response.ok().entity(chatService.findByUsername(username)).build();
     //}
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{receiver}/{sender}/{message}")
-    public Response setChat(@PathParam("receiver") String receiver,
-                            @PathParam("sender") String sender,
-                            @PathParam("message") String message) throws Exception {
-        try {
-            System.out.println(" receiver: " + receiver);
-            System.out.println(" sender: " + sender);
-            System.out.println(" message: " + message);
-            User senderUser = userService.findByUsername(sender);
-            User receiverUser = userService.findByUsername(receiver);
-            Chat chat = Chat.builder().message(message).sender(senderUser).receiver(receiverUser).build();
-            return Response.ok().entity(chatService.save(chat)).build();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(500).build();
-        }
-    }
+//    @POST
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("/{receiver}/{sender}/{message}")
+//    public Response setChat(@PathParam("receiver") String receiver,
+//                            @PathParam("sender") String sender,
+//                            @PathParam("message") String message) throws Exception {
+//        try {
+//            System.out.println(" receiver: " + receiver);
+//            System.out.println(" sender: " + sender);
+//            System.out.println(" message: " + message);
+//            User senderUser = userService.findByUsername(sender);
+//            User receiverUser = userService.findByUsername(receiver);
+//            Chat chat = Chat.builder().message(message).sender(senderUser).receiver(receiverUser).build();
+//            return Response.ok().entity(chatService.save(chat)).build();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return Response.status(500).build();
+//        }
+//    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

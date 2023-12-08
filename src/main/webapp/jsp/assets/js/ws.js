@@ -42,21 +42,13 @@ function send() {
     console.log("send method")
     let message = document.getElementById("message").value;
     let username = document.getElementById("username").innerText;
-    let receiver = document.getElementById("receiver").innerText;
-    let sender = document.getElementById("username").innerText;
+
     let chat = {
         message: message,
-        username: username,
-        sender: sender,
-        receiver: receiver
+        username: username
     };
-    console.log("this is receiver:" + receiver)
     console.log("sending " + message)
-    ws.send(JSON.stringify(chat))
-    const response = fetch("/api/chat/" + receiver + "/" + sender + "/" + message,
-        {
-            method: "POST"
-        });
+    ws.send(JSON.stringify(message))
 }
 
 const btn = document.getElementById("sendBtn");
