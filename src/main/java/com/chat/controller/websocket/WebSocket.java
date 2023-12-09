@@ -28,22 +28,22 @@ public class WebSocket {
     }
 
     @OnMessage
-    public void onMessage(Session session, String chat) throws Exception {
+    public void onMessage(Session session, Chat chat) throws Exception {
         System.out.println("message: " + chat);
         broadcast(chat);
     }
 
-    public static void broadcast(String chat) throws Exception {
+    public static void broadcast(Chat chat) throws Exception {
         System.out.println("send to all");
         for (Session socketSessions : SessionManager.getWebSocketSessions()) {
-            socketSessions.getBasicRemote().sendText(chat);
+            socketSessions.getBasicRemote().sendObject(chat);
         }
     }
 
     public static void send(String username, String chat) throws Exception {
         System.out.println("private message to: " + username + " message: " + chat);
 //        todo: getWebSocketMap is null
-        System.out.println(SessionManager.getWebSocketSessionMap().get(username));
+        System.out.println("websocket map: " + SessionManager.getWebSocketSessionMap().get(username));
       SessionManager.getWebSocketSessionMap().get(username).getBasicRemote().sendText(chat);
     }
 

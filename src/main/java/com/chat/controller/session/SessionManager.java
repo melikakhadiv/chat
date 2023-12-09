@@ -37,9 +37,11 @@ public class SessionManager {
         return httpSessionMap.keySet();
     }
 
+    // TODO: 12/9/2023 error in broadcasting
     public static Set<HttpSession> getHttpSessions(){
         return (Set<HttpSession>) httpSessionMap.values();
     }
+
     public static Set<Session> getWebSocketSessions(){
         return (Set<Session>) webSocketSessionMap.values();
     }

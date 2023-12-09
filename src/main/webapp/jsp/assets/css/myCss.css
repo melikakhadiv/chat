@@ -287,7 +287,7 @@ form {
 .selected-user{
     background:  #74d800;
 }
-.select {
+select {
     background-color: transparent;
     border: none;
     margin: 0;
@@ -299,4 +299,9 @@ form {
     outline: none;
     text-align: center;
     overflow:auto;
+}
+
+input{
+    border: none;
+    outline: none;
 }

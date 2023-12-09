@@ -40,8 +40,8 @@ function display(dataString) {
 
 function send() {
     console.log("send method")
-    let message = document.getElementById("message").value;
-    let username = document.getElementById("username").innerText;
+    let message = document.getElementById("broadcastMsg").value;
+    let username = document.getElementById("username").innerHTML;
 
     let chat = {
         message: message,
@@ -51,8 +51,8 @@ function send() {
     ws.send(JSON.stringify(chat))
 }
 
-const btn = document.getElementById("sendToAll");
-var input = document.getElementById("message");
+const btn = document.getElementById("sendBtn");
+var input = document.getElementById("messageText");
 input.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
@@ -62,6 +62,6 @@ input.addEventListener("keypress", function (event) {
 });
 btn.addEventListener("click", function handleClick(event) {
     event.preventDefault();
-    const firstInput = document.getElementById("message");
+    const firstInput = document.getElementById("messageText");
     firstInput.value = "";
 });
