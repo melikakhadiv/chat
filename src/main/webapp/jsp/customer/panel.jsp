@@ -10,7 +10,7 @@
 <div class="top"></div>
 <div class="box">
     <div class="left">
-        <div class="topp">
+        <div class="top">
             <h3>CHATBOX</h3>
         </div>
         <div class="search">
