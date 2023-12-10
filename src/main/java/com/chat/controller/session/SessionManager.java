@@ -38,12 +38,12 @@ public class SessionManager {
     }
 
     // TODO: 12/9/2023 error in broadcasting
-    public static Set<HttpSession> getHttpSessions(){
-        return (Set<HttpSession>) httpSessionMap.values();
+    public static Collection<HttpSession> getHttpSessions(){
+        return (Collection<HttpSession>) httpSessionMap.values();
     }
 
-    public static Set<Session> getWebSocketSessions(){
-        return (Set<Session>) webSocketSessionMap.values();
+    public static Collection<Session> getWebSocketSessions(){
+        return (Collection<Session>) webSocketSessionMap.values();
     }
 
     public static Map<String, HttpSession> getHttpSessionMap() {
