@@ -33,35 +33,23 @@ function display(dataString) {
     console.log("ine " + dataString)
     let data = JSON.parse(dataString);
     console.log("data " + data)
-    let msg = "<p>" + data.username + " : " + data.message + "</p>";
+    let msg = "<p>"  + data.message + "</p>";
     document.getElementById("output").innerHTML += msg + " </br>";
     // document.getElementById("user").innerHTML = data.username +" </br>";
 }
 
 function send() {
     console.log("send method")
-    let message = document.getElementById("message").value;
-    let username = document.getElementById("username").innerText;
+    let broadcastMsg = document.getElementById("broadcastMsg").value;
+    let messageText = document.getElementById("messageText").value;
+    if (broadcastMsg != null){
+        console.log("broadcast: " + broadcastMsg)
+        ws.send(JSON.stringify(broadcastMsg))
+    }else if (messageText != null){
+        console.log("message: " + broadcastMsg)
+        ws.send(JSON.stringify(messageText))
+    }
 
-    let chat = {
-        message: message,
-        username: username
-    };
-    console.log("sending " + message)
-    ws.send(JSON.stringify(message))
 }
 
-const btn = document.getElementById("sendBtn");
-var input = document.getElementById("message");
-input.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        btn.click();
 
-    }
-});
-btn.addEventListener("click", function handleClick(event) {
-    event.preventDefault();
-    const firstInput = document.getElementById("message");
-    firstInput.value = "";
-});

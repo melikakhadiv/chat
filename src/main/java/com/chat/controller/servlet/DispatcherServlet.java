@@ -79,26 +79,24 @@ public class DispatcherServlet extends HttpServlet {
         System.out.println("Dispatch Post");
         String role = null;
         try {
+
             System.out.println("getName: " +request.getUserPrincipal().getName());
             String username = request.getUserPrincipal().getName();
             role = userService.findByUsername(username).getRole().getRole();
             request.getSession().setAttribute("username", username);
             request.getSession().setAttribute("userImage", userService.findByUsername(username).getPhoto().getFilePath());
             request.getSession().setAttribute("role", role);
+            request.getSession().setAttribute("username", username);
             SessionManager.addHttpSession(request.getSession());
+            System.out.println("debug addHttp: " + request.getSession());
             System.out.println(role + " " + username);
             System.out.println("role: " + request.getSession().getAttribute("role"));
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Redirect : " + "/login.jsp");
-            request.getRequestDispatcher("/chat").forward(request, response);
+//            request.getRequestDispatcher("/chat").forward(request, response);
             System.out.println("Error : " + e.getMessage());
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
 }

@@ -2,21 +2,18 @@ package com.chat.controller.session;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SessionManager {
-    private static Map<String, HttpSession> httpSessionMap = new HashMap<>();
-    private static Map<String , Session> webSessionMap = new HashMap<>();
+    private static Map<String , HttpSession> httpSessionMap = new HashMap<>();
+    private static Map<String , Session> webSocketSessionMap = new HashMap<>();
 
     public static void addHttpSession(HttpSession httpSession){
-        httpSessionMap.put((String) httpSession.getAttribute("username"),httpSession);
+        httpSessionMap.put(String.valueOf(httpSession.getAttribute("username")), httpSession);
     }
 
-    public static void addWebSocketSession(String username , Session session){
-        webSessionMap.put(username,session);
+    public static void addWebSocketSession(String username,Session session){
+        webSocketSessionMap.put(username, session);
     }
 
     public static void removeHttpSession(HttpSession httpSession){
@@ -24,32 +21,36 @@ public class SessionManager {
     }
 
     public static void removeWebSocketSession(Session session){
-        webSessionMap.remove(session);
+        webSocketSessionMap.remove(session);
     }
 
     public static void onClose(String username){
-        webSessionMap.remove(username);
+        webSocketSessionMap.remove(username);
         httpSessionMap.remove(username);
+    }
+
+    public static boolean isLoggedInUser(String username){
+        return httpSessionMap.containsKey(username);
     }
 
     public static Set<String> getOnlineUsers(){
         return httpSessionMap.keySet();
     }
 
+    // TODO: 12/9/2023 error in broadcasting
     public static Set<HttpSession> getHttpSessions(){
         return (Set<HttpSession>) httpSessionMap.values();
     }
 
     public static Set<Session> getWebSocketSessions(){
-        return (Set<Session>) webSessionMap.values();
+        return (Set<Session>) webSocketSessionMap.values();
     }
 
-    public static Map<String,HttpSession> getHttpSessionMap(){
+    public static Map<String, HttpSession> getHttpSessionMap() {
         return httpSessionMap;
     }
 
-    public static Map<String,Session> getWebSessionMap(){
-        return webSessionMap;
+    public static Map<String, Session> getWebSocketSessionMap() {
+        return webSocketSessionMap;
     }
 }
-
