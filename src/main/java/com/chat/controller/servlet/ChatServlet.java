@@ -32,31 +32,45 @@ public class ChatServlet extends HttpServlet {
 //            e.printStackTrace();
 //        }
         String role = req.getParameter("role");
-        req.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(req, resp);
+        req.getRequestDispatcher("/user-panel").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            String message = req.getParameter("message");
-            System.out.println("debug message: " + message);
 //            User sender = userService.findByUsername(req.getParameter("username"));
             System.out.println("debug sender: " + req.getUserPrincipal().getName());
-//            User receiver=userService.findByUsername(req.getParameter("receiver"));
-            System.out.println("debug receiver: " + req.getParameter("receiver"));
-//            Chat chat = Chat.builder().
-//                    message(message)
-//                    .sender(sender)
-//                    .receiver(receiver)
-//                    .build();
-//            chatService.save(chat);
-//            System.out.println("receiver:" + receiver);
-//            HttpSession httpSession = req.getSession();
-//            resp.sendRedirect("/jsp/" + sender.getRole().getRole() + "/panel.jsp");
-            WebSocket.send(req.getParameter("receiver") , req.getParameter("message"));
+
+            String sendBtn = req.getParameter("sendBtn");
+            String sendToAllBtn = req.getParameter("sendToAllBtn");
+            if (sendBtn != null) {
+                System.out.println("private message");
+                String message = req.getParameter("message");
+                System.out.println("debug message: " + message);
+
+//                User receiver = userService.findByUsername(req.getParameter("receiver"));
+                System.out.println("debug receiver: " + req.getParameter("receiver"));
+// TODO: 12/10/2023 save a chat 
+//                Chat chat = Chat.builder().
+////                        message(message)
+//                        .sender(sender)
+//                        .receiver(receiver)
+//                        .build();
+//                chatService.save(chat);
+
+                WebSocket.send(req.getParameter("receiver"), req.getParameter("message"));
+                resp.sendRedirect("/user-panel");
+            } else if (sendToAllBtn != null) {
+                System.out.println("private message");
+                String broadcastMsg = req.getParameter("broadcastMsg");
+                System.out.println("broadcast message: " + broadcastMsg);
+                WebSocket.broadcast(broadcastMsg);
+                resp.sendRedirect("/user-panel");
+            }
 
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
+            e.printStackTrace();
         }
     }
 

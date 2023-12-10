@@ -28,15 +28,14 @@ public class WebSocket {
     }
 
     @OnMessage
-    public void onMessage(Session session, Chat chat) throws Exception {
-        System.out.println("message: " + chat);
-        broadcast(chat);
+    public void onMessage(Session session, String chat) throws Exception {
+        System.out.println("onMessage: " + chat);
     }
 
-    public static void broadcast(Chat chat) throws Exception {
-        System.out.println("send to all");
+    public static void broadcast(String chat) throws Exception {
+        System.out.println("broadcast");
         for (Session socketSessions : SessionManager.getWebSocketSessions()) {
-            socketSessions.getBasicRemote().sendObject(chat);
+            socketSessions.getBasicRemote().sendText(chat);
         }
     }
 

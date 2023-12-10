@@ -15,10 +15,10 @@
 
     --clip: polygon(52% 65%, 100% 38%, 100% 0, 0 0, 0% 38%);
     --shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-    --c: rgba(80, 132, 14, 0.48);
+    --c: rgb(253, 214, 214);
     /*--c: rgba(128, 85, 79, 0.96);*/
 
-    --g: rgba(132, 55, 47, 0.48);
+    --g: rgb(191, 109, 109);
     /*--g:#74d800;*/
 }
 
@@ -221,8 +221,8 @@ form {
 
 .ico3, form div {
     background: var(--g);
-    padding: 7px;
-    color: white;
+    padding: 5px;
+    color: #2d2a2a;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -233,7 +233,7 @@ form {
     position: absolute;
     right: 8px;
     font-size: 1.2em;
-    color: #162938;
+    color: #f6b5b5;
     line-height: 57px;
 }
 
@@ -299,9 +299,19 @@ select {
     outline: none;
     text-align: center;
     overflow:auto;
+    text-indent: 5px;
 }
 
 input{
     border: none;
     outline: none;
 }
+
+#chat-users {
+    width: 100%;
+    border: none;
+    padding: 0;
+    list-style: none;
+}
+
+select option { padding: 6px;}
