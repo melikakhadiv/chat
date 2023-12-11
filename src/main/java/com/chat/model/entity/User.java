@@ -25,7 +25,8 @@ public class User extends Base {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "u_username", length = 20)
+    @Column(name = "u_username",unique = true, length = 20)
+
 //    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid UserName")
     private String username;
 
