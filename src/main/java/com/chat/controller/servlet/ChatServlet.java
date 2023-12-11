@@ -25,50 +25,42 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        try {
+        try {
 //            req.getSession().setAttribute("chatList", chatService.findAll());
 //            resp.sendRedirect("/jsp/admin/panel.jsp");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        String role = req.getParameter("role");
-        req.getRequestDispatcher("/user-panel").forward(req, resp);
+            String role = (String) req.getSession().getAttribute("role");
+            req.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-//            User sender = userService.findByUsername(req.getParameter("username"));
+            System.out.println("private message");
+            User sender = userService.findByUsername((String) req.getSession().getAttribute("username"));
             System.out.println("debug sender: " + req.getUserPrincipal().getName());
 
-            String sendBtn = req.getParameter("sendBtn");
-            String sendToAllBtn = req.getParameter("sendToAllBtn");
-            if (sendBtn != null) {
-                System.out.println("private message");
-                String message = req.getParameter("message");
-                System.out.println("debug message: " + message);
 
-//                User receiver = userService.findByUsername(req.getParameter("receiver"));
-                System.out.println("debug receiver: " + req.getParameter("receiver"));
-// TODO: 12/10/2023 save a chat 
-//                Chat chat = Chat.builder().
-////                        message(message)
-//                        .sender(sender)
-//                        .receiver(receiver)
-//                        .build();
-//                chatService.save(chat);
+            String message = req.getParameter("message");
+            System.out.println("debug message: " + message);
 
-                WebSocket.send(req.getParameter("receiver"), req.getParameter("message"));
-                resp.sendRedirect("/user-panel");
-            } else if (sendToAllBtn != null) {
-                System.out.println("private message");
-                String broadcastMsg = req.getParameter("broadcastMsg");
-                System.out.println("broadcast message: " + broadcastMsg);
-                WebSocket.broadcast(broadcastMsg);
-                resp.sendRedirect("/user-panel");
-            }
+            User receiver = userService.findByUsername(req.getParameter("receiver"));
+            System.out.println("debug receiver: " + req.getParameter("receiver"));
 
-        } catch (Exception e) {
+            Chat chat = Chat.builder().
+                    message(message)
+                    .sender(sender)
+                    .receiver(receiver)
+                    .build();
+            chatService.save(chat);
+
+            WebSocket.send(req.getParameter("receiver"), req.getParameter("message"));
+        } catch (
+                Exception e) {
             System.out.println("Error" + e.getMessage());
             e.printStackTrace();
         }

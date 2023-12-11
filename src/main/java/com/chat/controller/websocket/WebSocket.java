@@ -30,6 +30,7 @@ public class WebSocket {
     @OnMessage
     public void onMessage(Session session, String chat) throws Exception {
         System.out.println("onMessage: " + chat);
+        broadcast(chat);
     }
 
     public static void broadcast(String chat) throws Exception {
@@ -42,8 +43,10 @@ public class WebSocket {
     public static void send(String username, String chat) throws Exception {
         System.out.println("private message to: " + username + " message: " + chat);
 //        todo: getWebSocketMap is null
-        System.out.println("websocket map: " + SessionManager.getWebSocketSessionMap().get(username));
-      SessionManager.getWebSocketSessionMap().get(username).getBasicRemote().sendText(chat);
+        System.out.println("debug open socket: " + SessionManager.getWebSocketSessions());
+        System.out.println("debug websocket map: " + SessionManager.getWebSocketSessionMap().get(username));
+//      SessionManager.getWebSocketSessionMap().get(username).getBasicRemote().sendText(chat);
+      SessionManager.getWebSocketSessionMap().get("sara").getBasicRemote().sendText(chat);
     }
 
 

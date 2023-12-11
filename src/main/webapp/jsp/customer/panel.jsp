@@ -14,10 +14,8 @@
             <h3>CHATBOX</h3>
         </div>
         <div class="topp">
-            <form action="/chat" method="post">
             <input id="broadcastMsg" class="in" type="text" placeholder="a message for all your friend ... " name="broadcastMsg">
-            <input type="submit" id="sendToAllBtn" onclick="send()"  value="Send" class="ico3">
-            </form>
+            <input type="submit" id="sendToAllBtn" onclick="send()" value="Send" class="ico3">
         </div>
         <div>
         <ul  id="chat-users" >
@@ -41,7 +39,7 @@
             <form action="/chat" method="post">
                 <input type="hidden" id="receiverInput" name="receiver" value="">
                 <input type="text" id="messageText" class="in2" placeholder="typing..." name="message">
-                <input type="submit" id="sendBtn" name="sendBtn" onclick="send()" value="Send" class="ico3">
+                <input type="submit" id="sendBtn"  name="sendBtn" value="Send" class="ico3">
             </form>
         </div>
     </div>

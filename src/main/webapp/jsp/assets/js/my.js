@@ -11,6 +11,8 @@ async function refreshUsers() {
     users.forEach(await function (user) {
         var li = document.createElement("li");
         li.id = "user-info-" + user.toString();
+
+        //todo: show modal
         li.onclick = function (event) {
             const selectedUser = document.getElementsByClassName("selected-user")[0];
             const receiverInput = document.getElementById("receiverInput");
