@@ -307,11 +307,10 @@ input{
     outline: none;
 }
 
-#chat-users {
-    width: 100%;
-    border: none;
-    padding: 0;
-    list-style: none;
+#group {
+    display: none;
 }
 
-select option { padding: 6px;}
+#hidden-div {
+    display: none;
+}

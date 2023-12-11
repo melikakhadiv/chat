@@ -11,9 +11,12 @@ async function refreshUsers() {
     users.forEach(await function (user) {
         var li = document.createElement("li");
         li.id = "user-info-" + user.toString();
-
-        //todo: show modal
         li.onclick = function (event) {
+            $("#exampleModalLong").modal('toggle');
+            let receiverName = document.getElementById("receiverName");
+            receiverName.innerText=user;
+            var hiddenDiv = document.getElementById('hidden-div');
+            hiddenDiv.style.display="none";
             const selectedUser = document.getElementsByClassName("selected-user")[0];
             const receiverInput = document.getElementById("receiverInput");
             receiverInput.value=user.toString();
@@ -65,6 +68,17 @@ btn.addEventListener("click", function handleClick(event) {
     event.preventDefault();
     const firstInput = document.getElementById("messageText");
     firstInput.value = "";
+});
+
+document.getElementById('groupChat').addEventListener('click', function(event) {
+    const selectedUser = document.getElementsByClassName("selected-user")[0];
+    var target = event.target;
+    target.classList.add("selected-user");
+    selectedUser.classList.remove("selected-user")
+    var hiddenDiv = document.getElementById('hidden-div');
+    hiddenDiv.style.display = (hiddenDiv.style.display === 'none' || hiddenDiv.style.display === '') ? 'block' : 'none';
+    let modal = document.getElementById("exampleModalLong");
+    modal.style.display="none";
 });
 
 
