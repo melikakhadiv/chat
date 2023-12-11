@@ -45,8 +45,8 @@ public class WebSocket {
 //        todo: getWebSocketMap is null
         System.out.println("debug open socket: " + SessionManager.getWebSocketSessions());
         System.out.println("debug websocket map: " + SessionManager.getWebSocketSessionMap().get(username));
-//      SessionManager.getWebSocketSessionMap().get(username).getBasicRemote().sendText(chat);
-      SessionManager.getWebSocketSessionMap().get("sara").getBasicRemote().sendText(chat);
+      SessionManager.getWebSocketSessionMap().get(username).getBasicRemote().sendText(chat);
+     //      SessionManager.getWebSocketSessionMap().get("sara").getBasicRemote().sendText(chat);
     }
 
 

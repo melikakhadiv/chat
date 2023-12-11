@@ -9,7 +9,7 @@ public class SessionManager {
     private static Map<String , Session> webSocketSessionMap = new HashMap<>();
 
     public static void addHttpSession(HttpSession httpSession){
-        httpSessionMap.put(String.valueOf(httpSession.getAttribute("username")), httpSession);
+        httpSessionMap .put(String.valueOf(httpSession.getAttribute("username")), httpSession);
     }
 
     public static void addWebSocketSession(String username,Session session){

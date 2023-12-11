@@ -19,7 +19,7 @@ window.onbeforeunload = function () {
 };
 
 function onMessage(event) {
-    console.log("onmessage" + event);
+    console.log("onmessage" + event );
     display(event.data);
 }
 
