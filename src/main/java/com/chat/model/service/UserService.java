@@ -22,16 +22,17 @@ public class UserService implements ServiceImpl<User, Long> {
     @Transactional
     public User save(User user) throws Exception {
         try {
-
-            if (findByUsername(user.getUsername()) != null) {
-                user.setActive(true);
+            user.setActive(true);
                 entityManager.persist(user);
-            }
-            else {
-                System.out.println("UserName is not Unique");
-            }
-            return user;
-
+                return user;
+//            if (findByUsername(user.getUsername()) == null) {
+//                user.setActive(true);
+//                entityManager.persist(user);
+//                return user;
+//            } else {
+//                System.out.println("UserName is not Unique");
+//                return null;
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             return null;

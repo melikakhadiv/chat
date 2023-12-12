@@ -1,8 +1,10 @@
 async function refreshUsers() {
-    const response = await fetch("/api/users",
+    let user = document.getElementById("username");
+    const response = await fetch("/api/users" ,
         {
             method: "GET"
         });
+    console.log(response)
     const users = await response.json();
     const ul = document.getElementById("chat-users");
 
@@ -15,6 +17,7 @@ async function refreshUsers() {
             $("#exampleModalLong").modal('toggle');
             let receiverName = document.getElementById("receiverName");
             receiverName.innerText=user;
+            getHistoryChat(user);
             var hiddenDiv = document.getElementById('hidden-div');
             hiddenDiv.style.display="none";
             const selectedUser = document.getElementsByClassName("selected-user")[0];
@@ -80,5 +83,26 @@ document.getElementById('groupChat').addEventListener('click', function(event) {
     let modal = document.getElementById("exampleModalLong");
     modal.style.display="none";
 });
+
+function getHistoryChat(receiver) {
+    let sender = document.getElementById("username").innerText;
+    console.log(receiver)
+
+    const resp = fetch("/api/chat/" + receiver + "/" + sender,
+        {
+            method: "GET"
+        });
+    const data = resp.json();
+    let message = document.getElementById("outputPrivate");
+    var msg = '';
+    for (var i = 0; i < data.length; i++) {
+        for (var j = 0; j < data[i].length; j++) {
+            msg += data[i][j].message+ ' ';
+            console.log(msg)
+        }
+        msg = '<div>' + msg + '</div>';
+    }
+    message.innerHTML = msg
+}
 
 

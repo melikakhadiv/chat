@@ -37,7 +37,7 @@ public class SessionManager {
         return httpSessionMap.keySet();
     }
 
-    // TODO: 12/9/2023 error in broadcasting
+
     public static Collection<HttpSession> getHttpSessions(){
         return (Collection<HttpSession>) httpSessionMap.values();
     }
