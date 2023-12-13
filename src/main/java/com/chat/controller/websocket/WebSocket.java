@@ -41,17 +41,13 @@ public class WebSocket {
 
     public static void send(String username, String chat) throws Exception {
         System.out.println("private message to: " + username + " message: " + chat);
-//        todo: getWebSocketMap is null
-        System.out.println("debug websocket open socket: " + SessionManager.getWebSocketSessions());
-        System.out.println("debug websocket websocketmap: " + SessionManager.getWebSocketSessionMap().get(username));
-      SessionManager.getWebSocketSessionMap().get(username).getBasicRemote().sendText(chat);
-     //      SessionManager.getWebSocketSessionMap().get("sara").getBasicRemote().sendText(chat);
+        SessionManager.getWebSocketSessionMap().get(username).getBasicRemote().sendText(chat);
     }
 
 
     @OnClose
     public void onClose(Session session) {
-     SessionManager.onClose(String.valueOf(session.getUserProperties().get("username")));
+        SessionManager.onClose(String.valueOf(session.getUserProperties().get("username")));
         System.out.println("session : " + session.getUserProperties().get("username") + " closed.");
     }
 }

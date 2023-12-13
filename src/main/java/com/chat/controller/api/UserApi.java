@@ -19,7 +19,10 @@ public class UserApi {
 //    @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
-//        return Response.ok().entity(SessionManager.getOnlineUsers().remove(username)).build();
+//        Object currentUser = SessionManager.getWebSocketSessionMap().get(username);
+//        System.out.println(currentUser);
+//        System.out.println(SessionManager.getOnlineUsers().remove(currentUser));
         return Response.ok().entity(SessionManager.getOnlineUsers()).build();
+//        return Response.ok().entity(SessionManager.getOnlineUsers()).build();
     }
 }

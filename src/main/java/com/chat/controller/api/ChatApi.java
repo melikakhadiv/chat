@@ -1,5 +1,6 @@
 package com.chat.controller.api;
 
+import com.chat.controller.websocket.WebSocket;
 import com.chat.model.entity.Chat;
 import com.chat.model.entity.User;
 import com.chat.model.service.ChatService;
@@ -21,32 +22,47 @@ public class ChatApi {
     @Inject
     private UserService userService;
 
-    // @GET
-    //@Produces(MediaType.APPLICATION_JSON)
-    //public Response getChatsByUsername(String username){
-    //  return Response.ok().entity(chatService.findByUsername(username)).build();
-    //}
 
-//    @POST
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("/{receiver}/{sender}/{message}")
-//    public Response setChat(@PathParam("receiver") String receiver,
-//                            @PathParam("sender") String sender,
-//                            @PathParam("message") String message) throws Exception {
-//        try {
-//            System.out.println(" receiver: " + receiver);
-//            System.out.println(" sender: " + sender);
-//            System.out.println(" message: " + message);
-//            User senderUser = userService.findByUsername(sender);
-//            User receiverUser = userService.findByUsername(receiver);
-//            Chat chat = Chat.builder().message(message).sender(senderUser).receiver(receiverUser).build();
-//            return Response.ok().entity(chatService.save(chat)).build();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return Response.status(500).build();
-//        }
-//    }
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{receiver}/{sender}/{message}")
+    public Response setPrivateChat(@PathParam("receiver") String receiver,
+                            @PathParam("sender") String sender,
+                            @PathParam("message") String message) throws Exception {
+        try {
+            System.out.println("----Api private----");
+            System.out.println(" receiver: " + receiver);
+            System.out.println(" sender: " + sender);
+            System.out.println(" message: " + message);
+            User senderUser = userService.findByUsername(sender);
+            User receiverUser = userService.findByUsername(receiver);
+            Chat chat = Chat.builder().message(message).sender(senderUser).receiver(receiverUser).build();
+            chatService.save(chat);
+            WebSocket.send(receiver,message);
+            System.out.println("private: " + message);
+            return Response.ok().entity(message).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).build();
+        }
+    }
+
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{broadcastMsg}")
+    public Response setBroadcast(@PathParam("broadcastMsg") String broadcastMsg){
+       try {
+           System.out.println("---Api broadcast---");
+           WebSocket.broadcast(broadcastMsg);
+           System.out.println("api broadcast: " + broadcastMsg);
+           return Response.ok().entity(broadcastMsg).build();
+       }catch (Exception e){
+           e.printStackTrace();
+           return Response.status(500).build();
+       }
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

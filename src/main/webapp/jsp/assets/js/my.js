@@ -1,5 +1,4 @@
 async function refreshUsers() {
-    let user = document.getElementById("username");
     const response = await fetch("/api/users" ,
         {
             method: "GET"
@@ -17,7 +16,7 @@ async function refreshUsers() {
             $("#exampleModalLong").modal('toggle');
             let receiverName = document.getElementById("receiverName");
             receiverName.innerText=user;
-            getHistoryChat(user);
+            // getHistoryChat(user);
             var hiddenDiv = document.getElementById('hidden-div');
             hiddenDiv.style.display="none";
             const selectedUser = document.getElementsByClassName("selected-user")[0];
@@ -52,28 +51,45 @@ async function refreshUsers() {
 
         div.appendChild(h3);
         ul.appendChild(li);
+
     });
 };
 
 setInterval(refreshUsers(), 5000);
 
-const btn = document.getElementById("sendToAllBtn");
-const sendBtn = document.getElementById("sendBtn");
-var input = document.getElementById("messageText");
-input.addEventListener("keypress", function (event) {
+const sendAllBtn = document.getElementById("sendAllBtn");
+const sendPrivateBtn = document.getElementById("sendPrivateBtn");
+let messageText = document.getElementById("messageText");
+let broadcastMsg = document.getElementById("broadcastMsg");
+
+messageText.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
-        btn.click();
-
+        sendPrivateBtn.click();
     }
 });
-btn.addEventListener("click", function handleClick(event) {
+
+broadcastMsg.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        sendAllBtn.click();
+    }
+});
+
+sendAllBtn.addEventListener("click", function handleClick(event) {
+    event.preventDefault();
+    const firstInput = document.getElementById("broadcastMsg");
+    firstInput.value = "";
+});
+
+sendPrivateBtn.addEventListener("click", function handleClick(event) {
     event.preventDefault();
     const firstInput = document.getElementById("messageText");
     firstInput.value = "";
 });
 
-document.getElementById('groupChat').addEventListener('click', function(event) {
+document.getElementById('groupDiv').addEventListener('click', function(event) {
+    console.log("group chat")
     const selectedUser = document.getElementsByClassName("selected-user")[0];
     var target = event.target;
     target.classList.add("selected-user");
@@ -105,4 +121,29 @@ function getHistoryChat(receiver) {
     message.innerHTML = msg
 }
 
+function broadcast(){
+    let sender = document.getElementById("username").innerText;
+    let broadcastMsg = document.getElementById("broadcastMsg").value;
+    let msg = "<p>" + sender + " : " + broadcastMsg + "</p>";
+    document.getElementById("output").innerHTML += msg + " </br>";
+    const response = fetch("api/chat/" + broadcastMsg , {
+        method: "post"
+    });
+    let data = response.json();
+    console.log("broadcast: " + data)
+}
+
+function privateMsg(){
+    let sender = document.getElementById("username").innerText;
+    let receiver = document.getElementById("receiverInput").value;
+    let messageText = document.getElementById("messageText").value;
+    let msg = "<p>" + sender + " : " + messageText + "</p>";
+    document.getElementById("outputPrivate").innerHTML += msg + " </br>";
+    const response = fetch("api/chat/"+ receiver + "/" + sender + "/" + messageText , {
+        method: "POST"
+    });
+    let data = response.json();
+    console.log("private: " + data)
+
+}
 

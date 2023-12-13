@@ -80,7 +80,6 @@ public class DispatcherServlet extends HttpServlet {
         String role = null;
         try {
 
-            System.out.println("getName: " +request.getUserPrincipal().getName());
             String username = request.getUserPrincipal().getName();
             role = userService.findByUsername(username).getRole().getRole();
             request.getSession().setAttribute("username", username);
@@ -88,7 +87,6 @@ public class DispatcherServlet extends HttpServlet {
             request.getSession().setAttribute("role", role);
             request.getSession().setAttribute("username", username);
             SessionManager.addHttpSession(request.getSession());
-            System.out.println("debug addHttp: " + request.getSession());
             System.out.println(role + " " + username);
             System.out.println("role: " + request.getSession().getAttribute("role"));
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);

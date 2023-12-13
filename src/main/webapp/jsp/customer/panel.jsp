@@ -12,14 +12,14 @@
     <div class="left">
         <div class="topp">
             <div class="img-name">
-                <img src="${sessionScope.get("userImage") == null ? "/jsp/customer/image/person.jpeg" : sessionScope.get("userImage")}" class="ava float-left" alt="">
+                <img src="${(sessionScope.get("userImage")== null)? "/jsp/customer/image/person.jpeg" : sessionScope.get("userImage")}"
+                     class="ava float-left" alt="">
                 <div>
                     <h3 id="username">${sessionScope.username}</h3>
-
                 </div>
             </div>
         </div>
-        <div class="topp">
+        <div class="topp" id="groupDiv">
             <h3 class="" id="groupChat">Group Chat</h3>
         </div>
         <div>
@@ -30,22 +30,23 @@
     </div>
 
     <%--group chat--%>
-    <div id="hidden-div" class="right">
-        <div class="modal-content">
-            <div class="right-top">
-                <h3>Group Chat</h3>
-            </div>
-            <div id="group" class="mid">
-                <div id="output"
-                     class="${sessionScope.groupChat.sender == sessionScope.username ? "sender" : "receiver"}"></div>
-            </div>
-            <div class="btm">
-                <form action="/chat" method="post">
+    <div class="modal fade right" id="hidden-div" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header right-top">
+                    <h3>Group Chat</h3>
+                </div>
+                <div id="group" class="mid">
+                    <div id="output"
+                         class="${(sessionScope.groupChat.sender == sessionScope.username) ? "sender" : "receiver"}"></div>
+                </div>
+                <div class="btm">
                     <input id="broadcastMsg" class="in2" type="text"
                            placeholder="a message for all your friend ... "
                            name="broadcastMsg">
-                    <input type="submit" id="sendToAllBtn" name="sendToAllBtn" value="Send" class="ico3">
-                </form>
+                    <button class="ico3" id="sendAllBtn" onclick="broadcast()">Send</button>
+                </div>
             </div>
         </div>
     </div>
@@ -63,11 +64,9 @@
                          class="${sessionScope.chat.sender == sessionScope.username ? "sender" : "receiver"}"></div>
                 </div>
                 <div class="btm">
-                    <form action="/chat" method="post">
                         <input type="hidden" id="receiverInput" name="receiver" value="">
                         <input type="text" id="messageText" class="in2" placeholder="typing..." name="message">
-                        <input type="submit" id="sendBtn" name="privateSendBtn" value="Send" class="ico3">
-                    </form>
+                        <button class="ico3" id="sendPrivateBtn" onclick="privateMsg()">Send</button>
                 </div>
             </div>
         </div>

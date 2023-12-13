@@ -19,8 +19,8 @@ window.onbeforeunload = function () {
 };
 
 function onMessage(event) {
-    console.log("onmessage" + event );
-    display(event.data);
+    console.log("onmessage: " + event.data);
+    // display(event.data);
 }
 
 function onOpen() {
@@ -28,22 +28,25 @@ function onOpen() {
 
 }
 
-// todo: show message
-function display(dataString) {
-    console.log("ine " + dataString)
-    let data = JSON.parse(dataString);
-    console.log("data " + data)
-    let msg = "<p>" + data.message + "</p>";
-    document.getElementById("output").innerHTML += msg + " </br>";
-    // document.getElementById("user").innerHTML = data.username +" </br>";
-}
+// // todo: show message
+// function display(dataString) {
+//     console.log("ine " + dataString)
+//     let data = JSON.parse(dataString);
+//     console.log("data " + data)
+//     let msg = "<p>" + data.message + "</p>";
+//     document.getElementById("output").innerHTML += msg + " </br>";
+//     // document.getElementById("user").innerHTML = data.username +" </br>";
+// }
 
 function send() {
     console.log("send method")
-    let message = document.getElementById("broadcastMsg").value;
-    console.log("broadcast: " + message)
-    ws.send(JSON.stringify(message))
-
+    let broadcastMsg = document.getElementById("broadcastMsg").value;
+    let  messageText = document.getElementById("messageText").value;
+   if (broadcastMsg != null){
+       ws.send(JSON.stringify(broadcastMsg))
+   }else if (messageText != null){
+       ws.send((JSON.stringify(messageText)))
+   }
 }
 
 
