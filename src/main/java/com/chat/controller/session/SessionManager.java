@@ -27,6 +27,7 @@ public class SessionManager {
     public static void onClose(String username){
         webSocketSessionMap.remove(username);
         httpSessionMap.remove(username);
+        httpSessionMap.get(username).invalidate();
     }
 
     public static boolean isLoggedInUser(String username){

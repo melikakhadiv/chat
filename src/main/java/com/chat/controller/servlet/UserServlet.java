@@ -48,7 +48,6 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("User Post");
         try {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
@@ -56,39 +55,55 @@ public class UserServlet extends HttpServlet {
             String firstname = req.getParameter("firstname");
             String lastname = req.getParameter("lastname");
             Role role = roleService.findByRole("customer");
+            Part filePart = req.getPart("file");
             String privateAcc = req.getParameter("privateAcc");
             boolean account = false;
             account = privateAcc != null;
-            Part filePart = req.getPart("file");
-            String fileName = "jsp/customer/image/" + username + "_" + filePart.getSubmittedFileName();
-            System.out.println(fileName);
-            System.out.println(getServletContext().getRealPath("/") + fileName);
-            for (Part part : req.getParts()) {
-                part.write(getServletContext().getRealPath("/") + fileName);
+            if (filePart != null && filePart.getSize() > 0) {
+                String fileName = "jsp/customer/image/" + username + "_" + filePart.getSubmittedFileName();
+                for (Part part : req.getParts()) {
+                    part.write(getServletContext().getRealPath("/") + fileName);
+                }
+
+
+                Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).active(true).build();
+
+                User user = User.builder()
+                        .username(username)
+                        .password(password)
+                        .nickname(nickname)
+                        .firstname(firstname)
+                        .lastname(lastname)
+                        .role(role)
+                        .active(true)
+                        .privateAccount(account)
+                        .photo(attachment)
+                        .build();
+                userService.save(user);
+
+                UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
+                userRoleService.save(userRole);
+            } else {
+                String fileName = null;
+                for (Part part : req.getParts()) {
+                    part.write(getServletContext().getRealPath("/") + fileName);
+                }
+                User user = User.builder()
+                        .username(username)
+                        .password(password)
+                        .nickname(nickname)
+                        .firstname(firstname)
+                        .lastname(lastname)
+                        .role(role)
+                        .active(true)
+                        .privateAccount(account)
+                        .photo(null)
+                        .build();
+                userService.save(user);
+
+                UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
+                userRoleService.save(userRole);
             }
-
-            Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).active(true).build();
-//            todo: saving attachment has an error
-//            attachmentService.save(attachment);
-
-            User user = User.builder()
-                    .username(username)
-                    .password(password)
-                    .nickname(nickname)
-                    .firstname(firstname)
-                    .lastname(lastname)
-                    .role(role)
-                    .active(true)
-                    .privateAccount(account)
-                    .photo(attachment)
-                    .build();
-            userService.save(user);
-
-            UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
-            userRoleService.save(userRole);
-            System.out.println(userService.findUsers());
-            System.out.println(userService.findOnlineUsers());
-
             resp.sendRedirect("/user-panel");
         } catch (Exception e) {
             System.out.println("Error : " + e.getMessage());

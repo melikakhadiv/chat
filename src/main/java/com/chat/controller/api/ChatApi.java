@@ -27,8 +27,8 @@ public class ChatApi {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{receiver}/{sender}/{message}")
     public Response setPrivateChat(@PathParam("receiver") String receiver,
-                            @PathParam("sender") String sender,
-                            @PathParam("message") String message) throws Exception {
+                                   @PathParam("sender") String sender,
+                                   @PathParam("message") String message) throws Exception {
         try {
             System.out.println("----Api private----");
             System.out.println(" receiver: " + receiver);
@@ -38,7 +38,7 @@ public class ChatApi {
             User receiverUser = userService.findByUsername(receiver);
             Chat chat = Chat.builder().message(message).sender(senderUser).receiver(receiverUser).build();
             chatService.save(chat);
-            WebSocket.send(receiver,message);
+            WebSocket.send(receiver, message);
             System.out.println("private: " + message);
             return Response.ok().entity(message).build();
 
@@ -52,16 +52,16 @@ public class ChatApi {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{broadcastMsg}")
-    public Response setBroadcast(@PathParam("broadcastMsg") String broadcastMsg){
-       try {
-           System.out.println("---Api broadcast---");
-           WebSocket.broadcast(broadcastMsg);
-           System.out.println("api broadcast: " + broadcastMsg);
-           return Response.ok().entity(broadcastMsg).build();
-       }catch (Exception e){
-           e.printStackTrace();
-           return Response.status(500).build();
-       }
+    public Response setBroadcast(@PathParam("broadcastMsg") String broadcastMsg) {
+        try {
+            System.out.println("---Api broadcast---");
+            WebSocket.broadcast(broadcastMsg);
+            System.out.println("api broadcast: " + broadcastMsg);
+            return Response.ok().entity(broadcastMsg).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).build();
+        }
     }
 
     @GET
@@ -69,14 +69,13 @@ public class ChatApi {
     @Path("/{receiver}/{sender}")
     public Response getChatBySenderReceiver(@PathParam("sender") String sender,
                                             @PathParam("receiver") String receiver) {
-
-// TODO: 12/6/2023  show chat in ui
-  try {
-            List<Chat> chat = chatService.findBySenderAndReceiver(sender,receiver);
+        try {
+            System.out.println(" receiver: " + receiver);
+            System.out.println(" sender: " + sender);
+            List<Chat> chat = chatService.findBySenderAndReceiver(sender, receiver);
             System.out.println("chat: " + chat);
             return Response.ok().entity(chat).build();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Response.status(500).build();
         }

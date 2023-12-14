@@ -79,20 +79,26 @@ public class DispatcherServlet extends HttpServlet {
         System.out.println("Dispatch Post");
         String role = null;
         try {
-
             String username = request.getUserPrincipal().getName();
             role = userService.findByUsername(username).getRole().getRole();
             request.getSession().setAttribute("username", username);
-            request.getSession().setAttribute("userImage", userService.findByUsername(username).getPhoto().getFilePath());
             request.getSession().setAttribute("role", role);
             request.getSession().setAttribute("username", username);
+            User user = userService.findByUsername(username);
+            if (user != null && user.getPhoto() != null) {
+                String userImagePath = user.getPhoto().getFilePath();
+                if (userImagePath != null) {
+                    request.getSession().setAttribute("userImage", userImagePath);
+                } else {
+                    request.getSession().removeAttribute("userImage");
+                }
+            } else {
+                request.getSession().removeAttribute("userImage");
+            }
             SessionManager.addHttpSession(request.getSession());
-            System.out.println(role + " " + username);
-            System.out.println("role: " + request.getSession().getAttribute("role"));
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-//            request.getRequestDispatcher("/chat").forward(request, response);
             System.out.println("Error : " + e.getMessage());
         }
     }

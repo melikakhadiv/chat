@@ -195,6 +195,7 @@ span {
 }
 
 .mid {
+    overflow: hidden;
     overflow-y: auto;
     width: 100%;
     border-bottom: 1px solid var(--c);

@@ -20,7 +20,7 @@ window.onbeforeunload = function () {
 
 function onMessage(event) {
     console.log("onmessage: " + event.data);
-    // display(event.data);
+    display(event.data);
 }
 
 function onOpen() {
@@ -28,15 +28,21 @@ function onOpen() {
 
 }
 
-// // todo: show message
-// function display(dataString) {
-//     console.log("ine " + dataString)
-//     let data = JSON.parse(dataString);
-//     console.log("data " + data)
-//     let msg = "<p>" + data.message + "</p>";
-//     document.getElementById("output").innerHTML += msg + " </br>";
-//     // document.getElementById("user").innerHTML = data.username +" </br>";
-// }
+
+function display(dataString) {
+    let broadcastMsg = document.getElementById("broadcastMsg").value;
+    let  messageText = document.getElementById("messageText").value;
+    let  sender = document.getElementById("username").innerText;
+    console.log("ine " + dataString)
+    let data = JSON.parse(dataString);
+    console.log("data " + data)
+    let msg = "<p>" + data + "</p>";
+    if (broadcastMsg != null){
+        document.getElementById("output").innerHTML += sender + ": "+ msg + " </br>";
+    }else if (messageText != null){
+        document.getElementById("outputPrivate").innerHTML += sender + ": "+ msg + " </br>";
+    }
+}
 
 function send() {
     console.log("send method")

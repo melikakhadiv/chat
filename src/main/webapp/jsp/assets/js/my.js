@@ -1,61 +1,61 @@
+const currentUsername = document.getElementById("username").innerText;
+
 async function refreshUsers() {
-    const response = await fetch("/api/users" ,
-        {
-            method: "GET"
-        });
-    console.log(response)
+    const response = await fetch("/api/users", {
+        method: "GET"
+    });
     const users = await response.json();
     const ul = document.getElementById("chat-users");
+    const filteredUsers = users.filter(user => user !== currentUsername);
 
     ul.innerHTML = "";
 
-    users.forEach(await function (user) {
-        var li = document.createElement("li");
+    filteredUsers.forEach(async function (user) {
+        let li = document.createElement("li");
         li.id = "user-info-" + user.toString();
         li.onclick = function (event) {
             $("#exampleModalLong").modal('toggle');
             let receiverName = document.getElementById("receiverName");
-            receiverName.innerText=user;
-            // getHistoryChat(user);
-            var hiddenDiv = document.getElementById('hidden-div');
-            hiddenDiv.style.display="none";
+            receiverName.innerText = user;
+            getHistoryChat(user);
+            let hiddenDiv = document.getElementById('hidden-div');
+            hiddenDiv.style.display = "none";
             const selectedUser = document.getElementsByClassName("selected-user")[0];
             const receiverInput = document.getElementById("receiverInput");
-            receiverInput.value=user.toString();
-            var target = event.target;
+            receiverInput.value = user.toString();
+            let target = event.target;
             target.classList.add("selected-user");
             selectedUser.classList.remove("selected-user");
-            console.log("receiver:" + user)
+            console.log("receiver:" + user);
         };
 
-        var friendDiv = document.createElement("div");
+        let friendDiv = document.createElement("div");
         friendDiv.classList.add("friend");
         li.appendChild(friendDiv);
 
-        var imgDiv = document.createElement("div");
+        let imgDiv = document.createElement("div");
         imgDiv.classList.add("img-name");
         friendDiv.appendChild(imgDiv);
 
-        var img = document.createElement("img");
+        let img = document.createElement("img");
         img.id = "usernameImage";
         img.classList.add("ava");
         img.src = user[1];
         imgDiv.appendChild(img);
 
-        var div = document.createElement("div");
+        let div = document.createElement("div");
         imgDiv.appendChild(div);
 
-        var h3 = document.createElement("h3");
+        let h3 = document.createElement("h3");
         h3.id = "userNameText";
         h3.innerText = user;
 
         div.appendChild(h3);
         ul.appendChild(li);
-
     });
-};
+}
 
-setInterval(refreshUsers(), 5000);
+setInterval(refreshUsers, 2000);
 
 const sendAllBtn = document.getElementById("sendAllBtn");
 const sendPrivateBtn = document.getElementById("sendPrivateBtn");
@@ -88,32 +88,34 @@ sendPrivateBtn.addEventListener("click", function handleClick(event) {
     firstInput.value = "";
 });
 
-document.getElementById('groupDiv').addEventListener('click', function(event) {
+document.getElementById('groupDiv').addEventListener('click', function (event) {
     console.log("group chat")
     const selectedUser = document.getElementsByClassName("selected-user")[0];
-    var target = event.target;
+    let target = event.target;
     target.classList.add("selected-user");
     selectedUser.classList.remove("selected-user")
-    var hiddenDiv = document.getElementById('hidden-div');
+    let hiddenDiv = document.getElementById('hidden-div');
     hiddenDiv.style.display = (hiddenDiv.style.display === 'none' || hiddenDiv.style.display === '') ? 'block' : 'none';
     let modal = document.getElementById("exampleModalLong");
-    modal.style.display="none";
+    modal.style.display = "none";
 });
 
-function getHistoryChat(receiver) {
-    let sender = document.getElementById("username").innerText;
+async function getHistoryChat(receiver) {
+    let sender = currentUsername;
     console.log(receiver)
 
-    const resp = fetch("/api/chat/" + receiver + "/" + sender,
+    const resp = await fetch("/api/chat/" + receiver + "/" + sender,
         {
             method: "GET"
         });
-    const data = resp.json();
+    const data =await resp.json();
     let message = document.getElementById("outputPrivate");
-    var msg = '';
-    for (var i = 0; i < data.length; i++) {
-        for (var j = 0; j < data[i].length; j++) {
-            msg += data[i][j].message+ ' ';
+    let msg = '';
+    for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].length; j++) {
+            const isSender = data[i][j].sender === sender;
+            const messageClass = isSender ? 'sender' : 'receiver';
+            msg += `<div class="${messageClass}">${data[i][j].message}</div>`;
             console.log(msg)
         }
         msg = '<div>' + msg + '</div>';
@@ -121,29 +123,36 @@ function getHistoryChat(receiver) {
     message.innerHTML = msg
 }
 
-function broadcast(){
+function broadcast() {
     let sender = document.getElementById("username").innerText;
     let broadcastMsg = document.getElementById("broadcastMsg").value;
     let msg = "<p>" + sender + " : " + broadcastMsg + "</p>";
     document.getElementById("output").innerHTML += msg + " </br>";
-    const response = fetch("api/chat/" + broadcastMsg , {
+    const response = fetch("api/chat/" + broadcastMsg, {
         method: "post"
     });
     let data = response.json();
     console.log("broadcast: " + data)
 }
 
-function privateMsg(){
-    let sender = document.getElementById("username").innerText;
+async function privateMsg() {
+    let sender = currentUsername;
     let receiver = document.getElementById("receiverInput").value;
     let messageText = document.getElementById("messageText").value;
-    let msg = "<p>" + sender + " : " + messageText + "</p>";
-    document.getElementById("outputPrivate").innerHTML += msg + " </br>";
-    const response = fetch("api/chat/"+ receiver + "/" + sender + "/" + messageText , {
+    const response = await fetch("api/chat/" + receiver + "/" + sender + "/" + messageText, {
         method: "POST"
     });
     let data = response.json();
-    console.log("private: " + data)
-
+    console.log("private: " + data.message)
+    let chatHistory = document.getElementById("outputPrivate");
+    chatHistory.innerHTML = ""; // Clear previous content
+    for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].length; j++) {
+            const isSender = data[i][j].sender === sender;
+            const messageClass = isSender ? 'sender' : 'receiver';
+            let msg = `<div class="${messageClass}">${data[i][j].sender} : ${data[i][j].message}</div>`;
+            chatHistory.innerHTML += msg + "<br>";
+        }
+    }
 }
 

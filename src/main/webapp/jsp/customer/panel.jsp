@@ -38,8 +38,7 @@
                     <h3>Group Chat</h3>
                 </div>
                 <div id="group" class="mid">
-                    <div id="output"
-                         class="${(sessionScope.groupChat.sender == sessionScope.username) ? "sender" : "receiver"}"></div>
+                    <div id="output"></div>
                 </div>
                 <div class="btm">
                     <input id="broadcastMsg" class="in2" type="text"
@@ -60,13 +59,12 @@
                     <h3 class="modal-title" id="receiverName"></h3>
                 </div>
                 <div class="mid">
-                    <div id="outputPrivate"
-                         class="${sessionScope.chat.sender == sessionScope.username ? "sender" : "receiver"}"></div>
+                    <div id="outputPrivate"></div>
                 </div>
                 <div class="btm">
-                        <input type="hidden" id="receiverInput" name="receiver" value="">
-                        <input type="text" id="messageText" class="in2" placeholder="typing..." name="message">
-                        <button class="ico3" id="sendPrivateBtn" onclick="privateMsg()">Send</button>
+                    <input type="hidden" id="receiverInput" name="receiver" value="">
+                    <input type="text" id="messageText" class="in2" placeholder="typing..." name="message">
+                    <button class="ico3" id="sendPrivateBtn" onclick="privateMsg()">Send</button>
                 </div>
             </div>
         </div>
