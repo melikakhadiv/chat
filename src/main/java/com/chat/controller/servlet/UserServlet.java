@@ -1,5 +1,6 @@
 package com.chat.controller.servlet;
 
+import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Attachment;
 import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
@@ -39,9 +40,18 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            req.getSession().setAttribute("userList", userService.findAll());
-            resp.sendRedirect("/jsp/admin/user-list.jsp");
+            String logout = req.getParameter("logout");
+            String usersTable = req.getParameter("usersTable");
+            if (logout != null) {
+                System.out.println("user : " + req.getSession().getAttribute("username") + "logged out!");
+                req.getSession().invalidate();
+                resp.sendRedirect("/index.jsp");
+            } else if (usersTable != null) {
+                resp.sendRedirect("/jsp/user-list.jsp");
+            }
+
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error: " + e.getMessage());
         }
     }

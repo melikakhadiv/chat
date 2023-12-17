@@ -31,28 +31,28 @@ function onOpen() {
 
 function display(dataString) {
     let broadcastMsg = document.getElementById("broadcastMsg").value;
-    let  messageText = document.getElementById("messageText").value;
-    let  sender = document.getElementById("username").innerText;
+    let messageText = document.getElementById("messageText").value;
+    let sender = document.getElementById("username").innerText;
     console.log("ine " + dataString)
-    let data = JSON.parse(dataString);
-    console.log("data " + data)
-    let msg = "<p>" + data + "</p>";
-    if (broadcastMsg != null){
-        document.getElementById("output").innerHTML += sender + ": "+ msg + " </br>";
-    }else if (messageText != null){
-        document.getElementById("outputPrivate").innerHTML += sender + ": "+ msg + " </br>";
+    // let data = JSON.parse(dataString);
+    // console.log("data " + data)
+    let msg = "<p>" + dataString + "</p>";
+    if (broadcastMsg != null) {
+        document.getElementById("output").innerHTML += sender + ": " + msg + " </br>";
+    } else if (messageText != null) {
+        document.getElementById("outputPrivate").innerHTML += sender + ": " + msg + " </br>";
     }
 }
 
 function send() {
     console.log("send method")
     let broadcastMsg = document.getElementById("broadcastMsg").value;
-    let  messageText = document.getElementById("messageText").value;
-   if (broadcastMsg != null){
-       ws.send(JSON.stringify(broadcastMsg))
-   }else if (messageText != null){
-       ws.send((JSON.stringify(messageText)))
-   }
+    let messageText = document.getElementById("messageText").value;
+    if (broadcastMsg != null) {
+        ws.send(JSON.stringify(broadcastMsg))
+    } else if (messageText != null) {
+        ws.send((JSON.stringify(messageText)))
+    }
 }
 
 

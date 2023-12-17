@@ -5,19 +5,28 @@
     <meta charset="UTF-8">
     <title>Chat Box Panel</title>
     <link rel="stylesheet" href="/jsp/assets/css/myCss.css">
+<%--    <jsp:include page="/jsp/css-import.jsp"></jsp:include>--%>
 </head>
 <body>
-<div class="top"></div>
+<div class="top">
+    <form action="/User" method="post">
+    <input class="ico3 float-right" name="logout" id="logout" type="submit" value="Logout">
+    </form>
+</div>
 <div class="box">
     <div class="left">
-        <div class="topp">
-            <div class="img-name">
+        <div class="topp ">
+            <div class="img-name ">
                 <img src="${(sessionScope.get("userImage")== null)? "/jsp/customer/image/person.jpeg" : sessionScope.get("userImage")}"
-                     class="ava float-left" alt="">
-                <div>
+                     class="ava" alt="">
+                <div >
                     <h3 id="username">${sessionScope.username}</h3>
                 </div>
             </div>
+            <form action="/User" method="get" target="_blank">
+                <input class="ico3 float-right" name="usersTable" id="usersTable"  type="submit" value="users">
+            </form>
+
         </div>
         <div class="topp" id="groupDiv">
             <h3 class="" id="groupChat">Group Chat</h3>

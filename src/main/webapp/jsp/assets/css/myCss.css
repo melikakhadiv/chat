@@ -200,6 +200,9 @@ span {
     width: 100%;
     border-bottom: 1px solid var(--c);
     height: calc(600px - 100px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .btm {

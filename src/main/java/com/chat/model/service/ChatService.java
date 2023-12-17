@@ -51,18 +51,23 @@ public class ChatService implements ServiceImpl<Chat, Long> {
 
 
     @Transactional
-    public List<Chat> findByUsername(String username) {
-        Query query = entityManager.createQuery("select oo from chatEntity oo where oo.sender.username=:username");
-        query.setParameter("username",username);
-        return query.getResultList();
-    }
-
-    @Transactional
     public List<Chat> findBySenderAndReceiver(String sender , String receiver) {
         try {
             Query query = entityManager.createNamedQuery("Chat.FindBySenderAndReceiver")
                     .setParameter("sender",sender)
                     .setParameter("receiver",receiver);
+            return query.getResultList();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Transactional
+    public List<Chat> findByUsername(String username) {
+        try {
+            Query query = entityManager.createNamedQuery("Chat.FindByUsername")
+                    .setParameter("username",username);
             return query.getResultList();
         }catch (Exception e){
             e.printStackTrace();

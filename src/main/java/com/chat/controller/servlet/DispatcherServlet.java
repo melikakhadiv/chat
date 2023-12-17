@@ -103,4 +103,9 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("user : " + req.getSession().getAttribute("username") + "logged out!");
+        req.getSession().invalidate();
+    }
 }
