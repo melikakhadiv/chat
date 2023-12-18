@@ -52,7 +52,6 @@ public class DispatcherServlet extends HttpServlet {
             Role customer = Role.builder().role("customer").build();
             roleService.save(admin);
             roleService.save(customer);
-//todo: create admin in init has an error
             User user = User.builder().firstname("admin")
                     .lastname("admin")
                     .nickname("admin")
@@ -66,8 +65,7 @@ public class DispatcherServlet extends HttpServlet {
                     .username("admin")
                     .roleName("admin")
                     .build();
-//            userRoleService.save(userRole);
-//            System.out.println(userRole);
+            userRoleService.save(userRole);
         } catch (Exception e) {
             System.out.println("Init Error \n" + e.getMessage());
             e.printStackTrace();

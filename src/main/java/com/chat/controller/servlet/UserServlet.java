@@ -67,14 +67,14 @@ public class UserServlet extends HttpServlet {
             Role role = roleService.findByRole("customer");
             Part filePart = req.getPart("file");
             String privateAcc = req.getParameter("privateAcc");
-            boolean account = false;
-            account = privateAcc != null;
+            boolean account = privateAcc != null;
+
             if (filePart != null && filePart.getSize() > 0) {
                 String fileName = "jsp/customer/image/" + username + "_" + filePart.getSubmittedFileName();
+
                 for (Part part : req.getParts()) {
                     part.write(getServletContext().getRealPath("/") + fileName);
                 }
-
 
                 Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).active(true).build();
 
@@ -94,10 +94,6 @@ public class UserServlet extends HttpServlet {
                 UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
                 userRoleService.save(userRole);
             } else {
-                String fileName = null;
-                for (Part part : req.getParts()) {
-                    part.write(getServletContext().getRealPath("/") + fileName);
-                }
                 User user = User.builder()
                         .username(username)
                         .password(password)
@@ -120,6 +116,7 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
             resp.sendError(403);
         }
+
     }
 
     @Override

@@ -25,7 +25,7 @@ public class ChatApi {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{receiver}/{sender}/{message}")
+    @Path("/private/{receiver}/{sender}/{message}")
     public Response setPrivateChat(@PathParam("receiver") String receiver,
                                    @PathParam("sender") String sender,
                                    @PathParam("message") String message) throws Exception {
@@ -51,7 +51,7 @@ public class ChatApi {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{broadcastMsg}")
+    @Path("/group/{broadcastMsg}")
     public Response setBroadcast(@PathParam("broadcastMsg") String broadcastMsg) {
         try {
             System.out.println("---Api broadcast---");
@@ -66,7 +66,7 @@ public class ChatApi {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{receiver}/{sender}")
+    @Path("/history/{receiver}/{sender}")
     public Response getChatBySenderReceiver(@PathParam("sender") String sender,
                                             @PathParam("receiver") String receiver) {
         try {

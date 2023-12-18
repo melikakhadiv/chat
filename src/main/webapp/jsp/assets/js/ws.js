@@ -14,13 +14,12 @@ window.onbeforeunload = function () {
     console.log("ws closed: " + wsUrl)
     ws.onclose = function () {
         ws.close();
-    }; // disable onclose handler first
+    };
 
 };
 
 function onMessage(event) {
-    console.log("onmessage: " + event.data);
-    display(event.data);
+    display(event.data)
 }
 
 function onOpen() {
@@ -29,30 +28,29 @@ function onOpen() {
 }
 
 
-function display(dataString) {
-    let broadcastMsg = document.getElementById("broadcastMsg").value;
-    let messageText = document.getElementById("messageText").value;
-    let sender = document.getElementById("username").innerText;
-    console.log("ine " + dataString)
-    // let data = JSON.parse(dataString);
-    // console.log("data " + data)
-    let msg = "<p>" + dataString + "</p>";
-    if (broadcastMsg != null) {
-        document.getElementById("output").innerHTML += sender + ": " + msg + " </br>";
-    } else if (messageText != null) {
-        document.getElementById("outputPrivate").innerHTML += sender + ": " + msg + " </br>";
-    }
+function display() {
+    updatePrivateChat();
 }
 
-function send() {
-    console.log("send method")
-    let broadcastMsg = document.getElementById("broadcastMsg").value;
-    let messageText = document.getElementById("messageText").value;
-    if (broadcastMsg != null) {
-        ws.send(JSON.stringify(broadcastMsg))
-    } else if (messageText != null) {
-        ws.send((JSON.stringify(messageText)))
+
+async function updatePrivateChat() {
+    let receiver = document.getElementById("receiverInput").value
+    const resp = await fetch("/api/chat/history/" + receiver + "/" + currentUsername, {
+        method: "GET"
+    });
+
+    const data = await resp.json();
+    let message = document.getElementById("outputPrivate");
+    let msg = "";
+    for (let i = 0; i < data.length; i++) {
+        const isSender = data[i].sender.username === currentUsername;
+        const messageClass = isSender ? 'sender' : 'receiver';
+        msg += `<div class="${messageClass}"> ${data[i].sender.username} : ${data[i].message}</div>`;
     }
+
+    message.innerHTML = msg;
 }
+
+
 
 

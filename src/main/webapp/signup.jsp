@@ -12,13 +12,13 @@
     <jsp:include page="/jsp/css-import.jsp"></jsp:include>
 </head>
 <body>
-<form action="/User" method="post" enctype="multipart/form-data">
-    <input type="text" name="username" placeholder="username"><br>
-    <input type="text" name="password" placeholder="password"><br>
-    <input type="text" name="firstname" placeholder="firstname"><br>
-    <input type="text" name="lastname" placeholder="lastname"><br>
-    <input type="text" name="nickname" placeholder="nickname"><br>
-    <input type="checkbox" name="privateAcc" id="privateAcc" value="privateAcc">
+<form action="/User" method="post" class="form-group" enctype="multipart/form-data">
+    <input type="text" name="username" placeholder="username"></br>
+    <input type="text" name="password" placeholder="password"></br>
+    <input type="text" name="firstname" placeholder="firstname"></br>
+    <input type="text" name="lastname" placeholder="lastname"></br>
+    <input type="text" name="nickname" placeholder="nickname"></br>
+    <input type="checkbox" name="privateAcc" id="privateAcc" value="privateAcc"><br>
     <label for="privateAcc"> Private Account</label><br>
     <input type="file" name="file" placeholder="img"><br>
     <input type="submit" value="sign up">

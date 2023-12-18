@@ -10,9 +10,9 @@
 <body>
 <form action="j_security_check" method="post">
     <label for="userId">UserName</label>
-    <input id="userId" type="text" name="j_username">
+    <input id="userId" type="text" name="j_username"><br>
     <label for="passId">Password</label>
-    <input id="passId" type="password" name="j_password">
+    <input id="passId" type="password" name="j_password"><br>
     <input type="submit" value="Login">
 </form>
 </body>

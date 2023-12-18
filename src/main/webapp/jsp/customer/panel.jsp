@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>Chat Box Panel</title>
     <link rel="stylesheet" href="/jsp/assets/css/myCss.css">
-<%--    <jsp:include page="/jsp/css-import.jsp"></jsp:include>--%>
+    <%--    <jsp:include page="/jsp/css-import.jsp"></jsp:include>--%>
 </head>
 <body>
 <div class="top">
-    <form action="/User" method="post">
-    <input class="ico3 float-right" name="logout" id="logout" type="submit" value="Logout">
+    <form action="/User" method="get">
+        <input class="ico3 float-right" name="logout" id="logout" type="submit" value="Logout">
     </form>
 </div>
 <div class="box">
@@ -19,12 +19,12 @@
             <div class="img-name ">
                 <img src="${(sessionScope.get("userImage")== null)? "/jsp/customer/image/person.jpeg" : sessionScope.get("userImage")}"
                      class="ava" alt="">
-                <div >
+                <div>
                     <h3 id="username">${sessionScope.username}</h3>
                 </div>
             </div>
             <form action="/User" method="get" target="_blank">
-                <input class="ico3 float-right" name="usersTable" id="usersTable"  type="submit" value="users">
+                <input class="ico3 float-right" name="usersTable" id="usersTable" type="submit" value="users">
             </form>
 
         </div>
@@ -47,9 +47,10 @@
                     <h3>Group Chat</h3>
                 </div>
                 <div id="group" class="mid">
-                    <div id="output"></div>
+                    <div id="output" class="chatPage"></div>
                 </div>
                 <div class="btm">
+                    <input type="hidden" name="sender" value="${sessionScope.username}">
                     <input id="broadcastMsg" class="in2" type="text"
                            placeholder="a message for all your friend ... "
                            name="broadcastMsg">
@@ -65,12 +66,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header right-top">
-                    <h3 class="modal-title" id="receiverName"></h3>
+                    <div class="img-name ">
+                        <img id="receiverImg" class="ava" alt="">
+                        <div>
+                            <h3 class="modal-title" id="receiverName"></h3>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="mid">
-                    <div id="outputPrivate"></div>
+                    <div id="outputPrivate" class="chatPage"></div>
                 </div>
                 <div class="btm">
+                    <input type="hidden" name="sender" value="${sessionScope.username}">
                     <input type="hidden" id="receiverInput" name="receiver" value="">
                     <input type="text" id="messageText" class="in2" placeholder="typing..." name="message">
                     <button class="ico3" id="sendPrivateBtn" onclick="privateMsg()">Send</button>

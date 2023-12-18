@@ -15,10 +15,10 @@
 
     --clip: polygon(52% 65%, 100% 38%, 100% 0, 0 0, 0% 38%);
     --shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
-    --c: rgb(253, 214, 214);
+    --c: rgba(212, 246, 171, 0.93);
     /*--c: rgba(128, 85, 79, 0.96);*/
 
-    --g: rgb(191, 109, 109);
+    --g: rgba(154, 85, 49, 0.93);
     /*--g:#74d800;*/
 }
 
@@ -176,7 +176,7 @@ ul {
 }
 
 span {
-    color: #74d800;
+    color: #3c3f41;
 }
 
 .right-top {
@@ -237,7 +237,7 @@ form {
     position: absolute;
     right: 8px;
     font-size: 1.2em;
-    color: #f6b5b5;
+    color: rgba(132, 57, 14, 0.93);
     line-height: 57px;
 }
 
@@ -289,7 +289,7 @@ form {
 }
 
 .selected-user{
-    background:  #74d800;
+    background: rgba(151, 194, 82, 0.93);
 }
 select {
     background-color: transparent;
@@ -317,4 +317,8 @@ input{
 
 #hidden-div {
     display: none;
+}
+
+.chatPage{
+    width: 100%;
 }

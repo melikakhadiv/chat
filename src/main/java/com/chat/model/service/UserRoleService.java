@@ -3,6 +3,7 @@ package com.chat.model.service;
 
 import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.UserRole;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -12,7 +13,7 @@ import jakarta.transaction.Transactional;
 import java.awt.event.WindowListener;
 import java.util.List;
 
-@RequestScoped
+@ApplicationScoped
 public class UserRoleService implements ServiceImpl<UserRole, String> {
 
     @PersistenceContext(unitName = "mft")

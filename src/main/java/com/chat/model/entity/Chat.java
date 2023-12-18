@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity(name = "chatEntity")
 @Table(name = "chat_tbl")
 @NamedQueries(
-        {@NamedQuery(name = "Chat.FindBySenderAndReceiver", query = "select oo from chatEntity oo where (oo.sender.username=:sender and  oo.receiver.username=:receiver) or (oo.sender.username=:receiver and  oo.receiver.username=:sender) order by local_datetime desc") ,
+        {@NamedQuery(name = "Chat.FindBySenderAndReceiver", query = "select oo from chatEntity oo where (oo.sender.username=:sender and  oo.receiver.username=:receiver) or (oo.sender.username=:receiver and  oo.receiver.username=:sender) order by oo.timeStamp") ,
                 @NamedQuery(name = "Chat.FindByUsername" , query = "select oo from chatEntity oo where oo.sender.username=:username or oo.receiver.username=:username")
         })
 public class Chat extends Base {

@@ -17,18 +17,24 @@ async function refreshUsers() {
         li.id = "user-info-" + user.username.toString();
         li.onclick = function (event) {
             $("#exampleModalLong").modal('toggle');
+            let receiverImg = document.getElementById("receiverImg");
+            if (user.photo) {
+                receiverImg.src = user.photo.filePath;
+            } else {
+                receiverImg.src = "/jsp/customer/image/person.jpeg";
+            }
+            li.classList.remove("selected-user");
+            li.classList.add("selected-user");
             let receiverName = document.getElementById("receiverName");
             receiverName.innerText = user.username.toString();
-            getHistoryChat(user.username);
+            getHistoryChat(user.username.toString());
             let hiddenDiv = document.getElementById('hidden-div');
             hiddenDiv.style.display = "none";
-            const selectedUser = document.getElementsByClassName("selected-user")[0];
             const receiverInput = document.getElementById("receiverInput");
+            receiverInput.value = "";
             receiverInput.value = user.username.toString();
-            let target = event.target;
-            target.classList.add("selected-user");
-            selectedUser.classList.remove("selected-user");
-            console.log("receiver:" + user.username);
+            console.log("receiver:" + receiverInput.value);
+
         };
 
         let friendDiv = document.createElement("div");
@@ -43,7 +49,7 @@ async function refreshUsers() {
         img.id = "usernameImage";
         img.classList.add("ava");
 
-        if (user.photo && user.photo.filePath != null) {
+        if (user.photo) {
             img.src = user.photo.filePath;
         } else {
             img.src = "/jsp/customer/image/person.jpeg";
@@ -114,34 +120,30 @@ document.getElementById('groupDiv').addEventListener('click', function (event) {
 });
 
 async function getHistoryChat(receiver) {
-    let sender = currentUsername;
-    console.log(receiver)
+    console.log(receiver);
 
-    const resp = await fetch("/api/chat/" + receiver + "/" + sender,
-        {
-            method: "GET"
-        });
+    const resp = await fetch("/api/chat/history/" + receiver + "/" + currentUsername, {
+        method: "GET"
+    });
+
     const data = await resp.json();
     let message = document.getElementById("outputPrivate");
-    let msg = '';
+    let msg = "";
     for (let i = 0; i < data.length; i++) {
-        for (let j = 0; j < data[i].length; j++) {
-            const isSender = data[i][j].sender === sender;
-            // const messageClass = isSender ? 'sender' : 'receiver';
-            // msg += <div class="${messageClass}">${data[i][j].message}</div>;
-            console.log(msg)
-        }
-        msg = '<div>' + msg + '</div>';
+        const isSender = data[i].sender.username === currentUsername;
+        const messageClass = isSender ? 'sender' : 'receiver';
+        msg += `<div class="${messageClass}"> ${data[i].sender.username} : ${data[i].message}</div>`;
     }
-    message.innerHTML = msg
+    message.innerHTML = msg;
 }
+
 
 function broadcast() {
     let sender = document.getElementById("username").innerText;
     let broadcastMsg = document.getElementById("broadcastMsg").value;
     let msg = "<p>" + sender + " : " + broadcastMsg + "</p>";
-    document.getElementById("output").innerHTML += msg + " </br>";
-    const response = fetch("api/chat/" + broadcastMsg, {
+    // document.getElementById("output").innerHTML += msg + " </br>";
+    const response = fetch("api/chat/group/" + broadcastMsg, {
         method: "post"
     });
     let data = response.json();
@@ -152,22 +154,11 @@ async function privateMsg() {
     let sender = currentUsername;
     let receiver = document.getElementById("receiverInput").value;
     let messageText = document.getElementById("messageText").value;
-    document.getElementById("outputPrivate").innerHTML += "<p>" + sender + ": " + messageText + "</p>" + " </br>"
-    const response = await fetch("api/chat/" + receiver + "/" + sender + "/" + messageText, {
+    // document.getElementById("outputPrivate").innerHTML += "<p>" + sender + ": " + messageText + "</p>" + " </br>"
+    const response = await fetch("api/chat/private/" + receiver + "/" + sender + "/" + messageText, {
         method: "POST"
     });
-    // let data = response.json();
-    // console.log("private: " + data.message)
-    // let chatHistory = document.getElementById("outputPrivate");
-    // chatHistory.innerHTML = "";
-    // for (let i = 0; i < data.length; i++) {
-    //     for (let j = 0; j < data[i].length; j++) {
-    //        const isSender = data[i][j].sender === sender;
-    //     //         const messageClass = isSender ? 'sender' : 'receiver';
-    //         let msg = `<div class="${messageClass}">${data[i][j].sender} : ${data[i][j].message}</div>`;
-    //         chatHistory.innerHTML += msg + "<br>";
-    //     }
-    // }
+    getHistoryChat(receiver);
 }
 
 async function getAllUsers() {
@@ -176,7 +167,7 @@ async function getAllUsers() {
     });
     const data = await response.json();
     displayUserList(data.users, data.onlineUsers);
-};
+}
 
 function displayUserList(users, onlineUsers) {
     var tableBody = document.getElementById('userTableBody');
