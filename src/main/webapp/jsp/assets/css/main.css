@@ -1,0 +1,132 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background:linear-gradient(to bottom right, white,  rgba(80, 132, 14, 0.93) , rgb(5, 74, 5));
+  font-family: sans-serif;
+}
+.signbox {
+  width: 320px;
+  height: 650px;
+  background-color: rgba(250, 250, 250, 0.93);
+  color: rgb(5, 74, 5);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+}
+.logbox {
+  width: 320px;
+  height: 420px;
+  background-color: rgba(250, 250, 250, 0.93);
+  color: rgb(5, 74, 5);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 70px 30px;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+}
+h1 {
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+}
+.logbox p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+.signbox p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+.signbox input {
+  width: 100%;
+  margin-top: 22px;
+  border: #054a05 solid 1px;
+  border-radius: 5px;
+}
+.logbox input {
+  width: 100%;
+  margin-top: 22px;
+  border: #054a05 solid 1px;
+  border-radius: 5px;
+}
+.signbox input[type="text"],
+input[type="password"] {
+  border: #054a05 solid 1px;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+}
+.lofbox input[type="text"],
+input[type="password"] {
+  border: #054a05 solid 1px;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+}
+.logbox input[type="Submit"] {
+  border: #054a05 solid 1px;
+  outline: none;
+  height: 40px;
+  background-color: rgba(210, 248, 100, 0.58);
+  color: #fff;
+  font-size: 18px;
+  border-radius: 20px;
+}
+.signbox input[type="Submit"] {
+  border: #054a05 solid 1px;
+  outline: none;
+  height: 40px;
+  background-color: rgba(210, 248, 100, 0.58);
+  color: #fff;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+.logbox input[type="Submit"]:hover {
+  cursor: pointer;
+  background: rgb(215, 215, 84);
+  color: whitesmoke;
+}
+.signbox input[type="Submit"]:hover {
+  cursor: pointer;
+  background: rgb(215, 215, 84);
+  color: whitesmoke;
+}
+.logbox a{
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+}
+.signbox a{
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 20px;
+}
+.logbox a:hover{
+    color: rgba(80, 132, 14, 0.93);
+}
+.signbox a:hover{
+  color: rgba(80, 132, 14, 0.93);
+}

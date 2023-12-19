@@ -23,13 +23,10 @@
                     <h3 id="username">${sessionScope.username}</h3>
                 </div>
             </div>
-            <form action="/User" method="get" target="_blank">
-                <input class="ico3 float-right" name="usersTable" id="usersTable" type="submit" value="users">
-            </form>
 
         </div>
         <div class="topp" id="groupDiv">
-            <h3 class="" id="groupChat">Group Chat</h3>
+            <h3 class="float-left text-left" id="groupChat">Send To All</h3>
         </div>
         <div>
             <ul id="chat-users">
@@ -44,7 +41,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header right-top">
-                    <h3>Group Chat</h3>
+                    <h3>Send To All</h3>
                 </div>
                 <div id="group" class="mid">
                     <div id="output" class="chatPage"></div>

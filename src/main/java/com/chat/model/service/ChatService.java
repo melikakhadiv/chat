@@ -1,5 +1,6 @@
 package com.chat.model.service;
 
+import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Chat;
 import com.chat.model.service.impl.ServiceImpl;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -56,7 +57,16 @@ public class ChatService implements ServiceImpl<Chat, Long> {
             Query query = entityManager.createNamedQuery("Chat.FindBySenderAndReceiver")
                     .setParameter("sender",sender)
                     .setParameter("receiver",receiver);
-            return query.getResultList();
+            List<Chat> chatList = query.getResultList();
+            for (Chat chat : chatList) {
+                if (!chat.isReceived() &&
+                        SessionManager.getOnlineUsers().contains(chat.getReceiver().getUsername())){
+                    System.out.println("service --- receiver is online now");
+                    chat.setReceived(true);
+                    edit(chat);
+                }
+            }
+            return chatList;
         }catch (Exception e){
             e.printStackTrace();
             return null;

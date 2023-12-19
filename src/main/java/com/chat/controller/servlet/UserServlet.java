@@ -44,6 +44,7 @@ public class UserServlet extends HttpServlet {
             String usersTable = req.getParameter("usersTable");
             if (logout != null) {
                 System.out.println("user : " + req.getSession().getAttribute("username") + "logged out!");
+                SessionManager.removeHttpSession(req.getSession());
                 req.getSession().invalidate();
                 resp.sendRedirect("/index.jsp");
             } else if (usersTable != null) {

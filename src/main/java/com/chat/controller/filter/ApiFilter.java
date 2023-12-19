@@ -20,8 +20,8 @@
 //    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 //        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 //        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-//        String url = httpServletRequest.getRequestURI();
-//        System.out.println("url " + url);
+//        String uri = httpServletRequest.getRequestURI();
+//        System.out.println("uri " + uri);
 //        String username = String.valueOf(httpServletRequest.getSession().getAttribute("username"));
 //        String sender = httpServletRequest.getParameter("sender");
 //        String receiver = httpServletRequest.getParameter("receiver");
@@ -29,17 +29,17 @@
 //        System.out.println("filter sender " + sender);
 //        System.out.println("filter receiver " + receiver);
 //
-//        if (url.contains("/private/") && !username.equals(sender)) {
+//        if (uri.contains("/private/") && !username.equals(sender)) {
 //            System.out.println("--chat post filter--");
 //            httpServletResponse.sendError(403, "Access forbidden");
 //            System.out.println("post filtered");
 //            return;
-//        } else if (url.contains("/history/") && !username.equals(sender) || !username.equals(receiver)) {
+//        } else if (uri.contains("/history/") && !username.equals(sender) || !username.equals(receiver)) {
 //            System.out.println("--chat get filter--");
 //            httpServletResponse.sendError(403, "Access forbidden");
 //            System.out.println("get filtered");
 //            return;
-//        }else if (url.contains("/group/") && !username.equals(sender)){
+//        }else if (uri.contains("/group/") && !username.equals(sender)){
 //            System.out.println("--chat group filter--");
 //            httpServletResponse.sendError(403, "Access forbidden");
 //            System.out.println("group filtered");

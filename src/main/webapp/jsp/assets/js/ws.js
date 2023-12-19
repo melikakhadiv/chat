@@ -38,13 +38,20 @@ async function updatePrivateChat() {
     const resp = await fetch("/api/chat/history/" + receiver + "/" + currentUsername, {
         method: "GET"
     });
-
     const data = await resp.json();
     let message = document.getElementById("outputPrivate");
     let msg = "";
     for (let i = 0; i < data.length; i++) {
-        const isSender = data[i].sender.username === currentUsername;
-        const messageClass = isSender ? 'sender' : 'receiver';
+        if (data[i].sender.username === currentUsername) {
+            if (data[i].received === true) {
+                messageClass = "sender"
+            } else {
+                messageClass = "offLineReceiver"
+            }
+        } else if (!(data[i].sender.username === currentUsername)) {
+            messageClass = "receiver"
+        }
+
         msg += `<div class="${messageClass}"> ${data[i].sender.username} : ${data[i].message}</div>`;
     }
 

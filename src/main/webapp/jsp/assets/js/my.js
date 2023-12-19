@@ -27,7 +27,7 @@ async function refreshUsers() {
             li.classList.add("selected-user");
             let receiverName = document.getElementById("receiverName");
             receiverName.innerText = user.username.toString();
-            getHistoryChat(user.username.toString());
+            setInterval(getHistoryChat(user.username.toString()) , 2000);
             let hiddenDiv = document.getElementById('hidden-div');
             hiddenDiv.style.display = "none";
             const receiverInput = document.getElementById("receiverInput");
@@ -55,10 +55,10 @@ async function refreshUsers() {
             img.src = "/jsp/customer/image/person.jpeg";
         }
         if (onlineUsers.includes(user.username)) {
-
-            img.style.border = "2px solid green";
+            friendDiv.style.background="green"
+            img.style.border = "3px solid green";
         } else {
-            img.style.border = "2px solid gray";
+            img.style.border = "3px solid gray";
         }
         imgDiv.appendChild(img);
 
@@ -120,8 +120,6 @@ document.getElementById('groupDiv').addEventListener('click', function (event) {
 });
 
 async function getHistoryChat(receiver) {
-    console.log(receiver);
-
     const resp = await fetch("/api/chat/history/" + receiver + "/" + currentUsername, {
         method: "GET"
     });
@@ -129,9 +127,18 @@ async function getHistoryChat(receiver) {
     const data = await resp.json();
     let message = document.getElementById("outputPrivate");
     let msg = "";
+    let messageClass = null;
     for (let i = 0; i < data.length; i++) {
-        const isSender = data[i].sender.username === currentUsername;
-        const messageClass = isSender ? 'sender' : 'receiver';
+        if (data[i].sender.username === currentUsername) {
+            if (data[i].received === true) {
+                messageClass = "sender"
+            } else {
+                messageClass = "offLineReceiver"
+            }
+        } else if (!(data[i].sender.username === currentUsername)) {
+            messageClass = "receiver"
+        }
+
         msg += `<div class="${messageClass}"> ${data[i].sender.username} : ${data[i].message}</div>`;
     }
     message.innerHTML = msg;
@@ -141,13 +148,12 @@ async function getHistoryChat(receiver) {
 function broadcast() {
     let sender = document.getElementById("username").innerText;
     let broadcastMsg = document.getElementById("broadcastMsg").value;
-    let msg = "<p>" + sender + " : " + broadcastMsg + "</p>";
-    // document.getElementById("output").innerHTML += msg + " </br>";
-    const response = fetch("api/chat/group/" + broadcastMsg, {
+    let msg = "<p class='sender'>" + sender + " : " + broadcastMsg + "</p>";
+    document.getElementById("output").innerHTML += msg + " </br>";
+    const response = fetch("api/chat/broadcast/" + sender + "/" + broadcastMsg, {
         method: "post"
     });
-    let data = response.json();
-    console.log("broadcast: " + data)
+
 }
 
 async function privateMsg() {
@@ -158,29 +164,11 @@ async function privateMsg() {
     const response = await fetch("api/chat/private/" + receiver + "/" + sender + "/" + messageText, {
         method: "POST"
     });
-    getHistoryChat(receiver);
+    await getHistoryChat(receiver);
+
 }
 
-async function getAllUsers() {
-    const response = await fetch("/api/users/all", {
-        method: "GET"
-    });
-    const data = await response.json();
-    displayUserList(data.users, data.onlineUsers);
-}
 
-function displayUserList(users, onlineUsers) {
-    var tableBody = document.getElementById('userTableBody');
-    tableBody.innerHTML = "";
-    users.forEach(function (user) {
-        var row = tableBody.insertRow();
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-
-        cell1.innerHTML = user.username;
-        cell2.innerHTML = onlineUsers.includes(user.username) ? 'Online' : 'Offline';
-    });
-}
 
 
 

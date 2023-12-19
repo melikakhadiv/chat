@@ -3,9 +3,10 @@
 <html>
 <head>
     <title>Title</title>
+    <meta http-equiv="refresh" content="1">
 </head>
 <body>
-<button onclick="getAllUsers()" type="button" class="icon1">refresh</button>
+
 <table class="table-hover table" >
     <thead>
     <tr>
@@ -14,9 +15,13 @@
     </tr>
     </thead>
     <tbody id="userTableBody">
+    <c:forEach var="session" items="${sessionScope.sessions}">
+        <td>${session}</td>
+        <td></td>
+    </c:forEach>
     </tbody>
 </table>
 </body>
-<jsp:include page="js-import.jsp"></jsp:include>
+<jsp:include page="jsp/js-import.jsp"></jsp:include>
 <script src="/jsp/assets/js/my.js"></script>
 </html>

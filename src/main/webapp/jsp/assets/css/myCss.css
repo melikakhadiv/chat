@@ -18,7 +18,7 @@
     --c: rgba(212, 246, 171, 0.93);
     /*--c: rgba(128, 85, 79, 0.96);*/
 
-    --g: rgba(154, 85, 49, 0.93);
+    --g: rgba(252, 252, 252, 0.93);
     /*--g:#74d800;*/
 }
 
@@ -157,7 +157,7 @@ h3 {
 
 p {
     margin-left: 7px;
-    color: grey;
+    color: #000000;
     font-family: "Poppins", sans-serif;
     font-size: 12px;
 }
@@ -256,7 +256,8 @@ form {
 
 .sender {
     margin: 10px;
-    background: var(--g);
+    background:linear-gradient(to bottom right, #b13420, #ffffff);
+    border : #b13420 solid 1px;
     display: table;
     clear: both;
     padding: 10px;
@@ -266,9 +267,12 @@ form {
 
 }
 
+
+
 .receiver {
     margin: 10px;
-    background: grey;
+    background:linear-gradient(to bottom right, #8bc34a, #ffffff);
+    border: #b2d935 solid 1px;
     float: left;
     display: table;
     clear: both;
@@ -278,15 +282,18 @@ form {
 
 }
 
-.sender p {
-    color: white;
-    font-size: 15px;
+.offLineReceiver {
+    margin: 10px;
+    background:linear-gradient(to bottom right, #f1de03, #ffffff);
+    border: #f1de03 solid 1px;
+    display: table;
+    clear: both;
+    padding: 10px;
+    max-width: 80%;
+    border-radius: 5px;
+    float: right;
 }
 
-.receiver p {
-    color: white;
-    font-size: 15px;
-}
 
 .selected-user{
     background: rgba(151, 194, 82, 0.93);
@@ -311,9 +318,7 @@ input{
     outline: none;
 }
 
-#group {
-    display: none;
-}
+
 
 #hidden-div {
     display: none;
