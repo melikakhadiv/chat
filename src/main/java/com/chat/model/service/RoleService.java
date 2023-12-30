@@ -4,13 +4,16 @@ import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.Role;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import jakarta.persistence.PersistenceContext;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
+@Slf4j
 public class RoleService implements ServiceImpl<Role, Long> {
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
@@ -19,6 +22,7 @@ public class RoleService implements ServiceImpl<Role, Long> {
     @Transactional
     public Role save(Role role) throws Exception {
         entityManager.persist(role);
+        log.info("Role-Service-Saved");
         return role;
     }
 
@@ -26,6 +30,7 @@ public class RoleService implements ServiceImpl<Role, Long> {
     @Transactional
     public Role edit(Role role) throws Exception {
         entityManager.merge(role);
+        log.info("Role-Service-Edited");
         return role;
     }
 
@@ -33,27 +38,33 @@ public class RoleService implements ServiceImpl<Role, Long> {
     @Transactional
     public Role remove(Long id) throws Exception {
         Role role = findById(id);
-        if (role == null) {
-            return null;
-        } else {
+        if (role != null) {
             entityManager.remove(id);
+            log.info("Role-Service-Removed");
             return role;
+        } else {
+            log.error("Role-Service-NotFound");
+            return null;
         }
     }
 
     @Override
     public List<Role> findAll() throws Exception {
-        Query query = entityManager.createQuery("select oo from roleEntity oo");
-        return (!query.getResultList().isEmpty()) ? query.getResultList() : null;
+        TypedQuery<Role> query = entityManager.createQuery("select oo from roleEntity oo" , Role.class);
+        log.info("Role-Service-FindAll");
+        return query.getResultList();
     }
 
     public Role findById(Long id) throws Exception {
-        return entityManager.find(Role.class, id);
+        Optional<Role> role = Optional.ofNullable(entityManager.find(Role.class , id));
+        log.info("Role-Service-findById");
+        return role.isPresent() ? role.get() : null;
     }
 
-    public Role findByRole(String role) throws Exception {
-        Query query = entityManager.createNamedQuery("Role.FindByName")
-                .setParameter("role", role);
-        return (!query.getResultList().isEmpty()) ? (Role) query.getResultList().get(0) : null;
+    public Role findByRole(String roleName) throws Exception {
+        Optional<Role> role = Optional.ofNullable(entityManager.createNamedQuery("Role.FindByName" , Role.class)
+                .setParameter("role", roleName).getSingleResult());
+        log.info("Role-Service-FindByRole");
+        return role.isPresent() ? role.get() : null;
     }
 }

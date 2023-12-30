@@ -11,6 +11,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Path("/users")
+@Slf4j
 public class UserApi {
     @Inject
     UserService userService;
@@ -32,9 +34,10 @@ public class UserApi {
             Map<String, Object> responseMap = new HashMap<>();
             responseMap.put("users", userList);
             responseMap.put("onlineUsers", onlineUsers);
+            log.info("User-Api-Get");
             return Response.ok().entity(responseMap).build();
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("User-Api-Get-" + e.getMessage());
             return Response.ok().status(402).build();
         }
     }

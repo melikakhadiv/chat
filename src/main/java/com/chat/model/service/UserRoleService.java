@@ -4,17 +4,17 @@ package com.chat.model.service;
 import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.UserRole;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
-
-import java.awt.event.WindowListener;
+import lombok.extern.slf4j.Slf4j;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
-public class UserRoleService implements ServiceImpl<UserRole, String> {
+@Slf4j
+public class UserRoleService implements ServiceImpl<UserRole, Integer> {
 
     @PersistenceContext(unitName = "mft")
     private EntityManager entityManager;
@@ -23,6 +23,7 @@ public class UserRoleService implements ServiceImpl<UserRole, String> {
     @Transactional
     public UserRole save(UserRole userRole) throws Exception {
         entityManager.persist(userRole);
+        log.info("UserRole-Service-Saved");
         return userRole;
     }
 
@@ -30,17 +31,20 @@ public class UserRoleService implements ServiceImpl<UserRole, String> {
     @Transactional
     public UserRole edit(UserRole userRole) throws Exception {
         entityManager.merge(userRole);
+        log.info("UserRole-Service-Edited");
         return userRole;
     }
 
     @Override
     @Transactional
-    public UserRole remove(String username) throws Exception {
-        UserRole userRole = findById(username);
+    public UserRole remove(Integer id) throws Exception {
+        UserRole userRole = findById(id);
         if (userRole != null) {
-            entityManager.remove(username);
+            entityManager.remove(id);
+            log.info("UserRole-Service-Removed");
             return userRole;
         } else {
+            log.error("UserRole-Service-NotFound");
             return null;
         }
     }
@@ -48,14 +52,17 @@ public class UserRoleService implements ServiceImpl<UserRole, String> {
     @Override
     @Transactional
     public List<UserRole> findAll() throws Exception {
-        Query query = entityManager.createQuery("select oo from UserRoleEntity oo");
+        TypedQuery<UserRole> query = entityManager.createQuery("select oo from UserRoleEntity oo" , UserRole.class);
+        log.info("UserRole-Service-FindAll");
         return query.getResultList();
     }
 
     @Override
     @Transactional
-    public UserRole findById(String username) throws Exception {
-        return entityManager.find(UserRole.class, username);
+    public UserRole findById(Integer id) throws Exception {
+        Optional<UserRole> userRole = Optional.ofNullable(entityManager.find(UserRole.class , id));
+        log.info("UserRole-Service-FindById");
+        return userRole.isPresent() ? userRole.get() : null;
     }
 
 }

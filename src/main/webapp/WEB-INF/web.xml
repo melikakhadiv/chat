@@ -41,7 +41,7 @@
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
-            <form-login-page>/login.jsp</form-login-page>
+            <form-login-page>/index.jsp</form-login-page>
             <form-error-page>/errors/NotFound.jsp</form-error-page>
         </form-login-config>
     </login-config>

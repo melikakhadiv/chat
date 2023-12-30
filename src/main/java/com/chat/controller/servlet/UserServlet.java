@@ -14,6 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import lombok.extern.slf4j.Slf4j;
 
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.io.IOException;
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
 @WebServlet(urlPatterns = "/User")
+@Slf4j
 public class UserServlet extends HttpServlet {
     @Inject
     private UserRoleService userRoleService;
@@ -41,19 +43,14 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             String logout = req.getParameter("logout");
-            String usersTable = req.getParameter("usersTable");
             if (logout != null) {
-                System.out.println("user : " + req.getSession().getAttribute("username") + "logged out!");
                 SessionManager.removeHttpSession(req.getSession());
                 req.getSession().invalidate();
+                log.info("User-Servlet-Get-LogOut");
                 resp.sendRedirect("/index.jsp");
-            } else if (usersTable != null) {
-                resp.sendRedirect("/jsp/user-list.jsp");
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error: " + e.getMessage());
+            log.error("User-Servlet-Get-" + e.getMessage());;
         }
     }
 
@@ -111,10 +108,10 @@ public class UserServlet extends HttpServlet {
                 UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
                 userRoleService.save(userRole);
             }
+            log.info("User-Servlet-Post-Saved");
             resp.sendRedirect("/user-panel");
         } catch (Exception e) {
-            System.out.println("Error : " + e.getMessage());
-            e.printStackTrace();
+            log.error("User-Servlet-Post-" + e.getMessage());
             resp.sendError(403);
         }
 
@@ -151,9 +148,10 @@ public class UserServlet extends HttpServlet {
                     .build();
 
             userService.edit(user);
+            log.info("User-Servlet-Put-Edited");
             resp.sendRedirect("/user-panel");
         } catch (Exception e) {
-            System.out.println("Error" + e.getMessage());
+            log.error("User-Servlet-Put-" + e.getMessage());
         }
     }
 
@@ -161,9 +159,10 @@ public class UserServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             userService.remove(Long.valueOf(req.getParameter("id")));
+            log.info("User-Servlet-Delete-Removed");
             resp.sendRedirect("/jsp/admin/user-list.jsp");
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            log.error("User-Servlet-Delete-" + e.getMessage());
         }
     }
 }

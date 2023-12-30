@@ -3,8 +3,11 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/colorlib-regform-7/index.html" value="file://$PROJECT_DIR$/src/main/webapp/colorlib-regform-7" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/costumer/panel.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/costumer" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/customer/panel.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/customer" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/one.html" value="file://$PROJECT_DIR$/src/main/webapp" />
       </map>
     </option>
   </component>

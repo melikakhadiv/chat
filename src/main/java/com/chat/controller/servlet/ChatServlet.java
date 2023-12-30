@@ -12,11 +12,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sound.midi.Receiver;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/chat")
+@Slf4j
 public class ChatServlet extends HttpServlet {
     @Inject
     private ChatService chatService;
@@ -26,13 +28,11 @@ public class ChatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-//            req.getSession().setAttribute("chatList", chatService.findAll());
-//            resp.sendRedirect("/jsp/admin/panel.jsp");
             String role = (String) req.getSession().getAttribute("role");
-            System.out.println("GET CHAT SERVLET");
+            log.info("Chat-Servlet-Get");
             req.getRequestDispatcher("/user-panel").forward(req, resp);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Chat-Servlet-Get-"+ e.getMessage());
         }
 
     }
@@ -46,7 +46,6 @@ public class ChatServlet extends HttpServlet {
             req.setAttribute("sender", sender);
             if (sendToAllBtn != null) {
                 String broadcastMsg = req.getParameter("broadcastMsg");
-                System.out.println("debug chat servlet broadcast: " + broadcastMsg);
                 User receiver = userService.findByUsername("admin");
 
                 Chat chat = Chat.builder().
@@ -56,16 +55,11 @@ public class ChatServlet extends HttpServlet {
                         .build();
                 chatService.save(chat);
                 req.setAttribute("groupChat", chat);
+                log.info("Chat-Servlet-Post-Broadcast");
                 WebSocket.broadcast(broadcastMsg);
             } else if (privateSendBtn != null) {
-                System.out.println("debug chat servlet sender: " + req.getUserPrincipal().getName());
-
                 String message = req.getParameter("message");
-                System.out.println("debug chat servlet message: " + message);
-
                 User receiver = userService.findByUsername(req.getParameter("receiver"));
-                System.out.println("debug chat servlet receiver: " + req.getParameter("receiver"));
-
                 Chat chat = Chat.builder().
                         message(message)
                         .sender(sender)
@@ -73,14 +67,12 @@ public class ChatServlet extends HttpServlet {
                         .build();
                 chatService.save(chat);
                 req.setAttribute("chat", chat);
-                System.out.println("debug chat servlet chat saved:" + chat);
+                log.info("Chat-Servlet-Post-Private");
                 WebSocket.send(req.getParameter("receiver"), req.getParameter("message"));
             }
             req.getRequestDispatcher("/user-panel").forward(req,resp);
-        } catch (
-                Exception e) {
-            System.out.println("Error" + e.getMessage());
-            e.printStackTrace();
+        } catch (Exception e) {
+            log.error("Chat-Servlet-Post-" + e.getMessage());
         }
     }
 

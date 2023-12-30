@@ -7,10 +7,12 @@ import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/Attachment")
+@Slf4j
 public class AttachmentServlet extends HttpServlet {
     @Inject
     private AttachmentService attachmentService;
@@ -19,9 +21,10 @@ public class AttachmentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.getSession().setAttribute("attachmentList", attachmentService.findAll());
+            log.info("Attachment-Servlet-Get");
             resp.sendRedirect("/jsp/admin/attachment-list.jsp");
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            log.error("Attachment-Servlet-Get-" + e.getMessage());
         }
     }
 
@@ -38,11 +41,12 @@ public class AttachmentServlet extends HttpServlet {
             attachmentService.save(attachment);
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("Attachment", attachment);
+            log.info("Attachment-Servlet-Post");
             resp.sendRedirect("/jsp/admin/attachment-list.jsp");
             resp.getWriter().println("Attachment is successfully saved");
 
         } catch (Exception e) {
-            System.out.println("Error" + e.getMessage());
+            log.error("Attachment-Servlet-Post-" + e.getMessage());
         }
     }
 
@@ -61,19 +65,21 @@ public class AttachmentServlet extends HttpServlet {
             httpSession.setAttribute("Attachment", attachment);
             resp.sendRedirect("/jsp/admin/attachment-list.jsp");
             attachmentService.edit(attachment);
+            log.info("Attachment-Servlet-Put");
             resp.getWriter().println("Attachment is successfully edited");
 
         } catch (Exception e) {
-            System.out.println("Error" + e.getMessage());
+            log.error("Attachment-Servlet-Put-" + e.getMessage());
         }
     }
 
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
+        try {
             attachmentService.remove(Long.valueOf(req.getParameter("id")));
+            log.info("Attachment-Servlet-Delete");
             resp.sendRedirect("/jsp/admin/attachment-list.jsp");
-        }catch (Exception e){
-            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            log.error("Attachment-Servlet-Delete-" + e.getMessage());
         }
     }
 }

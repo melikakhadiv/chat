@@ -14,6 +14,5 @@ public class GetHttpSessionConfigurator extends ServerEndpointConfig.Configurato
     {
         HttpSession httpSession = (HttpSession)request.getHttpSession();
         config.getUserProperties().put("username",httpSession.getAttribute("username"));
-        System.out.println(((HttpSession) request.getHttpSession()).getId());
     }
 }

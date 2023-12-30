@@ -12,6 +12,7 @@ import jakarta.websocket.Session;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,13 +20,13 @@ import java.util.Map;
 import java.util.Set;
 
 @Path("/chat")
+@Slf4j
 public class ChatApi {
     @Inject
     private ChatService chatService;
 
     @Inject
     private UserService userService;
-
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,22 +35,17 @@ public class ChatApi {
                                    @PathParam("sender") String sender,
                                    @PathParam("message") String message) throws Exception {
         try {
-            System.out.println("----Api private----");
-            System.out.println(" receiver: " + receiver);
-            System.out.println(" sender: " + sender);
-            System.out.println(" message: " + message);
-            String status = null;
             User senderUser = userService.findByUsername(sender);
             User receiverUser = userService.findByUsername(receiver);
             Chat chat = Chat.builder().message(message).sender(senderUser).receiver(receiverUser).build();
             chatService.save(chat);
             WebSocket.send(receiver, message);
-            System.out.println("private: " + message);
             chat.setReceived(SessionManager.getOnlineUsers().contains(receiver));
+            log.info("Chat-Api-Post-Private-Sender:" + sender + "-Receiver:" + receiver + "-Message:" + message);
             return Response.ok().entity(chat).build();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Chat-Api-Post-Private-" + e.getMessage());
             return Response.status(500).build();
         }
     }
@@ -61,7 +57,6 @@ public class ChatApi {
     public Response setBroadcast(@PathParam("broadcastMsg") String broadcastMsg,
                                  @PathParam("sender") String sender) {
         try {
-            System.out.println("---Api broadcast---");
             User senderUser = userService.findByUsername(sender);
             Set<String> onlineUsers = SessionManager.getOnlineUsers();
             for (String username : onlineUsers) {
@@ -74,10 +69,10 @@ public class ChatApi {
                 chatService.save(chat);
             }
             WebSocket.broadcast(broadcastMsg);
-            System.out.println("api broadcast: " + broadcastMsg);
+            log.info("Chat-Api-Post-Broadcast-Sender:" + sender + "-Message:" + broadcastMsg);
             return Response.ok().entity(broadcastMsg).build();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Chat-Api-Post-Broadcast-" + e.getMessage());
             return Response.status(500).build();
         }
     }
@@ -85,17 +80,14 @@ public class ChatApi {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/history/{receiver}/{sender}")
-//    @Path("/history/{other}")
     public Response getChatBySenderReceiver(@PathParam("sender") String sender,
                                             @PathParam("receiver") String receiver) {
         try {
-            System.out.println(" receiver: " + receiver);
-            System.out.println(" sender: " + sender);
             List<Chat> chatList = chatService.findBySenderAndReceiver(sender, receiver);
-            System.out.println("chat: " + chatList);
+            log.info("Chat-Api-Get-History-Sender:" + sender + "-Receiver:" + receiver);
             return Response.ok().entity(chatList).build();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Chat-Api-Get-History-" + e.getMessage());
             return Response.status(500).build();
         }
     }

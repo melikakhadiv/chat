@@ -17,6 +17,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
@@ -32,6 +33,7 @@ import java.io.IOException;
 )
 
 @WebServlet(urlPatterns = "/user-panel", loadOnStartup = 1)
+@Slf4j
 public class DispatcherServlet extends HttpServlet {
 
     @Inject
@@ -46,7 +48,7 @@ public class DispatcherServlet extends HttpServlet {
     @Override
     @RequestScoped
     public void init() throws ServletException {
-        System.out.println("Initializing ...");
+        log.info("Dispatcher-Servlet-Init");
         try {
             Role admin = Role.builder().role("admin").build();
             Role customer = Role.builder().role("customer").build();
@@ -67,14 +69,12 @@ public class DispatcherServlet extends HttpServlet {
                     .build();
             userRoleService.save(userRole);
         } catch (Exception e) {
-            System.out.println("Init Error \n" + e.getMessage());
-            e.printStackTrace();
+            log.error("Dispatcher-Servlet-Init-" + e.getMessage());
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Dispatch Post");
         String role = null;
         try {
             String username = request.getUserPrincipal().getName();
@@ -94,16 +94,10 @@ public class DispatcherServlet extends HttpServlet {
                 request.getSession().removeAttribute("userImage");
             }
             SessionManager.addHttpSession(request.getSession());
+            log.info("Dispatcher-Servlet-Get");
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error : " + e.getMessage());
+            log.error("Dispatcher-Servlet-Get-"+ e.getMessage());
         }
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("user : " + req.getSession().getAttribute("username") + "logged out!");
-        req.getSession().invalidate();
     }
 }
