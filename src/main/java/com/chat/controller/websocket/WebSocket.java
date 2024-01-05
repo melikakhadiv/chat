@@ -1,18 +1,10 @@
 package com.chat.controller.websocket;
 
 import com.chat.controller.session.SessionManager;
-import com.chat.model.entity.Chat;
-import com.chat.model.service.ChatService;
-import com.chat.model.service.UserService;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.C;
-
-import java.io.IOException;
 
 @ServerEndpoint(value = "/chat",
         configurator = GetHttpSessionConfigurator.class,
@@ -24,7 +16,7 @@ public class WebSocket {
 
 
     @OnOpen
-    public void onOpen(Session session) throws EncodeException, IOException {
+    public void onOpen(Session session) {
         SessionManager.addWebSocketSession(String.valueOf(session.getUserProperties().get("username")), session);
         log.info("Websocket-onOpen-Id:" + session.getId() + "-Username:" + session.getUserProperties().get("username"));
     }

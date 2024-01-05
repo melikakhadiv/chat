@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @NoArgsConstructor
 @Getter
@@ -20,7 +19,6 @@ import java.util.List;
 @NamedQueries(
         {@NamedQuery(name = "Chat.FindBySenderAndReceiver", query = "select oo from chatEntity oo where (oo.sender.username=:sender and  oo.receiver.username=:receiver) or (oo.sender.username=:receiver and  oo.receiver.username=:sender) order by oo.timeStamp"),
                 @NamedQuery(name = "Chat.FindByUsername", query = "select oo from chatEntity oo where oo.sender.username=:username or oo.receiver.username=:username")
-//                @NamedQuery(name = "Chat.FindByGroupUser", query = "select oo from chatEntity oo where oo.sender.username=:username or oo.receiver.username=:username")
         })
 public class Chat extends Base {
     @Id

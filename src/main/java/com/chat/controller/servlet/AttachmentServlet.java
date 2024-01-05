@@ -1,15 +1,12 @@
 package com.chat.controller.servlet;
 
 import com.chat.model.entity.Attachment;
-import com.chat.model.entity.enums.FileType;
 import com.chat.model.service.AttachmentService;
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 
 @WebServlet(urlPatterns = "/Attachment")
 @Slf4j
@@ -18,7 +15,7 @@ public class AttachmentServlet extends HttpServlet {
     private AttachmentService attachmentService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
         try {
             req.getSession().setAttribute("attachmentList", attachmentService.findAll());
             log.info("Attachment-Servlet-Get");
@@ -30,7 +27,7 @@ public class AttachmentServlet extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)  {
         try {
             Part filePart = req.getPart("file");
             String fileName = "jsp/customer/attachment/" + filePart.getSubmittedFileName();
@@ -51,8 +48,7 @@ public class AttachmentServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp)  {
 
         try {
             Part filePart = req.getPart("file");
@@ -73,7 +69,7 @@ public class AttachmentServlet extends HttpServlet {
         }
     }
 
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         try {
             attachmentService.remove(Long.valueOf(req.getParameter("id")));
             log.info("Attachment-Servlet-Delete");

@@ -6,16 +6,12 @@ import com.chat.model.entity.User;
 import com.chat.model.service.ChatService;
 import com.chat.model.service.UserService;
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.sound.midi.Receiver;
-import java.io.IOException;
 
 @WebServlet(urlPatterns = "/chat")
 @Slf4j
@@ -26,7 +22,7 @@ public class ChatServlet extends HttpServlet {
     private UserService userService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)  {
         try {
             String role = (String) req.getSession().getAttribute("role");
             log.info("Chat-Servlet-Get");
@@ -38,7 +34,7 @@ public class ChatServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try {
             String sendToAllBtn = req.getParameter("sendToAllBtn");
             String privateSendBtn = req.getParameter("privateSendBtn");

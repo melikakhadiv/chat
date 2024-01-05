@@ -1,5 +1,6 @@
 package com.chat.model.entity;
 
+import com.google.gson.Gson;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,6 +62,11 @@ public class User extends Base {
 //    @JoinColumn(name = "u_chat_id")
 //    private List<Chat> chat;
 
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }
 
 

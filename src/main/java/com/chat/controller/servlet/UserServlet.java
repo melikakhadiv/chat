@@ -5,12 +5,10 @@ import com.chat.model.entity.Attachment;
 import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
 import com.chat.model.entity.UserRole;
-import com.chat.model.service.AttachmentService;
 import com.chat.model.service.RoleService;
 import com.chat.model.service.UserRoleService;
 import com.chat.model.service.UserService;
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -20,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 1,  // 1 MB
+        fileSizeThreshold = 1024 * 1024 ,  // 1 MB
         maxFileSize = 1024 * 1024 * 10,      // 10 MB
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
@@ -36,26 +34,24 @@ public class UserServlet extends HttpServlet {
     @Inject
     private UserService userService;
 
-    @Inject
-    private AttachmentService attachmentService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         try {
             String logout = req.getParameter("logout");
             if (logout != null) {
-                SessionManager.removeHttpSession(req.getSession());
                 req.getSession().invalidate();
                 log.info("User-Servlet-Get-LogOut");
-                resp.sendRedirect("/index.jsp");
+                resp.sendRedirect("/user-panel");
             }
         } catch (Exception e) {
-            log.error("User-Servlet-Get-" + e.getMessage());;
+            log.error("User-Servlet-Get-" + e.getMessage());
+
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         try {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
@@ -118,7 +114,7 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp)  {
         try {
             Long id = Long.valueOf(req.getParameter("id"));
             String username = req.getParameter("username");
@@ -156,7 +152,7 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)  {
         try {
             userService.remove(Long.valueOf(req.getParameter("id")));
             log.info("User-Servlet-Delete-Removed");

@@ -9,7 +9,6 @@ import com.chat.model.service.UserRoleService;
 import com.chat.model.service.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.HttpConstraint;
 import jakarta.servlet.annotation.HttpMethodConstraint;
 import jakarta.servlet.annotation.ServletSecurity;
@@ -19,7 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 
 @ServletSecurity(value =
 @HttpConstraint(
@@ -47,7 +45,7 @@ public class DispatcherServlet extends HttpServlet {
 
     @Override
     @RequestScoped
-    public void init() throws ServletException {
+    public void init()  {
         log.info("Dispatcher-Servlet-Init");
         try {
             Role admin = Role.builder().role("admin").build();
@@ -70,14 +68,16 @@ public class DispatcherServlet extends HttpServlet {
             userRoleService.save(userRole);
         } catch (Exception e) {
             log.error("Dispatcher-Servlet-Init-" + e.getMessage());
+
         }
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)  {
         String role = null;
         try {
             String username = request.getUserPrincipal().getName();
+            System.out.println(username);
             role = userService.findByUsername(username).getRole().getRole();
             request.getSession().setAttribute("username", username);
             request.getSession().setAttribute("role", role);

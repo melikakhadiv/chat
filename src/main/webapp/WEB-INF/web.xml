@@ -62,4 +62,8 @@
         <error-code>408</error-code>
         <location>/errors/RequestTimeOut.jsp</location>
     </error-page>
+    
+    <welcome-file-list>
+        <welcome-file>jsp/customer/panel.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

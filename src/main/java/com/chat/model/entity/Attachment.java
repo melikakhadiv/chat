@@ -1,13 +1,8 @@
 package com.chat.model.entity;
 
 
-
-import com.chat.model.entity.enums.FileType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
