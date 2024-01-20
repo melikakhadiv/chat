@@ -1,6 +1,8 @@
 package com.chat.model.entity;
 
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -13,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 
 @Entity(name="attachmentEntity")
 @Table(name="chat_attachment_tbl")
-
+@RequestScoped
 public class Attachment extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

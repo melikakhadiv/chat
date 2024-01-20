@@ -1,5 +1,6 @@
 package com.chat.model.entity;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 
 @Entity(name ="UserRoleEntity")
 @Table(name = "user_role")
+@ApplicationScoped
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

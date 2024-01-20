@@ -1,6 +1,8 @@
 package com.chat.model.entity;
 
 import com.google.gson.Gson;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +21,7 @@ import java.util.List;
 @NamedQueries({@NamedQuery(name = "User.FindPrivateAccount", query = "select oo from userEntity oo where oo.privateAccount=true"),
         @NamedQuery(name = "User.FindByUsername", query = "select oo from userEntity oo where oo.username=:username"),
         @NamedQuery(name = "User.FindPublicAccount", query = "select oo from userEntity oo where oo.privateAccount=false")})
-
+@SessionScoped
 public class User extends Base {
 
     @Id

@@ -1,5 +1,6 @@
 package com.chat.model.entity;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 
 @Entity(name="roleEntity")
 @Table(name="chat_role_tbl")
-
+@ApplicationScoped
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
