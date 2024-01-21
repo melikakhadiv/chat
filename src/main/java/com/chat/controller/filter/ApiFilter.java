@@ -16,21 +16,21 @@ public class ApiFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+        String username = String.valueOf(httpServletRequest.getSession().getAttribute("username"));
+
         String uri = httpServletRequest.getRequestURI();
         String[] uriAddress = uri.split("/");
         String sender = uriAddress[5];
         String receiver = uriAddress[4];
-        String username = String.valueOf(httpServletRequest.getSession().getAttribute("username"));
-
-        if (uri.contains("/private/") || uri.contains("/broadcast/") && username.equals(sender)) {
+        if (((HttpServletRequest) servletRequest).getMethod().equals("post") && username.equals(sender)) {
             filterChain.doFilter(servletRequest, servletResponse);
-            log.info("Filter-Api-Post");
+            log.info("Filter-Api-Chat-Post");
 
-        } else if (uri.contains("/history/") && username.equals(receiver) || username.equals(sender)) {
+        } else if (((HttpServletRequest) servletRequest).getMethod().equals("get") && username.equals(receiver) || username.equals(sender)) {
             filterChain.doFilter(servletRequest, servletResponse);
-            log.info("Filter-Api-Get");
+            log.info("Filter-Api-Chat-Get");
         }
         httpServletResponse.sendError(403, "Access forbidden");
-        log.error("Filter-Api");
+        log.error("Filter-Api-Chat");
     }
 }
