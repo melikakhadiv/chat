@@ -1,5 +1,6 @@
 package com.chat.controller.servlet;
 
+import com.chat.controller.exception.ExceptionHandler;
 import com.chat.controller.websocket.WebSocket;
 import com.chat.model.entity.Chat;
 import com.chat.model.entity.User;
@@ -28,7 +29,7 @@ public class ChatServlet extends HttpServlet {
             log.info("Chat-Servlet-Get");
             req.getRequestDispatcher("/user-panel").forward(req, resp);
         } catch (Exception e) {
-            log.error("Chat-Servlet-Get-"+ e.getMessage());
+            log.error("Chat-Servlet-Get-"+ ExceptionHandler.getException().getMessage(e));
         }
 
     }
@@ -68,7 +69,7 @@ public class ChatServlet extends HttpServlet {
             }
             req.getRequestDispatcher("/user-panel").forward(req,resp);
         } catch (Exception e) {
-            log.error("Chat-Servlet-Post-" + e.getMessage());
+            log.error("Chat-Servlet-Post-" + ExceptionHandler.getException().getMessage(e));
         }
     }
 

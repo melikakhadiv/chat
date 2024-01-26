@@ -1,5 +1,6 @@
 package com.chat.model.service;
 
+import com.chat.controller.exception.NoContentException;
 import com.chat.model.entity.Attachment;
 import com.chat.model.service.impl.ServiceImpl;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -40,7 +41,7 @@ public class AttachmentService implements ServiceImpl<Attachment, Long> {
             return entityManager.merge(attachment);
         } else {
             log.error("Attachment-Service-NotFound");
-            return null;
+            throw new NoContentException();
         }
     }
 

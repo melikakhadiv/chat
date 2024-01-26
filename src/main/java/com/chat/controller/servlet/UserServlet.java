@@ -1,6 +1,8 @@
 package com.chat.controller.servlet;
 
-import com.chat.controller.session.SessionManager;
+
+//import com.chat.controller.validation.BeanValidation;
+import com.chat.controller.exception.ExceptionHandler;
 import com.chat.model.entity.Attachment;
 import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
@@ -12,6 +14,7 @@ import jakarta.inject.Inject;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -33,6 +36,9 @@ public class UserServlet extends HttpServlet {
 
     @Inject
     private UserService userService;
+
+//    @Inject
+//    private BeanValidation<User> beanValidation;
 
 
     @Override
@@ -72,7 +78,7 @@ public class UserServlet extends HttpServlet {
 
                 Attachment attachment = Attachment.builder().title("User Image").filePath(fileName).active(true).build();
 
-                User user = User.builder()
+                 @Valid User user = User.builder()
                         .username(username)
                         .password(password)
                         .nickname(nickname)
@@ -83,6 +89,7 @@ public class UserServlet extends HttpServlet {
                         .privateAccount(account)
                         .photo(attachment)
                         .build();
+//                if(beanValidation.validator(user) == null){};
                 userService.save(user);
 
                 UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
@@ -99,6 +106,7 @@ public class UserServlet extends HttpServlet {
                         .privateAccount(account)
                         .photo(null)
                         .build();
+
                 userService.save(user);
 
                 UserRole userRole = UserRole.builder().roleName("customer").username(user.getUsername()).build();
@@ -107,7 +115,7 @@ public class UserServlet extends HttpServlet {
             log.info("User-Servlet-Post-Saved");
             resp.sendRedirect("/user-panel");
         } catch (Exception e) {
-            log.error("User-Servlet-Post-" + e.getMessage());
+            log.error("User-Servlet-Post-" + ExceptionHandler.getException().getMessage(e));
             resp.sendError(403);
         }
 
@@ -147,7 +155,7 @@ public class UserServlet extends HttpServlet {
             log.info("User-Servlet-Put-Edited");
             resp.sendRedirect("/user-panel");
         } catch (Exception e) {
-            log.error("User-Servlet-Put-" + e.getMessage());
+            log.error("User-Servlet-Put-" + ExceptionHandler.getException().getMessage(e));
         }
     }
 
@@ -158,7 +166,7 @@ public class UserServlet extends HttpServlet {
             log.info("User-Servlet-Delete-Removed");
             resp.sendRedirect("/jsp/admin/user-list.jsp");
         } catch (Exception e) {
-            log.error("User-Servlet-Delete-" + e.getMessage());
+            log.error("User-Servlet-Delete-" + ExceptionHandler.getException().getMessage(e));
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.chat.controller.api;
 
+import com.chat.controller.exception.ExceptionHandler;
 import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.User;
 import com.chat.model.service.UserService;
@@ -37,7 +38,7 @@ public class UserApi {
             log.info("User-Api-Get");
             return Response.ok().entity(responseMap).build();
         }catch (Exception e){
-            log.error("User-Api-Get-" + e.getMessage());
+            log.error("User-Api-Get-" + ExceptionHandler.getException().getMessage(e));
             return Response.ok().status(402).build();
         }
     }

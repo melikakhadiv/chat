@@ -1,5 +1,6 @@
 package com.chat.controller.api;
 
+import com.chat.controller.exception.ExceptionHandler;
 import com.chat.controller.session.SessionManager;
 import com.chat.controller.websocket.WebSocket;
 import com.chat.model.entity.Chat;
@@ -7,16 +8,11 @@ import com.chat.model.entity.User;
 import com.chat.model.service.ChatService;
 import com.chat.model.service.UserService;
 import jakarta.inject.Inject;
-import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Path("/chat")
@@ -45,7 +41,7 @@ public class ChatApi {
             return Response.ok().entity(chat).build();
 
         } catch (Exception e) {
-            log.error("Chat-Api-Post-Private-" + e.getMessage());
+            log.error("Chat-Api-Post-Private-" + ExceptionHandler.getException().getMessage(e));
             return Response.status(500).build();
         }
     }
@@ -72,7 +68,7 @@ public class ChatApi {
             log.info("Chat-Api-Post-Broadcast-Sender:" + sender + "-Message:" + broadcastMsg);
             return Response.ok().entity(broadcastMsg).build();
         } catch (Exception e) {
-            log.error("Chat-Api-Post-Broadcast-" + e.getMessage());
+            log.error("Chat-Api-Post-Broadcast-" + ExceptionHandler.getException().getMessage(e));
             return Response.status(500).build();
         }
     }
@@ -87,7 +83,7 @@ public class ChatApi {
             log.info("Chat-Api-Get-History-Sender:" + sender + "-Receiver:" + receiver);
             return Response.ok().entity(chatList).build();
         } catch (Exception e) {
-            log.error("Chat-Api-Get-History-" + e.getMessage());
+            log.error("Chat-Api-Get-History-" + ExceptionHandler.getException().getMessage(e));
             return Response.status(500).build();
         }
     }

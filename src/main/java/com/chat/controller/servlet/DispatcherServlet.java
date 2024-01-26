@@ -1,5 +1,6 @@
 package com.chat.controller.servlet;
 
+import com.chat.controller.exception.ExceptionHandler;
 import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Role;
 import com.chat.model.entity.User;
@@ -67,7 +68,7 @@ public class DispatcherServlet extends HttpServlet {
                     .build();
             userRoleService.save(userRole);
         } catch (Exception e) {
-            log.error("Dispatcher-Servlet-Init-" + e.getMessage());
+            log.error("Dispatcher-Servlet-Init-" + ExceptionHandler.getException().getMessage(e));
 
         }
     }
@@ -97,7 +98,7 @@ public class DispatcherServlet extends HttpServlet {
             log.info("Dispatcher-Servlet-Get");
             request.getRequestDispatcher("/jsp/" + role + "/panel.jsp").forward(request, response);
         } catch (Exception e) {
-            log.error("Dispatcher-Servlet-Get-"+ e.getMessage());
+            log.error("Dispatcher-Servlet-Get-"+ ExceptionHandler.getException().getMessage(e));
         }
     }
 }

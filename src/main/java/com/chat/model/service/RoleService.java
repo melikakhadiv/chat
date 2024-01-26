@@ -1,5 +1,6 @@
 package com.chat.model.service;
 
+import com.chat.controller.exception.NoContentException;
 import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.Role;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -44,7 +45,7 @@ public class RoleService implements ServiceImpl<Role, Long> {
             return role;
         } else {
             log.error("Role-Service-NotFound");
-            return null;
+            throw new NoContentException();
         }
     }
 

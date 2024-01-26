@@ -1,5 +1,6 @@
 package com.chat.controller.servlet;
 
+import com.chat.controller.exception.ExceptionHandler;
 import com.chat.model.entity.Attachment;
 import com.chat.model.service.AttachmentService;
 import jakarta.inject.Inject;
@@ -65,7 +66,7 @@ public class AttachmentServlet extends HttpServlet {
             resp.getWriter().println("Attachment is successfully edited");
 
         } catch (Exception e) {
-            log.error("Attachment-Servlet-Put-" + e.getMessage());
+            log.error("Attachment-Servlet-Put-" + ExceptionHandler.getException().getMessage(e));
         }
     }
 
@@ -75,7 +76,7 @@ public class AttachmentServlet extends HttpServlet {
             log.info("Attachment-Servlet-Delete");
             resp.sendRedirect("/jsp/admin/attachment-list.jsp");
         } catch (Exception e) {
-            log.error("Attachment-Servlet-Delete-" + e.getMessage());
+            log.error("Attachment-Servlet-Delete-" + ExceptionHandler.getException().getMessage(e));
         }
     }
 }

@@ -1,14 +1,13 @@
 package com.chat.model.service;
 
+import com.chat.controller.exception.NoContentException;
 import com.chat.controller.session.SessionManager;
 import com.chat.model.entity.Chat;
-import com.chat.model.entity.User;
 import com.chat.model.service.impl.ServiceImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +48,7 @@ public class ChatService implements ServiceImpl<Chat, Long> {
             return chat;
         } else {
             log.error("Chat-Service-Remove-NotFound");
-            return null;
+            throw new NoContentException();
         }
     }
 
@@ -86,7 +85,6 @@ public class ChatService implements ServiceImpl<Chat, Long> {
                 .setParameter("username", username);
         log.info("Chat-Service-FindByUsername");
         return query.getResultList();
-
     }
 
     @Override

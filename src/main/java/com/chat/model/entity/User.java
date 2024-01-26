@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
@@ -30,11 +32,11 @@ public class User extends Base {
 
     @Column(name = "u_username",unique = true, length = 20)
 
-//    @Pattern(regexp = "^[A-Za-z]{10,30}$", message = "Invalid UserName")
+    @Pattern(regexp = "^[A-Za-z]{4,10}$", message = "Invalid UserName")
     private String username;
 
     @Column(name = "u_password", length = 20)
-//    @Pattern(regexp = "^[A-Za-z]{8,30}$", message = "Invalid Password")
+    @Pattern(regexp = "^[A-Za-z]{4,10}$", message = "Invalid Password")
     private String password;
 
     @Column(name = "u_nickname", length = 20)

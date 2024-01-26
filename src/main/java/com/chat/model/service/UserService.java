@@ -1,7 +1,8 @@
 package com.chat.model.service;
 
+import com.chat.controller.exception.DuplicateDataException;
+import com.chat.controller.exception.NoContentException;
 import com.chat.controller.session.SessionManager;
-import com.chat.model.entity.Role;
 import com.chat.model.service.impl.ServiceImpl;
 import com.chat.model.entity.User;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -33,7 +34,7 @@ public class UserService implements ServiceImpl<User, Long> {
         } else {
             System.out.print("-----user duplicate"+user1);
             log.error("User-Service-Save-Duplicate");
-            throw new Exception();
+            throw new DuplicateDataException();
         }
         }
 
@@ -56,7 +57,7 @@ public class UserService implements ServiceImpl<User, Long> {
                 return user;
             } else {
                 log.error("User-Service-Remove-NotFound");
-                return null;
+                throw new NoContentException();
             }
         }
 
